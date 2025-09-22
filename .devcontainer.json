@@ -1,0 +1,5 @@
+{
+  "image": "ruby:3.2-bookworm",
+  "forwardPorts": [3000],
+  "postCreateCommand": "bash script/devcontainer/provision.sh"
+}
