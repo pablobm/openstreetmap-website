@@ -5,6 +5,8 @@ json.user do
   json.display_name user.display_name
   json.account_created user.created_at.xmlschema
   json.description user.description if user.description
+  json.company user.company if user.company
+  json.social_links user.social_links.map { |link| link["url"] } if user.social_links
 
   if current_user && current_user == user && can?(:details, User)
     json.contributor_terms do
