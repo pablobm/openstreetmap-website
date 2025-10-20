@@ -38,7 +38,9 @@ module Api
                     :description => "test",
                     :terms_agreed => Date.yesterday,
                     :home_lat => 12.1, :home_lon => 23.4,
-                    :languages => ["en"])
+                    :languages => ["en"],
+                    :social_links => [{ "url" => "https://twitter.com/testuser", "platform" => "twitter" },
+                                      { "url" => "https://github.com/testuser", "platform" => "github" }])
 
       # check that a visible user is returned properly
       get api_user_path(:id => user.id)
@@ -410,6 +412,17 @@ module Api
         assert_select "description", :count => 1, :text => user.description
         assert_select "company", :count => 1, :text => user.company
 
+        if user.social_links.present?
+          assert_select "social-links", :count => 1 do
+            user.social_links.each do |link|
+              details = link.parsed
+              assert_select "link[platform='#{details[:platform]}']", :count => 1, :text => details[:url]
+            end
+          end
+        else
+          assert_select "social-links", :count => 0
+        end
+
         assert_select "contributor-terms", :count => 1 do
           if user.terms_agreed.present?
             assert_select "[agreed='true']", :count => 1
@@ -489,6 +502,19 @@ module Api
       assert_equal user.id, js["user"]["id"]
       assert_equal user.description, js["user"]["description"]
       assert_equal user.company, js["user"]["company"]
+      
+      if user.social_links.present?
+        assert_not_nil js["user"]["social_links"]
+        assert_equal user.social_links.length, js["user"]["social_links"].length
+        user.social_links.each_with_index do |link, index|
+          details = link.parsed
+          assert_equal details[:url], js["user"]["social_links"][index]["url"]
+          assert_equal details[:platform], js["user"]["social_links"][index]["platform"]
+        end
+      else
+        assert_nil js["user"]["social_links"]
+      end
+      
       assert_operator js["user"]["contributor_terms"], :[], "agreed"
 
       if include_private

@@ -8,7 +8,8 @@ xml.tag! "user", :id => user.id,
 
   xml.tag! "social-links" do
     user.social_links.each do |link|
-      xml.tag! "link", link["url"]
+      details = link.parsed
+      xml.tag! "link", details[:url], :platform => details[:platform]
     end
   end
 
