@@ -5,13 +5,14 @@ xml.tag! "user", :id => user.id,
                  :account_created => user.created_at.xmlschema do
   xml.tag! "description", user.description if user.description
   xml.tag! "company", user.company if user.company
-  if user.social_links
-    xml.tag! "social-links" do
-      user.social_links.each do |link|
-        xml.tag! "link", link["url"]
-      end
+
+  xml.tag! "social-links" do
+    user.social_links.each do |link|
+      xml.tag! "link", link["url"]
     end
   end
+
+  
   if current_user && current_user == user && can?(:details, User)
     xml.tag! "contributor-terms", :agreed => user.terms_agreed.present?,
                                   :pd => user.consider_pd

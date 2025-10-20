@@ -408,6 +408,7 @@ module Api
     def check_xml_details(user, include_private, include_email)
       assert_select "user[id='#{user.id}']", :count => 1 do
         assert_select "description", :count => 1, :text => user.description
+        assert_select "company", :count => 1, :text => user.company
 
         assert_select "contributor-terms", :count => 1 do
           if user.terms_agreed.present?
@@ -487,6 +488,7 @@ module Api
     def check_json_details(js, user, include_private, include_email)
       assert_equal user.id, js["user"]["id"]
       assert_equal user.description, js["user"]["description"]
+      assert_equal user.company, js["user"]["company"]
       assert_operator js["user"]["contributor_terms"], :[], "agreed"
 
       if include_private
