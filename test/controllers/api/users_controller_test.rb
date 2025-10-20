@@ -502,7 +502,7 @@ module Api
       assert_equal user.id, js["user"]["id"]
       assert_equal user.description, js["user"]["description"]
       assert_equal user.company, js["user"]["company"]
-      
+
       if user.social_links.present?
         assert_not_nil js["user"]["social_links"]
         assert_equal user.social_links.length, js["user"]["social_links"].length
@@ -514,7 +514,7 @@ module Api
       else
         assert_nil js["user"]["social_links"]
       end
-      
+
       assert_operator js["user"]["contributor_terms"], :[], "agreed"
 
       if include_private

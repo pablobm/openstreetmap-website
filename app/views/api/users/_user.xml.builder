@@ -13,7 +13,6 @@ xml.tag! "user", :id => user.id,
     end
   end
 
-  
   if current_user && current_user == user && can?(:details, User)
     xml.tag! "contributor-terms", :agreed => user.terms_agreed.present?,
                                   :pd => user.consider_pd
