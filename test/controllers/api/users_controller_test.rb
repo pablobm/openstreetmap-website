@@ -38,9 +38,10 @@ module Api
                     :description => "test",
                     :terms_agreed => Date.yesterday,
                     :home_lat => 12.1, :home_lon => 23.4,
-                    :languages => ["en"],
-                    :social_links => [{ "url" => "https://twitter.com/testuser", "platform" => "twitter" },
-                                      { "url" => "https://github.com/testuser", "platform" => "github" }])
+                    :languages => ["en"]) do |user|
+        create(:social_link, :user => user, :url => "https://twitter.com/testuser")
+        create(:social_link, :user => user, :url => "https://github.com/testuser")
+      end
 
       # check that a visible user is returned properly
       get api_user_path(:id => user.id)
@@ -410,17 +411,17 @@ module Api
     def check_xml_details(user, include_private, include_email)
       assert_select "user[id='#{user.id}']", :count => 1 do
         assert_select "description", :count => 1, :text => user.description
-        assert_select "company", :count => 1, :text => user.company
+        assert_select "company", :count => 1, :text => user.company if user.company
 
         if user.social_links.present?
-          assert_select "social-links", :count => 1 do
+          assert_select "social-links link", :count => user.social_links.count do
             user.social_links.each do |link|
               details = link.parsed
               assert_select "link[platform='#{details[:platform]}']", :count => 1, :text => details[:url]
             end
           end
         else
-          assert_select "social-links", :count => 0
+          assert_select "social-links link", :count => 0
         end
 
         assert_select "contributor-terms", :count => 1 do
@@ -501,18 +502,22 @@ module Api
     def check_json_details(js, user, include_private, include_email)
       assert_equal user.id, js["user"]["id"]
       assert_equal user.description, js["user"]["description"]
-      assert_equal user.company, js["user"]["company"]
+      if user.company
+        assert_equal user.company, js["user"]["company"]
+      else
+        assert_nil js["user"]["company"]
+      end
 
       if user.social_links.present?
-        assert_not_nil js["user"]["social_links"]
-        assert_equal user.social_links.length, js["user"]["social_links"].length
-        user.social_links.each_with_index do |link, index|
-          details = link.parsed
-          assert_equal details[:url], js["user"]["social_links"][index]["url"]
-          assert_equal details[:platform], js["user"]["social_links"][index]["platform"]
+        js_links = js.dig("user", "social_links")
+        assert_equal user.social_links.count, js_links.count
+        user.social_links.zip(js_links).each do |user_link, js_link|
+          details = user_link.parsed
+          assert_equal details[:url], js_link["url"]
+          assert_equal details[:platform], js_link["platform"]
         end
       else
-        assert_nil js["user"]["social_links"]
+        assert_empty js["user"]["social_links"]
       end
 
       assert_operator js["user"]["contributor_terms"], :[], "agreed"
