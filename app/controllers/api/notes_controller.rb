@@ -145,6 +145,8 @@ module Api
     ##
     # Add a comment to an existing note
     def comment
+      render inline: "<h2>Error from the LB</h2><p>The load balancer is having a bad day, peeps.</p>", status: 502
+      return
       # Check the arguments are sane
       raise OSM::APIBadUserInput, "No id was given" unless params[:id]
       raise OSM::APIBadUserInput, "No text was given" if params[:text].blank?
