@@ -274,14 +274,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def preferred_color_scheme(*subjects)
-    return nil unless current_user
-
-    subjects.each do |subject|
-      scheme = current_user.preferences.find_by(:k => "#{subject}.color_scheme")&.v
-      return scheme unless scheme.nil? || scheme == "auto"
-    end
-    nil
+  def preferred_color_scheme(...)
+    current_user&.preferred_color_scheme(...)
   end
 
   helper_method :preferred_editor, :preferred_color_scheme
