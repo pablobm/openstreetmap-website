@@ -219,6 +219,54 @@ body.small-nav {
   font-weight: $font-weight-normal;
 }
 
+/* Rules for MapLibre maps */
+
+.maplibregl-ctrl {
+  margin-right: 0 !important;
+}
+
+.maplibregl-control-container .maplibregl-ctrl button {
+  display: block;
+  height: 40px;
+  width: 40px;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.6);
+
+  &:hover, &:focus {
+    background-color: black !important;
+  }
+
+  &:first-child {
+    border-start-start-radius: 4px;
+  }
+
+  &:last-child {
+    border-end-start-radius: 4px;
+  }
+}
+
+.maplibregl-user-location-accuracy-circle {
+  background-color: $green !important;
+  opacity: 0.2 !important;
+}
+
+.maplibregl-user-location-dot, .maplibregl-user-location-dot:before {
+  background-color: $vibrant-green !important;
+}
+
+.maplibregl-ctrl button.maplibregl-ctrl-zoom-in .maplibregl-ctrl-icon {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='%23ffffff' viewBox='0 0 20 20'%3E%3Cpath d='M16 8H12V4L11 3H10L9 4V8H5L4 9v1l1 1H9v4l1 1h1l1-1V11h4l1-1V9z'/%3E%3C/svg%3E") !important;
+}
+.maplibregl-ctrl button.maplibregl-ctrl-zoom-out .maplibregl-ctrl-icon {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='%23ffffff' viewBox='0 0 20 20'%3E%3Cpath d='M4 9v1l1 1H16l1-1V9L16 8H5Z'/%3E%3C/svg%3E") !important;
+}
+.maplibregl-ctrl button.maplibregl-ctrl-geolocate .maplibregl-ctrl-icon {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='%23ffffff' viewBox='0 0 20 20'%3E%3Cpath d='M10 10v6h2L16 6V4H14L4 8v2Z'/%3E%3C/svg%3E") !important;
+}
+.maplibregl-ctrl button.maplibregl-ctrl-geolocate.maplibregl-ctrl-geolocate-active .maplibregl-ctrl-icon {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' fill='%2376c551' viewBox='0 0 20 20'%3E%3Cpath d='M10 10v6h2L16 6V4H14L4 8v2Z'/%3E%3C/svg%3E") !important;
+}
+
 /* Rules for Leaflet maps */
 
 .leaflet-top.leaflet-right,
@@ -419,6 +467,11 @@ body.small-nav {
   border-top: 0px !important;
 }
 
+.maplibregl-popup-tip {
+  border-top-color: rgb(var(--bs-body-bg-rgb)) !important;
+}
+
+.maplibregl-popup-content,
 .leaflet-popup-content-wrapper, .leaflet-popup-tip,
 .leaflet-control-attribution, .leaflet-control-scale-line {
   @extend .bg-body, .text-body;
