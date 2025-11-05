@@ -261,9 +261,10 @@ class User < ApplicationRecord
   end
 
   def preferred_color_scheme(*priority_list)
+    color_preferences = preferences.color_schemes.where.not(:v => "auto").pluck(:k, :v).to_h
     priority_list.each do |target|
-      scheme = preferences.find_by(:k => "#{target}.color_scheme")&.v
-      return scheme unless scheme.nil? || scheme == "auto"
+      scheme = color_preferences["#{target}.color_scheme"]
+      return scheme unless scheme.nil?
     end
     nil
   end
