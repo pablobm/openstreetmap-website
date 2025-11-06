@@ -2,7 +2,7 @@ OSM.initializeMapButtons = function (map) {
   const queryCtrl = $(".control-query"),
         queryButton = queryCtrl.find(".control-button");
 
-  OSM.NewNote.initializeMapButtons();
+  OSM.NewNote.initialize();
 
   queryButton.on("click", function (e) {
     e.preventDefault();

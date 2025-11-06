@@ -86,7 +86,13 @@ OSM.Router = function (map, rts) {
   }
 
   const routes = Object.entries(rts)
-    .map(([path, controller]) => new Route(path, controller));
+    .map(([path, descriptor]) => {
+      if (typeof descriptor === "function") {
+        return new Route(path, descriptor);
+      } else {
+        return new Route(path, descriptor.controller);
+      }
+    });
 
   routes.recognize = function (path) {
     for (const route of this) {
