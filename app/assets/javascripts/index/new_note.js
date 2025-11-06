@@ -1,9 +1,7 @@
 OSM.NewNote = function (map) {
   const noteLayer = map.noteLayer,
         content = $("#sidebar_content"),
-        page = {},
-        control = $(".control-note"),
-        addNoteButton = control.find(".control-button");
+        page = {};
   let newNoteMarker,
       halo;
 
@@ -86,7 +84,7 @@ OSM.NewNote = function (map) {
   }
 
   function updateControls() {
-    const zoomedOut = addNoteButton.hasClass("disabled");
+    const zoomedOut = OSM.NewNote.addNoteButton.hasClass("disabled");
     const withoutText = content.find("textarea").val() === "";
 
     content.find("#new-note-zoom-warning").prop("hidden", !zoomedOut);
@@ -101,7 +99,7 @@ OSM.NewNote = function (map) {
   };
 
   page.load = function (path) {
-    control.addClass("active");
+    OSM.NewNote.control.addClass("active");
 
     map.addLayer(noteLayer);
 
@@ -147,7 +145,7 @@ OSM.NewNote = function (map) {
     });
 
     map.on("click", moveNewNoteMarkerToClick);
-    addNoteButton.on("disabled enabled", updateControls);
+    OSM.NewNote.addNoteButton.on("disabled enabled", updateControls);
     updateControls();
 
     return map.getState();
@@ -155,10 +153,22 @@ OSM.NewNote = function (map) {
 
   page.unload = function () {
     map.off("click", moveNewNoteMarkerToClick);
-    addNoteButton.off("disabled enabled", updateControls);
+    OSM.NewNote.addNoteButton.off("disabled enabled", updateControls);
     removeNewNoteMarker();
-    control.removeClass("active");
+    OSM.NewNote.control.removeClass("active");
   };
 
   return page;
+};
+
+OSM.NewNote.initializeMapButtons = function(map) {
+  OSM.NewNote.control = $(".control-note");
+  OSM.NewNote.addNoteButton = OSM.NewNote.control.find(".control-button");
+
+  OSM.NewNote.addNoteButton.on("click", function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    if ($(this).hasClass("disabled")) return;
+    OSM.router.route("/note/new");
+  });
 };

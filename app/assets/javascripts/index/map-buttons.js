@@ -1,17 +1,8 @@
 OSM.initializeMapButtons = function (map) {
   const queryCtrl = $(".control-query"),
-        queryButton = queryCtrl.find(".control-button"),
-        noteCtrl = $(".control-note"),
-        noteButton = noteCtrl.find(".control-button");
+        queryButton = queryCtrl.find(".control-button");
 
-  noteButton.on("click", function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    if ($(this).hasClass("disabled")) return;
-
-    OSM.router.route("/note/new");
-  });
+  OSM.NewNote.initializeMapButtons();
 
   queryButton.on("click", function (e) {
     e.preventDefault();
