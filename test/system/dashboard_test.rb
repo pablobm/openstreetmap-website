@@ -62,7 +62,13 @@ class DashboardSystemTest < ApplicationSystemTestCase
       assert_no_text "Your location"
       assert_no_link "Fred Tester"
 
-      find(".maplibregl-marker").click
+      starting = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+
+      find(".maplibregl-marker", :wait => 60).click
+
+      ending = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+      elapsed = ending - starting
+      puts "ELAPSED: #{elapsed}s"
 
       assert_text "Your location"
       assert_link "Fred Tester"
