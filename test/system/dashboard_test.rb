@@ -62,7 +62,7 @@ class DashboardSystemTest < ApplicationSystemTestCase
       assert_no_text "Your location"
       assert_no_link "Fred Tester"
 
-      find(".maplibregl-marker", :wait => 60).click
+      find(".maplibregl-marker").click
 
       assert_text "Your location"
       assert_link "Fred Tester"
