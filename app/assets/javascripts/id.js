@@ -1,4 +1,4 @@
-//= require iD
+//= require @openstreetmap/id/dist/iD.js
 
 /* globals iD */
 
@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
       .assetPath("iD/")
       .assetMap(JSON.parse(container.dataset.assetMap))
       .locale(container.dataset.locale)
-      .theme(container.dataset.theme)
+      //.theme(container.dataset.theme)
       .containerNode(container)
       .init();
 
