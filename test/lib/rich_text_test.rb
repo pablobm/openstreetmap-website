@@ -223,6 +223,11 @@ class RichTextTest < ActiveSupport::TestCase
     assert_equal 50, r.spam_score.round
   end
 
+  def test_escape_html_entities
+    r = RichText.new("text", "Thomson&Thompson")
+    assert_equal "Thomson&amp;Thompson", r
+  end
+
   def test_text_to_html_linkify
     with_settings(:linkify_hosts => ["replace-me.example.com"], :linkify_hosts_replacement => "repl.example.com") do
       r = RichText.new("text", "foo http://example.com/ bar")
