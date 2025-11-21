@@ -117,10 +117,10 @@ module RichText
     end
 
     def linkify(text, mode = :urls)
-      link_attr = 'rel="nofollow noopener noreferrer" dir="auto"'
-      Rinku.auto_link(expand_link_shorthands(ERB::Util.html_escape(text)), mode, link_attr) do |url|
-        format_link_text(url)
-      end.html_safe
+      ERB::Util.html_escape(text)
+               .then { |html| expand_link_shorthands(html) }
+               .then { |html| auto_link(html, mode) }
+               .html_safe
     end
 
     private
@@ -141,6 +141,11 @@ module RichText
         text.gsub!(/(\s)#{Regexp.escape(replacement)}/) { "#{Regexp.last_match(1)}#{Settings.server_protocol}://#{hosts[0]}" } if replacement && hosts&.any?
       end
       text
+    end
+
+    def auto_link(html, mode)
+      link_attr = 'rel="nofollow noopener noreferrer" dir="auto"'
+      Rinku.auto_link(html, mode, link_attr) { |url| format_link_text(url) }
     end
 
     def format_link_text(url)
