@@ -23,7 +23,7 @@ class ErrorsController < ApplicationController
 
   def not_found
     respond_to do |format|
-      format.html { render :status => :not_found }
+      format.html { render :status => :not_found, :template => "public/404.html" }
       format.any { render :status => :not_found, :plain => "" }
     end
   end
