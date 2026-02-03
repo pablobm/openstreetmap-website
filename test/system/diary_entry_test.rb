@@ -11,7 +11,6 @@ class DiaryEntrySystemTest < ApplicationSystemTestCase
     @diary_entry = create(:diary_entry)
   end
 
-  class HtmlTest < DiaryEntrySystemTest
     test "reply to diary entry should prefill the message subject" do
       sign_in_as(create(:user))
       visit diary_entries_path
@@ -151,12 +150,8 @@ class DiaryEntrySystemTest < ApplicationSystemTestCase
       assert_content body
       assert_no_content I18n.t("diary_entries.diary_entry.full_entry")
     end
-  end
 
-  class JsTest < DiaryEntrySystemTest
-    driven_by_selenium
-
-    test "contents after diary entry should be below floated images" do
+   js_test "contents after diary entry should be below floated images" do
       user = create(:user)
       diary_entry = create(:diary_entry, :user => user, :body => "<img width=100 height=1000 align=left alt='Floated Image'>")
 
@@ -166,5 +161,4 @@ class DiaryEntrySystemTest < ApplicationSystemTestCase
       img = find "img[alt='Floated Image']"
       assert_link "Edit this entry", :below => img
     end
-  end
 end

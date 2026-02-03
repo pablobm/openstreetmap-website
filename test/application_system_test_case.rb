@@ -49,11 +49,15 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   end
 
   def self.js_test(name, &)
+    puts "=== #{self}"
+    pp ["SUBCLASSES", subclasses]
     js_test_class = subclasses.detect { |c| c.name.demodulize == "JsTest" }
+    pp ["JS TEST CLASS", js_test_class]
     js_test_class ||=
       Class.new(self)
-           .tap { |klass| superclass.const_set("#{superclass.name.sub(/Test$/, '')}JsTest", klass) }
+           .tap { |klass| const_set(:JsTest, klass) }
            .tap(&:driven_by_selenium)
+    pp ["TEST + SUPERCLASS", js_test_class, js_test_class.superclass]
     js_test_class.test(name, &)
   end
 

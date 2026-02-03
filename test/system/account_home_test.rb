@@ -3,63 +3,57 @@
 require "application_system_test_case"
 
 class AccountHomeTest < ApplicationSystemTestCase
-  class HtmlTest < AccountHomeTest
-    test "Go to Home Location is not available for users without home location" do
-      user = create(:user, :display_name => "test user")
-      sign_in_as(user)
+  test "Go to Home Location is not available for users without home location" do
+    user = create(:user, :display_name => "test user")
+    sign_in_as(user)
 
-      visit root_path
-      assert_no_selector ".leaflet-marker-icon"
+    visit root_path
+    assert_no_selector ".leaflet-marker-icon"
 
-      click_on "test user"
-      assert_no_link "Go to Home Location"
-    end
+    click_on "test user"
+    assert_no_link "Go to Home Location"
   end
 
-  class JsTest < AccountHomeTest
-    driven_by_selenium
+  js_test "Go to Home Location works on map layout pages" do
+    user = create(:user, :display_name => "test user", :home_lat => 60, :home_lon => 30)
+    sign_in_as(user)
 
-    test "Go to Home Location works on map layout pages" do
-      user = create(:user, :display_name => "test user", :home_lat => 60, :home_lon => 30)
-      sign_in_as(user)
+    visit root_path
+    assert_no_selector ".leaflet-marker-icon"
 
-      visit root_path
-      assert_no_selector ".leaflet-marker-icon"
-
-      click_on "test user"
-      click_on "Go to Home Location"
-      all ".leaflet-marker-icon", :count => 1 do |marker|
-        assert_equal "My home location", marker["title"]
-      end
-
-      click_on "OpenStreetMap logo"
-      assert_no_selector ".leaflet-marker-icon"
+    click_on "test user"
+    click_on "Go to Home Location"
+    all ".leaflet-marker-icon", :count => 1 do |marker|
+      assert_equal "My home location", marker["title"]
     end
 
-    test "Go to Home Location works on non-map layout pages" do
-      user = create(:user, :display_name => "test user", :home_lat => 60, :home_lon => 30)
-      sign_in_as(user)
+    click_on "OpenStreetMap logo"
+    assert_no_selector ".leaflet-marker-icon"
+  end
 
-      visit about_path
-      assert_no_selector ".leaflet-marker-icon"
+  js_test "Go to Home Location works on non-map layout pages" do
+    user = create(:user, :display_name => "test user", :home_lat => 60, :home_lon => 30)
+    sign_in_as(user)
 
-      click_on "test user"
-      click_on "Go to Home Location"
-      all ".leaflet-marker-icon", :count => 1 do |marker|
-        assert_equal "My home location", marker["title"]
-      end
+    visit about_path
+    assert_no_selector ".leaflet-marker-icon"
 
-      click_on "OpenStreetMap logo"
-      assert_no_selector ".leaflet-marker-icon"
+    click_on "test user"
+    click_on "Go to Home Location"
+    all ".leaflet-marker-icon", :count => 1 do |marker|
+      assert_equal "My home location", marker["title"]
     end
 
-    test "account home page shows a warning when visited by users without home location" do
-      user = create(:user, :display_name => "test user")
-      sign_in_as(user)
+    click_on "OpenStreetMap logo"
+    assert_no_selector ".leaflet-marker-icon"
+  end
 
-      visit account_home_path
-      assert_no_selector ".leaflet-marker-icon"
-      assert_text "Home location is not set"
-    end
+  js_test "account home page shows a warning when visited by users without home location" do
+    user = create(:user, :display_name => "test user")
+    sign_in_as(user)
+
+    visit account_home_path
+    assert_no_selector ".leaflet-marker-icon"
+    assert_text "Home location is not set"
   end
 end

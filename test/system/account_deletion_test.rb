@@ -4,6 +4,7 @@ require "application_system_test_case"
 
 class AccountDeletionTest < ApplicationSystemTestCase
   def setup
+    pp Capybara.current_driver
     @user = create(:user, :display_name => "test user")
     sign_in_as(@user)
   end
