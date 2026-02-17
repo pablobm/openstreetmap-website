@@ -12,12 +12,13 @@ class UserMailer < ApplicationMailer
   before_action :set_shared_template_vars
   before_action :attach_project_logo
 
-  def signup_confirm(user, token, referer = nil)
+  def signup_confirm
+    user = params[:user]
     with_recipient_locale user do
       @url = url_for(:controller => "confirmations", :action => "confirm",
                      :display_name => user.display_name,
-                     :confirm_string => token,
-                     :referer => referer)
+                     :confirm_string => params[:token],
+                     :referer => params[:referer])
 
       mail :to => user.email,
            :subject => t(".subject")

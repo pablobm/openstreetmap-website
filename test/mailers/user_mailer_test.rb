@@ -9,6 +9,20 @@ class UserMailerTest < ActionMailer::TestCase
     assert_match(/<html lang=/, email.html_part.body.to_s)
   end
 
+  def test_signup_confirm
+    user = create(:user)
+    token = user.generate_token_for(:new_user)
+    referer = "/example-page"
+
+    email = UserMailer
+            .with(:user => user, :token => token, :referer => referer)
+            .signup_confirm
+            .deliver_now
+
+    url = Rails.application.routes.url_helpers.new_user_confirm_url(user, :host => Settings.server_url, :protocol => Settings.server_protocol)
+    assert_match(url, email.html_part.body.to_s)
+  end
+
   def test_gpx_description_tags
     trace = create(:trace) do |t|
       create(:tracetag, :trace => t, :tag => "one")
