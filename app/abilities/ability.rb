@@ -52,6 +52,7 @@ class Ability
         can [:mine, :create, :update, :destroy], Trace
         can [:account, :go_public], User
         can [:read, :create, :destroy], UserMute
+        can [:clear_all], Noticed::Notification
 
         if user.moderator?
           can [:hide, :unhide], [DiaryEntry, DiaryComment]

@@ -91,6 +91,8 @@ class User < ApplicationRecord
 
   has_many :reports
 
+  has_many :notifications, :as => :recipient, :class_name => "Noticed::Notification"
+
   has_many :social_links
   accepts_nested_attributes_for :social_links, :allow_destroy => true
 
@@ -439,6 +441,14 @@ class User < ApplicationRecord
       .joins(:reports)
       .where("reports.updated_at >= COALESCE(issues.resolved_at, '1970-01-01')")
       .count
+  end
+
+  def pending_notifications
+    visible_notification_types = %w[
+      ChangesetCommentNotifier::Notification
+      NoteCommentNotifier::Notification
+    ]
+    notifications.unread.where(:type => visible_notification_types).newest_first
   end
 
   def max_messages_per_hour

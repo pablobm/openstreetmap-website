@@ -72,4 +72,35 @@ class DashboardSystemTest < ApplicationSystemTestCase
 
     assert_current_path user_path(user)
   end
+
+  test "show and clear notifications" do
+    author = create(:user)
+    commenter1 = create(:user)
+    commenter2 = create(:user)
+    changeset = create(:changeset, :user => author)
+    create(:changeset_subscription, :changeset => changeset, :subscriber => author)
+
+    comment1 = create(:changeset_comment, :changeset => changeset, :author => commenter1)
+    create(:changeset_subscription, :changeset => changeset, :subscriber => commenter1)
+    ChangesetCommentNotifier.with(:record => comment1).deliver
+
+    comment2 = create(:changeset_comment, :changeset => changeset, :author => commenter2)
+    create(:changeset_subscription, :changeset => changeset, :subscriber => commenter2)
+    ChangesetCommentNotifier.with(:record => comment2).deliver
+
+    sign_in_as(author)
+    visit dashboard_path
+
+    new_notification_entry_selector = ".notification-list .notification-list__new"
+    assert_selector new_notification_entry_selector, :count => 2
+
+    visit dashboard_path
+    assert_selector new_notification_entry_selector, :count => 0
+
+    notification_entry_selector = ".notification-list .notification-list__entry"
+    assert_selector notification_entry_selector, :count => 2
+
+    click_on "Clear notifications"
+    assert_selector notification_entry_selector, :count => 0
+  end
 end

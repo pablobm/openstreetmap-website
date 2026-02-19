@@ -325,6 +325,7 @@ OpenStreetMap::Application.routes.draw do
   get "/account/edit", :to => redirect(:path => "/account"), :as => nil
 
   resource :dashboard, :only => [:show]
+  delete "/notifications" => "notifications#clear_all", :as => :clear_notifications
 
   namespace :profile, :module => :profiles do
     resource :description, :only => [:show, :update]
