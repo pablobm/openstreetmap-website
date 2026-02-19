@@ -89,18 +89,25 @@ class DashboardSystemTest < ApplicationSystemTestCase
     ChangesetCommentNotifier.with(:record => comment2).deliver
 
     sign_in_as(author)
-    visit dashboard_path
+    visit root_path
 
+    notification_count_selector = ".count-number-notifications"
+    assert_selector notification_count_selector, :text => "2"
+
+    visit dashboard_path
+    assert_selector notification_count_selector, :text => "2"
     new_notification_entry_selector = ".notification-list .notification-list__new"
     assert_selector new_notification_entry_selector, :count => 2
 
     visit dashboard_path
+    assert_selector notification_count_selector, :text => "2"
     assert_selector new_notification_entry_selector, :count => 0
 
     notification_entry_selector = ".notification-list .notification-list__entry"
     assert_selector notification_entry_selector, :count => 2
 
     click_on "Clear notifications"
+    assert_no_selector notification_count_selector
     assert_selector notification_entry_selector, :count => 0
   end
 end

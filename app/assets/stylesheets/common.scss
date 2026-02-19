@@ -181,6 +181,12 @@ nav.primary, nav.secondary {
   font-weight: $font-weight-normal;
 }
 
+.count-number-notifications {
+  background: transparentize(lighten($blue, 25%), .25);
+  color: $gray-800;
+  font-weight: $font-weight-normal;
+}
+
 /* Rules for Leaflet maps */
 
 .leaflet-top.leaflet-right,

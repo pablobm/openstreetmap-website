@@ -54,12 +54,18 @@
           <% if current_user.new_messages.size > 0 %>
             <span class="badge count-number position-static m-1"><%= current_user.new_messages.size %></span>
           <% end %>
+          <% if current_user.pending_notifications.size > 0 %>
+            <span class="badge count-number-notifications position-static m-1"><%= current_user.pending_notifications.size %></span>
+          <% end %>
           <span class="username align-middle text-truncate" dir="auto">
             <%= current_user.display_name_was %>
           </span>
         </button>
         <div class="dropdown-menu dropdown-menu-end">
-          <%= link_to t("users.show.my_dashboard"), dashboard_path, :class => "dropdown-item" %>
+          <%= link_to dashboard_path, :class => "dropdown-item" do %>
+            <%= t("users.show.my_dashboard") %>
+            <span class="badge count-number-notifications"><%= number_with_delimiter(current_user.pending_notifications.size) %></span>
+          <% end %>
           <%= link_to messages_inbox_path, :class => "dropdown-item" do %>
             <%= t("users.show.my messages") %>
             <span class="badge count-number"><%= number_with_delimiter(current_user.new_messages.size) %></span>
