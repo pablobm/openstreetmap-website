@@ -28,7 +28,7 @@ class TraceImporterJob < ApplicationJob
       :trace_description => trace.description,
       :trace_tags => trace.tags.map(&:tag),
       :error => error
-    ).deliver_later(trace.user)
+    ).deliver(trace.user)
     trace.destroy
   end
 end
