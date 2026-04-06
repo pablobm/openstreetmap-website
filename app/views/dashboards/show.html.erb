@@ -24,6 +24,9 @@
             <% when "ChangesetCommentNotifier::Notification" %>
                 Comment in changeset <%= link_to "##{notification.event.record_id}", notification.event.record.changeset %>
                 <% if notification.unseen? %><span class="notification-list__new">(new)</span><% end %>
+            <% when "GpxImportFailureNotifier::Notification" %>
+              Failed importing GPX file <code><%= notification.event.params[:trace_name] %></code>, with title "<%= notification.event.params[:trace_description] %>"
+                <% if notification.unseen? %><span class="notification-list__new">(new)</span><% end %>
             <% end %>
           </li>
         <% end %>

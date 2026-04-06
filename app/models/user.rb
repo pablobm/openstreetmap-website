@@ -447,6 +447,7 @@ class User < ApplicationRecord
     visible_notification_types = %w[
       ChangesetCommentNotifier::Notification
       NoteCommentNotifier::Notification
+      GpxImportFailureNotifier::Notification
     ]
     notifications.unread.where(:type => visible_notification_types).newest_first
   end
