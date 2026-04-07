@@ -396,6 +396,25 @@ class UserTest < ActiveSupport::TestCase
     assert_equal "fr", preference.v
   end
 
+  def test_notification_preferences
+    user = create(:user)
+    assert_equal ["email"], user.notification_preferences("changeset_comment")
+
+    user.remove_notification_method("changeset_comment", "email")
+    assert_equal [], user.notification_preferences("changeset_comment")
+
+    # Idempotent
+    user.remove_notification_method("changeset_comment", "email")
+    assert_equal [], user.notification_preferences("changeset_comment")
+
+    user.add_notification_method("changeset_comment", "email")
+    assert_equal ["email"], user.notification_preferences("changeset_comment")
+
+    # Idempotent
+    user.add_notification_method("changeset_comment", "email")
+    assert_equal ["email"], user.notification_preferences("changeset_comment")
+  end
+
   def test_visible?
     assert_predicate build(:user, :pending), :visible?
     assert_predicate build(:user, :active), :visible?

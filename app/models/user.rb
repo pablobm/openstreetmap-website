@@ -295,6 +295,28 @@ class User < ApplicationRecord
     preference.update!(:v => language)
   end
 
+  def notification_preferences(event)
+    notification_mechanisms = ["email"]
+
+    # TODO: protect against injection via `event`
+    prefs = preferences.where("k LIKE 'notification.#{event}.%'").pluck(:k, :v).to_h.transform_keys { |k| k.split(".").last }
+    notification_mechanisms.filter do |mechanism|
+      prefs.key?(mechanism) ? ActiveModel::Type::Boolean.new.cast(prefs[mechanism]) : true
+    end
+  end
+
+  def remove_notification_method(event, mechanism)
+    pref = preferences.find_or_initialize_by(:k => "notification.#{event}.#{mechanism}")
+    pref.v = "false"
+    pref.save!
+  end
+
+  def add_notification_method(event, mechanism)
+    pref = preferences.find_or_initialize_by(:k => "notification.#{event}.#{mechanism}")
+    pref.v = "true"
+    pref.save!
+  end
+
   def home_location?
     home_lat && home_lon
   end
