@@ -2112,6 +2112,7 @@ en:
         message: Preferences updated.
       navigation:
         preferences: Preferences
+        notifications_preferences: Notifications Preferences
         advanced_preferences: Advanced Preferences
     basic_preferences:
       show:
@@ -2132,6 +2133,12 @@ en:
           auto: Same as Website
           light: Light
           dark: Dark
+        save: Update Preferences
+    notifications_preferences:
+      show:
+        title: Notifications Preferences
+        changeset_comment: Changeset comment
+        note_comment: Note comment
         save: Update Preferences
     advanced_preferences:
       show:

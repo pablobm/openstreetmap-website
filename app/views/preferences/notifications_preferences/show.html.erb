@@ -1,0 +1,19 @@
+<% content_for :heading_class, "pb-0" %>
+
+<% content_for :heading do %>
+  <h1><%= t ".title" %></h1>
+  <%= render :partial => "navigation" %>
+<% end %>
+
+<%= bootstrap_form_for current_user, :url => { :action => :update } do |f| %>
+  <% notifications_preferences(current_user).each do |preference| %>
+    <div class="mb-3">
+      <%= label_tag preference.event_name, t(".#{preference.event_name}"), :class => "form-label" %>
+      <% preference.mechanisms.each do |mechanism| %>
+        <%= check_box_tag preference.event_name, mechanism.name, mechanism.enabled? %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%= f.primary t(".save") %>
+<% end %>
