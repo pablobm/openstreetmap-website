@@ -9,7 +9,7 @@ class NewFollowerNotifierTest < ActiveSupport::TestCase
 
   def test_send_email_when_subscribed
     user = create(:user)
-    user.notifications_preferences.update("new_follower_email" => 1)
+    user.notification_preferences.update("new_follower_email" => 1)
     follow = create(:follow, :following => user)
 
     deliver_notification(follow)
@@ -19,7 +19,7 @@ class NewFollowerNotifierTest < ActiveSupport::TestCase
 
   def test_do_not_send_email_when_not_subscribed
     user = create(:user)
-    user.notifications_preferences.update("new_follower_email" => 0)
+    user.notification_preferences.update("new_follower_email" => 0)
     follow = create(:follow, :following => user)
 
     deliver_notification(follow)

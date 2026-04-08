@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Preferences
-  class NotificationsPreferencesController < PreferencesController
+  class NotificationPreferencesController < PreferencesController
     private
 
     def update_preferences

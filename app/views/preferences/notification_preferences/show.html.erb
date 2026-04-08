@@ -5,8 +5,8 @@
   <%= render :partial => "navigation" %>
 <% end %>
 
-<%= bootstrap_form_for current_user.notifications_preferences, :url => { :action => :update } do |f| %>
-  <% current_user.notifications_preferences.event_preferences.each do |event_pref| %>
+<%= bootstrap_form_for current_user.notification_preferences, :url => { :action => :update } do |f| %>
+  <% current_user.notification_preferences.event_preferences.each do |event_pref| %>
     <%= f.form_group event_pref.event_name, :label => {:text => "[form_group :label #{event_pref.event_name}]" } do %>
       <% event_pref.mechanisms.each do |mechanism| %>
         <%= f.check_box mechanism.attribute_name, :label => t(".delivery_mechanisms.#{mechanism.name}"), :class => "notification_preference" %>

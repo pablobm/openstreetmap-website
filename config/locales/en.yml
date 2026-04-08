@@ -2112,7 +2112,7 @@ en:
         message: Preferences updated.
       navigation:
         preferences: Preferences
-        notifications_preferences: Notifications Preferences
+        notification_preferences: Notification Preferences
         advanced_preferences: Advanced Preferences
     basic_preferences:
       show:
@@ -2134,9 +2134,9 @@ en:
           light: Light
           dark: Dark
         save: Update Preferences
-    notifications_preferences:
+    notification_preferences:
       show:
-        title: Notifications Preferences
+        title: Notification Preferences
         changeset_comment: Changeset comment
         diary_comment: Diary comment
         direct_message: Direct message

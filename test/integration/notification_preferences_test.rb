@@ -8,7 +8,7 @@ class NotificationPreferencesTest < ActionDispatch::IntegrationTest
     post "/login", :params => { :username => user.email, :password => "s3cr3t" }
     follow_redirect!
 
-    get notifications_preferences_path
+    get notification_preferences_path
 
     assert_select "input.notification_preference", 5 do
       assert_select "[checked]", true
@@ -28,7 +28,7 @@ class NotificationPreferencesTest < ActionDispatch::IntegrationTest
     ActionMailer::Base.deliveries.clear
 
     patch(
-      notifications_preferences_path,
+      notification_preferences_path,
       :params => {
         :user_notification_preferences => {
           :new_follower_email => "0"
