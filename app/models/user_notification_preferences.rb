@@ -3,7 +3,7 @@
 class UserNotificationPreferences
   extend ActiveModel::Naming
 
-  EVENT_NAMES = %w[
+  EVENTS = %w[
     changeset_comment
     diary_comment
     direct_message
@@ -50,7 +50,7 @@ class UserNotificationPreferences
   end
 
   def [](event_name)
-    return [] unless EVENT_NAMES.include?(event_name)
+    return [] unless EVENTS.include?(event_name)
 
     prefs =
       @user
@@ -66,12 +66,12 @@ class UserNotificationPreferences
   end
 
   def event_preferences
-    EVENT_NAMES.map { |name| EventPreferences.new(self, name) }
+    EVENTS.map { |name| EventPreferences.new(self, name) }
   end
 
   def update(new_prefs)
     pref_records =
-      EVENT_NAMES.map do |event_name|
+      EVENTS.map do |event_name|
         DELIVERY_MECHANISMS.map do |mechanism|
           attribute_name = "#{event_name}_#{mechanism}"
           next unless new_prefs.key?(attribute_name)
@@ -97,7 +97,7 @@ class UserNotificationPreferences
     true
   end
 
-  EVENT_NAMES.each do |event_name|
+  EVENTS.each do |event_name|
     DELIVERY_MECHANISMS.each do |mechanism|
       define_method "#{event_name}_#{mechanism}" do
         self[event_name].include?(mechanism)
