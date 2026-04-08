@@ -3,6 +3,10 @@
 require "test_helper"
 
 class NewFollowerNotifierTest < ActiveSupport::TestCase
+  def setup
+    ActionMailer::Base.deliveries.clear
+  end
+
   def test_send_email_when_subscribed
     user = create(:user)
     user.notifications_preferences.update("new_follower_email" => 1)

@@ -2,10 +2,6 @@
 
 module Preferences
   class NotificationsPreferencesController < PreferencesController
-    def show
-      @notification_preferences = UserNotificationPreferences.new(current_user)
-    end
-
     private
 
     def update_preferences

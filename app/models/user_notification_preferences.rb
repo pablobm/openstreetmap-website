@@ -39,10 +39,6 @@ class UserNotificationPreferences
     def attribute_name
       "#{@event_preferences.event_name}_#{name}"
     end
-
-    def enabled?
-      @event_preferences.preferences[name]
-    end
   end
 
   def initialize(user)
