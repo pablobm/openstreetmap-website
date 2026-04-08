@@ -10,11 +10,11 @@ class NotificationPreferencesTest < ActionDispatch::IntegrationTest
 
     get notifications_preferences_path
 
-    assert_select "inputs.notification_preference", 7 do
+    assert_select "input.notification_preference", 5 do
       assert_select "[checked]", true
     end
 
-    assert_select "inputs#direct_message_email", 1 do
+    assert_select "input#new_follower_email", 1 do
       assert_select "[checked]", true
     end
 
@@ -26,7 +26,7 @@ class NotificationPreferencesTest < ActionDispatch::IntegrationTest
     assert_equal 1, email.to.count
     assert_equal user.email, email.to.first
 
-    put notifications_preferences_path, :params => { :direct_message => { :email => "0" } }
+    put notifications_preferences_path, :params => { :new_follower => { :email => "0" } }
 
     follow2 = create(:follow, :following => user)
     perform_enqueued_jobs do

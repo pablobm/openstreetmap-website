@@ -29,7 +29,13 @@ module PreferencesHelper
   end
 
   def notifications_preferences(user)
-    ["changeset_comment", "note_comment"].map do |event_name|
+    %w[
+      changeset_comment
+      diary_comment
+      direct_message
+      new_follower
+      note_comment
+    ].map do |event_name|
       UserNotificationPreference.new(user, event_name)
     end
   end

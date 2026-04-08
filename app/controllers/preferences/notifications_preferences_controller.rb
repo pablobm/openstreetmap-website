@@ -2,11 +2,16 @@
 
 module Preferences
   class NotificationsPreferencesController < PreferencesController
+    def show
+      @notification_preferences = UserNotificationPreferences.new(current_user)
+    end
+
     private
 
     def update_preferences
-      current_user.languages = params[:user][:languages].split(",")
-      current_user.save
+      throw "update_preferences"
+      preferences = UserNotificationPreferences.new(current_user)
+      preferences.update(params[:notifications])
     end
   end
 end

@@ -5,14 +5,14 @@
   <%= render :partial => "navigation" %>
 <% end %>
 
-<%= bootstrap_form_for current_user, :url => { :action => :update } do |f| %>
-  <% notifications_preferences(current_user).each do |preference| %>
-    <div class="mb-3">
-      <%= label_tag preference.event_name, t(".#{preference.event_name}"), :class => "form-label" %>
-      <% preference.mechanisms.each do |mechanism| %>
-        <%= check_box_tag preference.event_name, mechanism.name, mechanism.enabled? %>
+<%= bootstrap_form_for @notification_preferences, :url => { :action => :update } do |f| %>
+  <% @notification_preferences.event_preferences.each do |event_pref| %>
+    <%= f.form_group event_pref.event_name, :label => {:text => "[form_group :label #{event_pref.event_name}]" } do %>
+      <% event_pref.mechanisms.each do |mechanism| %>
+        <%= check_box_tag "#{event_pref.event_name}[]", mechanism.name, mechanism.enabled?, :class => "notification_preference", :id => "#{event_pref.event_name}_#{mechanism.name}" %>
+        <%= label_tag "#{event_pref.event_name}_#{mechanism.name}", t(".delivery_mechanisms.#{mechanism.name}"), :class => "form-label" %>
       <% end %>
-    </div>
+    <% end %>
   <% end %>
 
   <%= f.primary t(".save") %>
