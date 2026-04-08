@@ -9,9 +9,8 @@ module Preferences
     private
 
     def update_preferences
-      throw "update_preferences"
       preferences = UserNotificationPreferences.new(current_user)
-      preferences.update(params[:notifications])
+      preferences.update(params[:user_notification_preferences])
     end
   end
 end

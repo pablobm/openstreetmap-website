@@ -36,6 +36,10 @@ class UserNotificationPreferences
 
     attr_reader :name
 
+    def attribute_name
+      "#{@event_preferences.event_name}_#{name}"
+    end
+
     def enabled?
       @event_preferences.preferences[name]
     end
@@ -66,13 +70,38 @@ class UserNotificationPreferences
   end
 
   def update(new_prefs)
+    pref_records =
+      EVENT_NAMES.map do |event_name|
+        DELIVERY_MECHANISMS.map do |mechanism|
+          attribute_name = "#{event_name}_#{mechanism}"
+          next unless new_prefs.key?(attribute_name)
+
+          record = @user.preferences.find_or_initialize_by(:k => "notification.#{event_name}.#{mechanism}")
+          record.v = new_prefs[attribute_name]
+          record
+        end
+      end
+      .flatten.compact
+
+    UserPreference.transaction do
+      pref_records.each(&:save!)
+      true
+    end
   end
 
   def to_key
-    ["current_user"]
+    nil
   end
 
   def persisted?
     true
+  end
+
+  EVENT_NAMES.each do |event_name|
+    DELIVERY_MECHANISMS.each do |mechanism|
+      define_method "#{event_name}_#{mechanism}" do
+        self[event_name].include?(mechanism)
+      end
+    end
   end
 end
