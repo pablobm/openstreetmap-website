@@ -11,92 +11,62 @@ class UserNotificationPreferences
     note_comment
   ].freeze
 
-  DELIVERY_MECHANISMS = %w[
+  MECHANISMS = %w[
     email
   ].freeze
-
-  class EventPreferences
-    def initialize(preferences, event_name)
-      @preferences = preferences
-      @event_name = event_name
-    end
-
-    attr_reader :event_name, :preferences
-
-    def mechanisms
-      DELIVERY_MECHANISMS.map { |mechanism| MechanismChoices.new(self, mechanism) }
-    end
-  end
-
-  class MechanismChoices
-    def initialize(event_preferences, name)
-      @event_preferences = event_preferences
-      @name = name
-    end
-
-    attr_reader :name
-
-    def attribute_name
-      "#{@event_preferences.event_name}_#{name}"
-    end
-  end
 
   def initialize(user)
     @user = user
   end
 
-  def [](event_name)
-    return [] unless EVENTS.include?(event_name)
-
-    prefs =
-      @user
-      .preferences
-      .where("k LIKE 'notification.#{event_name}.%'")
-      .pluck(:k, :v)
-      .to_h
-      .transform_keys { |k| k.split(".").last }
-
-    DELIVERY_MECHANISMS.filter do |mechanism|
-      prefs.key?(mechanism) ? ActiveModel::Type::Boolean.new.cast(prefs[mechanism]) : true
-    end
-  end
-
   def event_preferences
-    EVENTS.map { |name| EventPreferences.new(self, name) }
+    EVENTS.map { |name| EventPreferences.new(name) }
   end
 
   def update(new_prefs)
-    pref_records =
+    updated_records =
       EVENTS.map do |event_name|
-        DELIVERY_MECHANISMS.map do |mechanism|
-          attribute_name = "#{event_name}_#{mechanism}"
-          next unless new_prefs.key?(attribute_name)
-
+        MECHANISMS.map do |mechanism|
           record = @user.preferences.find_or_initialize_by(:k => "notification.#{event_name}.#{mechanism}")
-          record.v = new_prefs[attribute_name]
+          record.v = Array.wrap(new_prefs[event_name]).include?(mechanism)
           record
         end
-      end
-      .flatten.compact
+      end.flatten
 
     UserPreference.transaction do
-      pref_records.each(&:save!)
+      updated_records.each(&:save!)
       true
     end
   end
 
+  # Required by ActionView in order to accept this in form_for.
+  # We don't actually use it as we only work with preferences
+  # linked to `current_user`, so it can be anything, including nil.
   def to_key
     nil
   end
 
+  # When this model is in a form, this tells ActionView to make
+  # it an update/patch form, as opposed to a create/post one.
   def persisted?
     true
   end
 
+  # One getter method for each delivery mechanism. Another
+  # requirement from ActionView, but at least one with
+  # more general utility.
   EVENTS.each do |event_name|
-    DELIVERY_MECHANISMS.each do |mechanism|
-      define_method "#{event_name}_#{mechanism}" do
-        self[event_name].include?(mechanism)
+    define_method event_name do
+      prefs =
+        @user
+        .preferences
+        .where("k LIKE 'notification.#{event_name}.%'")
+        .pluck(:k, :v)
+        .to_h
+        .transform_keys { |k| k.split(".").last }
+
+      MECHANISMS.filter do |mechanism|
+        prefs.key?(mechanism) ? ActiveModel::Type::Boolean.new.cast(prefs[mechanism]) : true
       end
     end
   end
