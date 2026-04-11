@@ -9,4 +9,3 @@ module UserNotificationPreferencesHelper
     UserNotificationPreferences::MECHANISMS
   end
 end
-
