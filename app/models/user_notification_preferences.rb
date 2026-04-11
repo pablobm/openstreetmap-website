@@ -23,6 +23,8 @@ class UserNotificationPreferences
     EVENTS.map { |name| EventPreferences.new(name) }
   end
 
+  # Receives a hash in the form `event => [mechanisms...]`. Eg:
+  # `{:changeset_comment => ["email"], :new_follower => []}`
   def update(new_prefs)
     updated_records =
       EVENTS.map do |event_name|

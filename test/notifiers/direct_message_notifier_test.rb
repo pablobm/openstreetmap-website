@@ -2,14 +2,14 @@
 
 require "test_helper"
 
-class NewFollowerNotifierTest < ActiveSupport::TestCase
+class DirectMessageNotifierTest < ActiveSupport::TestCase
   def setup
     ActionMailer::Base.deliveries.clear
   end
 
   def test_send_email_when_subscribed
     candidate_recipient = create(:user)
-    candidate_recipient.notification_preferences.update("new_follower" => ["email"])
+    candidate_recipient.notification_preferences.update("direct_message" => ["email"])
 
     trigger_notification(candidate_recipient)
 
@@ -19,7 +19,7 @@ class NewFollowerNotifierTest < ActiveSupport::TestCase
 
   def test_do_not_send_email_when_not_subscribed
     candidate_recipient = create(:user)
-    candidate_recipient.notification_preferences.update("new_follower" => [])
+    candidate_recipient.notification_preferences.update("direct_message" => [])
 
     trigger_notification(candidate_recipient)
 
@@ -28,10 +28,11 @@ class NewFollowerNotifierTest < ActiveSupport::TestCase
 
   private
 
-  def trigger_notification(followee)
-    follow = create(:follow, :following => followee)
+  def trigger_notification(message_recipient)
+    message = create(:message, :recipient => message_recipient)
+
     perform_enqueued_jobs do
-      NewFollowerNotifier.with(:record => follow).deliver
+      DirectMessageNotifier.with(:record => message).deliver
     end
   end
 end
