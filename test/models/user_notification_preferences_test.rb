@@ -4,8 +4,7 @@ require "test_helper"
 
 class UserNotificationPreferencesTest < ActiveSupport::TestCase
   def test_all_enabled_by_default
-    user = create(:user)
-    preferences = UserNotificationPreferences.new(user)
+    preferences = UserNotificationPreferences.new(create(:user))
     assert_equal ["email"], preferences.changeset_comment
     assert_equal ["email"], preferences.diary_comment
     assert_equal ["email"], preferences.direct_message
@@ -14,8 +13,7 @@ class UserNotificationPreferencesTest < ActiveSupport::TestCase
   end
 
   def test_update
-    user = create(:user)
-    preferences = UserNotificationPreferences.new(user)
+    preferences = UserNotificationPreferences.new(create(:user))
     preferences.update(
       "changeset_comment" => ["email"],
       "diary_comment" => [],
@@ -33,8 +31,7 @@ class UserNotificationPreferencesTest < ActiveSupport::TestCase
   end
 
   def test_update_ignore_invalid_values
-    user = create(:user)
-    preferences = UserNotificationPreferences.new(user)
+    preferences = UserNotificationPreferences.new(create(:user))
 
     preferences.update("changeset_comment" => ["whatsapp"])
 
@@ -49,8 +46,7 @@ class UserNotificationPreferencesTest < ActiveSupport::TestCase
   end
 
   def test_update_leave_alone_unmentioned_events
-    user = create(:user)
-    preferences = UserNotificationPreferences.new(user)
+    preferences = UserNotificationPreferences.new(create(:user))
     preferences.update(
       "changeset_comment" => ["email"],
       "diary_comment" => []
