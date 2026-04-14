@@ -27,19 +27,37 @@ class UserNotificationPreferencesTest < ActiveSupport::TestCase
     assert_equal [], preferences.diary_comment
     assert_equal ["email"], preferences.direct_message
     assert_equal [], preferences.new_follower
-    assert_equal [], preferences.note_comment
+
+    # Default value
+    assert_equal ["email"], preferences.note_comment
   end
 
   def test_update_ignore_invalid_values
     user = create(:user)
     preferences = UserNotificationPreferences.new(user)
 
-    preferences.update("changset_comment" => ["whatsapp"])
+    preferences.update("changeset_comment" => ["whatsapp"])
 
     assert_equal [], preferences.changeset_comment
+    assert_equal 0, UserPreference.where("k LIKE 'notification.changeset_comment.whatsapp'").count
+
     preferences.update("changeset_comment" => %w[whatsapp email])
     assert_equal ["email"], preferences.changeset_comment
+    assert_equal 0, UserPreference.where("k LIKE 'notification.changeset_comment.whatsapp'").count
 
     preferences.update("imaginary_event" => ["email"])
+  end
+
+  def test_update_leave_alone_unmentioned_events
+    user = create(:user)
+    preferences = UserNotificationPreferences.new(user)
+    preferences.update(
+      "changeset_comment" => ["email"],
+      "diary_comment" => []
+    )
+    assert_equal 1, UserPreference.where("k LIKE 'notification.changeset_comment.%'").count
+    assert_equal 1, UserPreference.where("k LIKE 'notification.diary_comment.%'").count
+    assert_equal 0, UserPreference.where("k LIKE 'notification.direct_message.%'").count
+    assert_equal 0, UserPreference.where("k LIKE 'notification.new_follower.%'").count
   end
 end

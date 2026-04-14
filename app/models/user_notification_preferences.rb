@@ -24,7 +24,9 @@ class UserNotificationPreferences
   def update(new_prefs)
     updated_records =
       EVENTS.map do |event_name|
-        MECHANISMS.map do |mechanism|
+        MECHANISMS.filter_map do |mechanism|
+          next unless new_prefs.key?(event_name)
+
           record = @user.preferences.find_or_initialize_by(:k => "notification.#{event_name}.#{mechanism}")
           record.v = Array.wrap(new_prefs[event_name]).include?(mechanism)
           record
