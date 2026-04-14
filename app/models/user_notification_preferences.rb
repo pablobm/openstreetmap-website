@@ -48,12 +48,6 @@ class UserNotificationPreferences
     nil
   end
 
-  # When this model is in a form, this tells ActionView to make
-  # it an update/patch form, as opposed to a create/post one.
-  def persisted?
-    true
-  end
-
   # One getter method for each delivery mechanism. Another
   # requirement from ActionView, but at least one with
   # more general utility.
