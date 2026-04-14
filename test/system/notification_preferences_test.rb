@@ -4,6 +4,8 @@ require "application_system_test_case"
 
 class NotificationPreferencesTest < ApplicationSystemTestCase
   test "toggling preferences" do
+    ActionMailer::Base.deliveries.clear
+
     user = create(:user)
     sign_in_as(user)
 
