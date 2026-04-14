@@ -32,7 +32,6 @@ class UserNotificationPreferences
           record
         end
       end.flatten
-
     UserPreference.transaction do
       updated_records.each(&:save!)
       true
@@ -40,8 +39,11 @@ class UserNotificationPreferences
   end
 
   # Required by ActionView in order to accept this in form_for.
-  # We don't actually use it as we only work with preferences
-  # linked to `current_user`, so it can be anything, including nil.
+  # Normally it would provide an id to tell which record is
+  # targeted by the form. However our form targets
+  # the preferences of `current_user` specifically, not just
+  # any arbitrary record, so we can put any value here asit
+  # will be ignored.
   def to_key
     nil
   end
