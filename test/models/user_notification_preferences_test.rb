@@ -43,6 +43,7 @@ class UserNotificationPreferencesTest < ActiveSupport::TestCase
     assert_equal 0, UserPreference.where("k LIKE 'notification.changeset_comment.whatsapp'").count
 
     preferences.update("imaginary_event" => ["email"])
+    assert_equal 0, UserPreference.where("k LIKE '%imaginary_event%'").count
   end
 
   def test_update_leave_alone_unmentioned_events
