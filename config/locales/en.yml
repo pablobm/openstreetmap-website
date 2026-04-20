@@ -610,6 +610,9 @@ en:
     changeset_comment:
       headline: Changeset comment
       description_html: "User %{commenter_name_with_link} left a comment on changeset %{changeset_id_with_link} (\"%{changeset_text}\")"
+    note_comment:
+      headline: Note comment
+      description_html: "User %{commenter_name_with_link} left a comment on note %{note_id_with_link} (\"%{note_text}\")"
   diary_entries:
     new:
       title: New Diary Entry
