@@ -87,7 +87,21 @@ class UserMailerPreview < ActionMailer::Preview
 
   def changeset_comment_notification
     recipient = create(:user, :languages => [I18n.locale])
-    comment = create(:changeset_comment)
+
+    changeset_description_text = <<~TEXT
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vel vehicula leo. In felis metus, faucibus quis iaculis at, pulvinar ac lacus.Morbi mollis mattis lacus, eu ultricies libero fermentum eget.
+    TEXT
+    changeset_description_tag = create(:changeset_tag, :k => "comment", :v => changeset_description_text)
+
+    comment_text = <<~TEXT
+      Sed ut est laoreet leo blandit vestibulum ut in lorem. Pellentesque ut turpis pellentesque, tincidunt ipsum non, iaculis quam. Maecenas varius, lorem et maximus bibendum, lacus urna pharetra arcu, eget vestibulum sapien massa eget augue.
+
+      Aenean maximus mollis diam, sit amet sodales ipsum ultrices sed. Duis quis sapien mattis, commodo eros eget, condimentum sapien. Donec cursus risus id diam facilisis venenatis. Duis hendrerit eget massa non dictum. Vivamus sed purus sit amet neque laoreet gravida. Integer mi mauris, dictum rutrum lorem at, euismod placerat eros. Duis lorem odio, porta vitae vestibulum ut, faucibus eget quam. Proin feugiat dui vel lacus tristique rutrum.
+
+      Nulla eu tellus in nunc vehicula vehicula at at erat.
+    TEXT
+    comment = create(:changeset_comment, :changeset => changeset_description_tag.changeset, :body => comment_text)
+
     UserMailer.with(:record => comment, :recipient => recipient).changeset_comment_notification
   end
 end
