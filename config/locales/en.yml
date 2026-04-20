@@ -610,6 +610,17 @@ en:
     changeset_comment:
       headline: Changeset comment
       description_html: "User %{commenter_name_with_link} left a comment on changeset %{changeset_id_with_link} (\"%{changeset_text}\")"
+    gpx_details:
+      filename: Filename
+      description: Description
+      tags: Tags
+      total_points: Total number of points
+      imported_points: Number of imported points
+    gpx_import_failure:
+      headline: GPS trace could not be imported
+      error_message: Error message
+    gpx_import_success:
+      headline: GPS trace imported successfully
     new_follower:
       headline: New follower
       description_html: "User %{follower_name_with_link} started following you. You can %{cta_with_link} if you wish."
