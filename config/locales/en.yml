@@ -607,6 +607,9 @@ en:
       no_notifications: You have no notifications at the moment
       point_to_preferences_html: "You can adjust how you receive notifications in %{cta_with_link}."
       cta: the preferences section
+    changeset_comment:
+      headline: Changeset comment
+      description_html: "User %{commenter_name_with_link} left a comment on changeset %{changeset_id_with_link} (\"%{changeset_text}\")"
   diary_entries:
     new:
       title: New Diary Entry
