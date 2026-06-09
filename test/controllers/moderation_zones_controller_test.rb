@@ -164,8 +164,17 @@ class ModerationZonesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "update, as normal user" do
-    session_for(create(:user))
-    moderation_zone = create(:moderation_zone, :ends_at => 1.week.from_now)
+    # This is an edge case: a normal user has a moderation zone to their name.
+    # Perhaps they used to be a moderator, but no longer. The important
+    # bit is that they shouldn't be able to update it any more.
+    #
+    # Instead of this we could just have a test for "normal user can update"
+    # with a simpler request (eg: with empty params) but, for the sake of
+    # doing it properly, let's have everyting in place except for the only detail
+    # that the user is not a moderator.
+    creator = create(:user)
+    moderation_zone = create(:moderation_zone, :ends_at => 1.week.from_now, :creator => creator)
+    session_for(creator)
 
     patch(
       moderation_zone_url(moderation_zone),
@@ -182,8 +191,9 @@ class ModerationZonesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "update, as moderator" do
-    session_for(create(:moderator_user))
-    moderation_zone = create(:moderation_zone, :ends_at => 1.week.from_now)
+    creator = create(:moderator_user)
+    moderation_zone = create(:moderation_zone, :ends_at => 1.week.from_now, :creator => creator)
+    session_for(creator)
 
     patch(
       moderation_zone_url(moderation_zone),
@@ -204,8 +214,9 @@ class ModerationZonesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "update, with errors" do
-    session_for(create(:moderator_user))
-    moderation_zone = create(:moderation_zone, :ends_at => 1.week.from_now)
+    creator = create(:moderator_user)
+    moderation_zone = create(:moderation_zone, :ends_at => 1.week.from_now, :creator => creator)
+    session_for(creator)
 
     patch(
       moderation_zone_url(moderation_zone),
@@ -244,5 +255,111 @@ class ModerationZonesControllerTest < ActionDispatch::IntegrationTest
 
     moderation_zone.reload
     assert_equal revoker, moderation_zone.revoker
+  end
+
+  test "update, by non-creator, of inactive+unrevoked record" do
+    updater = create(:moderator_user)
+    creator = create(:moderator_user)
+    moderation_zone = create(:moderation_zone, :reason => "Initial reason", :creator => creator, :ends_at => 1.week.ago)
+    session_for(updater)
+
+    patch(
+      moderation_zone_url(moderation_zone),
+      :params => {
+        :moderation_zone => {
+          :reason => "Updated reason"
+        }
+      }
+    )
+    assert_redirected_to moderation_zones_url
+    assert_equal "Only the moderator who created this moderation zone can edit it.", flash[:error]
+
+    moderation_zone.reload
+    assert_equal "Initial reason", moderation_zone.reason
+  end
+
+  test "update, by creator, of inactive+revoked record" do
+    creator = create(:moderator_user)
+    moderation_zone = create(:moderation_zone, :reason => "Initial reason", :creator => creator, :ends_at => 1.week.ago)
+    session_for(creator)
+
+    patch(
+      moderation_zone_url(moderation_zone),
+      :params => {
+        :moderation_zone => {
+          :reason => "Updated reason"
+        }
+      }
+    )
+
+    assert_redirected_to moderation_zones_url
+    assert_nil flash[:error]
+
+    moderation_zone.reload
+    assert_equal "Updated reason", moderation_zone.reason
+  end
+
+  test "update, by non-creator, of revoked record" do
+    updater = create(:moderator_user)
+    revoker = create(:moderator_user)
+    creator = create(:moderator_user)
+    moderation_zone = create(:moderation_zone, :reason => "Initial reason", :creator => creator, :ends_at => 1.week.ago, :revoker => revoker)
+    session_for(updater)
+
+    patch(
+      moderation_zone_url(moderation_zone),
+      :params => {
+        :moderation_zone => {
+          :reason => "Updated reason"
+        }
+      }
+    )
+    assert_redirected_to moderation_zones_url
+    assert_equal "Only the moderators who created or revoked this moderation zone can edit it.", flash[:error]
+
+    moderation_zone.reload
+    assert_equal "Initial reason", moderation_zone.reason
+  end
+
+  test "update, by non-creator, of active record" do
+    updater = create(:moderator_user)
+    creator = create(:moderator_user)
+    moderation_zone = create(:moderation_zone, :reason => "Initial reason", :creator => creator, :ends_at => 1.week.from_now)
+    session_for(updater)
+
+    patch(
+      moderation_zone_url(moderation_zone),
+      :params => {
+        :moderation_zone => {
+          :reason => "Updated reason",
+          :period => 1.week.from_now
+        }
+      }
+    )
+    assert_redirected_to moderation_zones_url
+    assert_equal "Only the moderator who created this moderation zone can edit it without revoking.", flash[:error]
+
+    moderation_zone.reload
+    assert_equal "Initial reason", moderation_zone.reason
+  end
+
+  test "update to reactivate" do
+    creator = create(:moderator_user)
+    moderation_zone = create(:moderation_zone, :creator => creator, :ends_at => 1.week.ago)
+    session_for(creator)
+
+    patch(
+      moderation_zone_url(moderation_zone),
+      :params => {
+        :moderation_zone => {
+          :period => 1.week.from_now
+        }
+      }
+    )
+    assert_redirected_to moderation_zones_url
+    assert_equal "This moderation zone is inactive and cannot be reactivated.", flash[:error]
+
+    moderation_zone.reload
+    assert_not_predicate moderation_zone, :active?
   end
 end
