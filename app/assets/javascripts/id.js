@@ -1,5 +1,6 @@
 //= require @openstreetmap/id/dist/iD.js
 //= require jquery.throttle-debounce
+//= require es-toolkit/dist/browser.global
 
 /* globals iD */
 
@@ -39,14 +40,14 @@ document.addEventListener("DOMContentLoaded", function () {
       parent.postMessage({ type, data }, location.origin);
     }
 
-    id.map().on("move.embed", window.Cowboy.throttle(250, function () {
+    id.map().on("move.embed", _.throttle(function () {
       if (id.inIntro()) return;
       const zoom = ~~id.map().zoom(),
             center = id.map().center(),
             llz = { lon: center[0], lat: center[1], zoom: zoom };
 
       postMessageToParent("hashchange", llz);
-    }));
+    }, 250));
 
     window.addEventListener("message", function (event) {
       if (event.source !== parent || event.origin !== location.origin) return;
