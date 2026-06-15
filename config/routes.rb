@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 OpenStreetMap::Application.routes.draw do
+  # DEVSERVER ONLY!!!
+  get "web-console" => "web_consoles#show"
+
   use_doorkeeper :scope => "oauth2" do
     controllers :authorizations => "oauth2_authorizations",
                 :applications => "oauth2_applications",
