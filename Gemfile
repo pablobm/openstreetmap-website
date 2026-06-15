@@ -14,6 +14,9 @@ gem "pg"
 # https://github.com/rails/rails/pull/58601 (merged but not yet released)
 gem "json", "< 3.0.0"
 
+# DEVSERVER ONLY!!
+gem "web-console", :group => [:development, :production]
+
 # Use SCSS for stylesheets
 gem "dartsass-sprockets"
 # Pin the dependent sass-embedded to avoid deprecation warnings in bootstrap
