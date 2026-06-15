@@ -10,6 +10,9 @@ gem "turbo-rails"
 gem "activerecord-postgis"
 gem "pg"
 
+# DEVSERVER ONLY!!
+gem "web-console", :group => [:development, :production]
+
 # Use SCSS for stylesheets
 gem "dartsass-sprockets"
 # Don't allow upgrade to 3.0.0 as some deprecations will become errors
