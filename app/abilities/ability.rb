@@ -26,6 +26,7 @@ class Ability
       can [:create, :destroy], :session
       can [:read, :data], Trace unless Settings.traces_disabled
       can [:read, :create, :suspended, :auth_success, :auth_failure], User
+      can :read, :web_console
       can :read, UserBlock
     end
 

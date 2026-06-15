@@ -10,6 +10,9 @@ gem "turbo-rails"
 gem "activerecord-postgis"
 gem "pg"
 
+# DEVSERVER ONLY!!
+gem "web-console", :group => [:development, :production]
+
 # Use SCSS for stylesheets
 gem "dartsass-sprockets"
 # Pin the dependent sass-embedded to avoid deprecation warnings in bootstrap

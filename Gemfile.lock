@@ -153,6 +153,7 @@ GEM
       smart_properties
     bigdecimal (4.1.2)
     bindata (2.5.1)
+    bindex (0.8.1)
     binding_of_caller (2.0.0)
       debug_inspector (>= 1.2.0)
     bootsnap (1.24.6)
@@ -906,6 +907,10 @@ GEM
       simpleidn
     vendorer (0.2.0)
     version_gem (1.1.14)
+    web-console (4.3.0)
+      actionview (>= 8.0.0)
+      bindex (>= 0.4.0)
+      railties (>= 8.0.0)
     webmock (3.26.2)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
@@ -1040,6 +1045,7 @@ DEPENDENCIES
   uri (< 1.0.0)
   validates_email_format_of
   vendorer
+  web-console
   webmock
   webrick
 
