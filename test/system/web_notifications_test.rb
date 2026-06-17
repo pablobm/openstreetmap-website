@@ -76,6 +76,36 @@ class WebNotificationsTest < ApplicationSystemTestCase
     assert_text "Changeset comment"
   end
 
+  test "mark individual notifications as read/unread" do
+    changeset_author = create(:user)
+    commenter = create(:user, :display_name => "Commenter")
+    1.upto(3).map do |i|
+      setup_changeset_comment(
+        :changeset_author => changeset_author,
+        :commenter => commenter,
+        :comment_attrs => {
+          :body => "This is comment number #{i}"
+        }
+      )
+    end
+
+    sign_in_as(changeset_author)
+    visit notifications_path
+    assert_selector ".bg-success-subtle .web-notification", :count => 3
+
+    first(".web-notification").hover
+    first(".notification-read-one-btn button").click
+    assert_selector ".bg-success-subtle .web-notification", :count => 2
+
+    last(".web-notification").hover
+    last(".notification-read-one-btn button").click
+    assert_selector ".bg-success-subtle .web-notification", :count => 1
+
+    first(".web-notification").hover
+    first(".notification-read-one-btn button").click
+    assert_selector ".bg-success-subtle .web-notification", :count => 2
+  end
+
   test "mark multiple notifications as read/unread" do
     changeset_author = create(:user)
     commenter = create(:user, :display_name => "Commenter")
@@ -153,5 +183,9 @@ class WebNotificationsTest < ApplicationSystemTestCase
     create(:changeset_subscription, :changeset => changeset, :subscriber => commenter)
     ChangesetCommentNotifier.with(:record => comment).deliver
     comment
+  end
+
+  def last(selector)
+    all(selector).last
   end
 end

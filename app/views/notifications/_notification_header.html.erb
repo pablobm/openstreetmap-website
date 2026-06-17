@@ -1,6 +1,28 @@
-<%# locals: (title:, uri: nil, timestamp:, missing_record: false) %>
+<%# locals: (notification:, title:, uri: nil, timestamp:, missing_record: false) %>
 
-<header class="<%= class_names("row", "align-items-center", "text-secondary" => missing_record) %>">
-  <h2 class="col-8 h6"><%= link_to_if(uri, title, uri) %></h2>
-  <p class="col-4 text-end"><%= friendly_date_ago(timestamp) %></p>
+<header class="<%= class_names("row", "align-items-start", "text-secondary" => missing_record) %>">
+  <h2 class="col-8 h6 my-2"><%= link_to_if(uri, title, uri) %></h2>
+  <div class="col-4 text-end my-1">
+    <p class="mb-0"><span class="notification-timestamp"><%= friendly_date_ago(timestamp) %></span></p>
+    <p class="notification-read-one-btn position-absolute end-0 me-3 lh-lg mb-0">
+      <% if notification.read? %>
+        <%= tag.button(
+              tag.i(:class => "bi bi-plus-lg"),
+              :type => "submit",
+              :class => ["btn btn-outline-secondary btn-sm"],
+              "aria-label" => t("notifications.index.mark_one_unread"),
+              :formaction => notification_unreads_path(notification)
+            ) %>
+      <% else %>
+        <%= tag.button(
+              tag.i(:class => "bi bi-check-lg"),
+              :type => "submit",
+              :class => ["btn btn-outline-secondary btn-sm"],
+              "aria-label" => t("notifications.index.mark_one_read"),
+              :formaction => notification_reads_path(notification)
+            ) %>
+      <% end %>
+    </p>
+
+  </div>
 </header>

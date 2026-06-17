@@ -684,6 +684,8 @@ en:
       link_text: the preferences section
       mark_selected_read: Mark selected read
       mark_selected_unread: Mark selected unread
+      mark_one_read: Mark read
+      mark_one_unread: Mark unread
     changeset_comment:
       headline: Changeset comment
       description_with_summary_html: "User %{commenter_name_with_link} left a comment on changeset %{changeset_id_with_link} (\"%{changeset_summary}\")"

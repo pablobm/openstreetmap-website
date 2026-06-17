@@ -1,0 +1,14 @@
+@media(hover: hover) {
+  .notification-read-one-btn {
+    display: none;
+  }
+
+  .notification-index-entry:hover {
+    .notification-read-one-btn {
+      display: block;
+    }
+    .notification-timestamp {
+      display: none;
+    }
+  }
+}
