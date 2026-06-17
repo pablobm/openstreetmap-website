@@ -22,7 +22,12 @@ class NotificationsController < ApplicationController
   before_action :check_database_readable
 
   def index
-    records = current_user.notifications.where(:type => LISTABLE_NOTIFICATIONS)
+    records =
+      current_user
+      .notifications
+      .where(:type => LISTABLE_NOTIFICATIONS)
+      .where(:read_at => nil)
+
     @notifications = get_page_items(records)
     @params = params.permit
   end
