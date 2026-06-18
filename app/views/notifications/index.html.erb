@@ -12,7 +12,13 @@
   <p><%= t(".no_notifications") %></p>
 <% else %>
   <%= form_with :url => notifications_status_path, :method => :patch do |form| %>
-    <%= form.submit t(".discard_selected") %>
+    <div class="row">
+      <div class="col-1 text-center">
+        <%= check_box_tag "select_all_notifications" %>
+      </div>
+      <div class="col-11"><%= form.submit t(".discard_selected"), :class => "submit-read" %></div>
+    </div>
+    <hr>
     <%= render "page", :notifications => @notifications, :params => @params, :form => form %>
   <% end %>
 <% end %>

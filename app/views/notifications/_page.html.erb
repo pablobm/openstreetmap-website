@@ -3,9 +3,9 @@
 <turbo-frame id="pagination" target="_top" data-turbo="false">
   <% notifications.items.each do |notification| %>
     <div class="row">
-      <div class="col-1">
+      <label class="col-1 text-center">
         <%= check_box_tag "notifications[#{notification.id}]", "read", :class => "notification-mark-read" %>
-      </div>
+      </label>
       <div class="col-11">
         <%= render "notification", :notification => notification %>
       </div>
