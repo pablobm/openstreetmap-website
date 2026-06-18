@@ -1,3 +1,7 @@
+<% content_for :head do %>
+  <%= javascript_include_tag "notifications" %>
+<% end %>
+
 <% content_for :heading do %>
   <h1><%= t ".title" %></h1>
   <p class="mb-0">
@@ -13,9 +17,9 @@
 <% else %>
   <%= form_with :url => notifications_status_path, :method => :patch do |form| %>
     <div class="row">
-      <div class="col-1 text-center">
-        <%= check_box_tag "select_all_notifications" %>
-      </div>
+      <label class="col-1 text-center">
+        <%= check_box_tag "select_page", :class => "align-middle" %>
+      </label>
       <div class="col-11"><%= form.submit t(".discard_selected"), :class => "submit-read" %></div>
     </div>
     <hr>
