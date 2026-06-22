@@ -2,24 +2,50 @@ $(function () {
   const selectPageCheckbox = $("#select_page");
   const individualCheckboxes = $(".notification-mark-read");
 
-  function updateCheckboxToSelectAll() {
-    const checkedStatuses = individualCheckboxes.get().map(el => el.checked)
-    const uniqueCheckedStatuses = [...new Set(checkedStatuses)];
-    if (uniqueCheckedStatuses.length === 1) {
-      selectPageCheckbox.prop("indeterminate", false);
-      selectPageCheckbox.prop("checked", allChecked);
+  individualCheckboxes.on("click", function () {
+    if (isPageSelected()) {
+      toPageSelected();
     } else {
-      selectPageCheckbox.prop("indeterminate", true);
+      toNoneOrSomeSelected();
     }
+  });
+
+  selectPageCheckbox.on("click", function () {
+    if (isPageSelected()) {
+      uncheckEachIndividualCheckbox();
+      toNoneOrSomeSelected();
+    } else {
+      checkEachIndividualCheckbox();
+      toPageSelected();
+    }
+  });
+
+  function toNoneOrSomeSelected() {
+    uncheckSelectPage();
   }
 
-  selectPageCheckbox.on("click", function(evt) {
-    individualCheckboxes.prop("checked", evt.target.checked);
-  });
+  function toPageSelected() {
+    checkEachIndividualCheckbox();
+    checkSelectPage();
+  }
 
-  individualCheckboxes.on("click", function () {
-    updateCheckboxToSelectAll();
-  });
+  function isPageSelected() {
+    return individualCheckboxes.get().every(el => el.checked);
+  }
 
-  updateCheckboxToSelectAll();
+  function checkEachIndividualCheckbox() {
+    individualCheckboxes.prop("checked", true);
+  }
+
+  function uncheckEachIndividualCheckbox() {
+    individualCheckboxes.prop("checked", false);
+  }
+
+  function checkSelectPage() {
+    selectPageCheckbox.prop("checked", true);
+  }
+
+  function uncheckSelectPage() {
+    selectPageCheckbox.prop("checked", false);
+  }
 });
