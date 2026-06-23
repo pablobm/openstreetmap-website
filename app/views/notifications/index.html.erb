@@ -12,6 +12,8 @@
   </p>
 <% end %>
 
+<p><%= link_to "DEBUG: mark all notifications unread", notifications_path(:mark_all_unread => true), :class => "text-danger" %></p>
+
 <% if @notifications.items.empty? %>
   <p><%= t(".no_notifications") %></p>
 <% else %>

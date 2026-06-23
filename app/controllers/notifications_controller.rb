@@ -22,6 +22,13 @@ class NotificationsController < ApplicationController
   before_action :check_database_readable
 
   def index
+    # JUST FOR DEBUGGING PURPOSES, TO REMOVE
+    if params[:mark_all_unread]
+      current_user.notifications.update(:read_at => nil)
+      redirect_back_or_to notifications_path
+      return
+    end
+
     records =
       current_user
       .notifications
