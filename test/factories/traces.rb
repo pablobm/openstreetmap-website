@@ -15,6 +15,10 @@ FactoryBot.define do
       visible { false }
     end
 
+    trait :without_validations do
+      to_create { |instance| instance.save(:validate => false) }
+    end
+
     transient do
       fixture { nil }
     end

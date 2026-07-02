@@ -15,26 +15,26 @@ module Traces
 
     # Test downloading the picture for a trace
     def test_show
-      public_trace_file = create(:trace, :visibility => "public", :fixture => "a")
+      identifiable_trace_file = create(:trace, :visibility => "identifiable", :fixture => "a")
 
-      # First with no auth, which should work since the trace is public
-      get trace_picture_path(public_trace_file.user, public_trace_file)
-      check_trace_picture public_trace_file
+      # First with no auth, which should work since the trace is identifiable
+      get trace_picture_path(identifiable_trace_file.user, identifiable_trace_file)
+      check_trace_picture identifiable_trace_file
 
-      # Now with some other user, which should work since the trace is public
+      # Now with some other user, which should work since the trace is identifiable
       session_for(create(:user))
-      get trace_picture_path(public_trace_file.user, public_trace_file)
-      check_trace_picture public_trace_file
+      get trace_picture_path(identifiable_trace_file.user, identifiable_trace_file)
+      check_trace_picture identifiable_trace_file
 
       # And finally we should be able to do it with the owner of the trace
-      session_for(public_trace_file.user)
-      get trace_picture_path(public_trace_file.user, public_trace_file)
-      check_trace_picture public_trace_file
+      session_for(identifiable_trace_file.user)
+      get trace_picture_path(identifiable_trace_file.user, identifiable_trace_file)
+      check_trace_picture identifiable_trace_file
     end
 
     # Check the picture for an anonymous trace can't be downloaded by another user
     def test_show_anon
-      anon_trace_file = create(:trace, :visibility => "private", :fixture => "b")
+      anon_trace_file = create(:trace, :visibility => "trackable", :fixture => "b")
 
       # First with no auth
       get trace_picture_path(anon_trace_file.user, anon_trace_file)

@@ -25,27 +25,27 @@ module Traces
 
     # Test downloading a trace
     def test_show
-      public_trace_file = create(:trace, :visibility => "public", :fixture => "a")
+      identifiable_trace_file = create(:trace, :visibility => "identifiable", :fixture => "a")
 
-      # First with no auth, which should work since the trace is public
-      get trace_data_path(public_trace_file)
+      # First with no auth, which should work since the trace is identifiable
+      get trace_data_path(identifiable_trace_file)
       follow_redirect!
       follow_redirect!
-      check_trace_data public_trace_file, "848caa72f2f456d1bd6a0fdf228aa1b9"
+      check_trace_data identifiable_trace_file, "848caa72f2f456d1bd6a0fdf228aa1b9"
 
-      # Now with some other user, which should work since the trace is public
+      # Now with some other user, which should work since the trace is identifiable
       session_for(create(:user))
-      get trace_data_path(public_trace_file)
+      get trace_data_path(identifiable_trace_file)
       follow_redirect!
       follow_redirect!
-      check_trace_data public_trace_file, "848caa72f2f456d1bd6a0fdf228aa1b9"
+      check_trace_data identifiable_trace_file, "848caa72f2f456d1bd6a0fdf228aa1b9"
 
       # And finally we should be able to do it with the owner of the trace
-      session_for(public_trace_file.user)
-      get trace_data_path(public_trace_file)
+      session_for(identifiable_trace_file.user)
+      get trace_data_path(identifiable_trace_file)
       follow_redirect!
       follow_redirect!
-      check_trace_data public_trace_file, "848caa72f2f456d1bd6a0fdf228aa1b9"
+      check_trace_data identifiable_trace_file, "848caa72f2f456d1bd6a0fdf228aa1b9"
     end
 
     # Test downloading a compressed trace
@@ -69,7 +69,7 @@ module Traces
 
     # Check an anonymous trace can't be downloaded by another user
     def test_show_anon
-      anon_trace_file = create(:trace, :visibility => "private", :fixture => "b")
+      anon_trace_file = create(:trace, :visibility => "trackable", :fixture => "b")
 
       # First with no auth
       get trace_data_path(anon_trace_file)
@@ -103,9 +103,9 @@ module Traces
     end
 
     def test_show_offline
-      public_trace_file = create(:trace, :visibility => "public", :fixture => "a")
+      identifiable_trace_file = create(:trace, :visibility => "identifiable", :fixture => "a")
       with_settings(:status => "gpx_offline") do
-        get trace_data_path(public_trace_file)
+        get trace_data_path(identifiable_trace_file)
         assert_response :success
         assert_template :offline
       end
