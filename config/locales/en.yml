@@ -605,8 +605,8 @@ en:
     index:
       title: Notifications
       no_notifications: You have no notifications at the moment
-      point_to_preferences_html: "You can adjust how you receive notifications in %{cta_with_link}."
-      cta: the preferences section
+      point_to_preferences_html: "You can adjust how you receive notifications in %{link}."
+      link_text: the preferences section
     changeset_comment:
       headline: Changeset comment
       description_with_summary_html: "User %{commenter_name_with_link} left a comment on changeset %{changeset_id_with_link} (\"%{changeset_summary}\")"
@@ -625,8 +625,8 @@ en:
       description_html: "User %{commenter_name_with_link} left a comment on changeset %{changeset_id_with_link} (\"%{changeset_text}\")"
     new_follower:
       headline: New follower
-      description_html: "User %{follower_name_with_link} started following you. You can %{cta_with_link} if you wish."
-      cta: follow them back
+      description_html: "User %{follower_name_with_link} started following you. You can %{link} if you wish."
+      link_text: follow them back
     note_comment:
       headline: Note comment
       description_html: "User %{commenter_name_with_link} left a comment on note %{note_id_with_link} (\"%{note_text}\")"
