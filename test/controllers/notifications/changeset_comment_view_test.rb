@@ -17,7 +17,7 @@ module Notifications
         :body => "Insightful comment"
       )
       notification = Struct.new(:record).new(changeset_comment)
-      notification_wrapper = UserNotifications::ChangesetCommentNotification.new(notification)
+      notification_wrapper = UserNotification::ChangesetComment.new(notification)
 
       render "notifications/changeset_comment", :notification => notification_wrapper
 
@@ -47,7 +47,7 @@ module Notifications
         :body => "Insightful comment"
       )
       notification = Struct.new(:record).new(changeset_comment)
-      notification_wrapper = UserNotifications::ChangesetCommentNotification.new(notification)
+      notification_wrapper = UserNotification::ChangesetComment.new(notification)
 
       render "notifications/changeset_comment", :notification => notification_wrapper
 

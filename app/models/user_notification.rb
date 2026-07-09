@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-class UserNotifications
+class UserNotification
   class Notification
     def self.from(notification)
       event_type_name = event_type_name_of(notification)
-      klass = "UserNotifications::#{event_type_name}Notification".constantize
+      klass = "UserNotification::#{event_type_name}".constantize
       klass.new(notification)
     end
 
@@ -29,7 +29,7 @@ class UserNotifications
     end
   end
 
-  class ChangesetCommentNotification < Notification
+  class ChangesetComment < Notification
     delegate :changeset, :to => :record
     delegate :id, :to => :changeset, :prefix => true
 
@@ -50,7 +50,7 @@ class UserNotifications
     end
   end
 
-  class DiaryCommentNotification < Notification
+  class DiaryComment < Notification
     delegate :body, :to => :record
     delegate :diary_entry, :to => :record
     delegate :title, :to => :diary_entry, :prefix => true
@@ -72,7 +72,7 @@ class UserNotifications
     end
   end
 
-  class GpxImportFailureNotification < Notification
+  class GpxImportFailure < Notification
     def timestamp
       @notification.created_at
     end
@@ -102,7 +102,7 @@ class UserNotifications
     end
   end
 
-  class GpxImportSuccessNotification < Notification
+  class GpxImportSuccess < Notification
     delegate :timestamp, :to => :record
 
     def trace_filename
@@ -128,11 +128,11 @@ class UserNotifications
     delegate :user, :to => :record
   end
 
-  class NewFollowerNotification < Notification
+  class NewFollower < Notification
     delegate :follower, :to => :record
   end
 
-  class NoteCommentNotification < Notification
+  class NoteComment < Notification
     delegate :note, :to => :record
     delegate :id, :to => :note, :prefix => true
 

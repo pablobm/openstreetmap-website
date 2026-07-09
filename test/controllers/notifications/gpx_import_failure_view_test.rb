@@ -18,7 +18,7 @@ module Notifications
           Time.current
         )
 
-      notification_wrapper = UserNotifications::GpxImportFailureNotification.new(notification)
+      notification_wrapper = UserNotification::GpxImportFailure.new(notification)
 
       render "notifications/gpx_import_failure", :notification => notification_wrapper
 

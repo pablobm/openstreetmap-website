@@ -15,7 +15,7 @@ module Notifications
         .new(:record, :params)
         .new(trace, { :possible_points => 5 })
 
-      notification_wrapper = UserNotifications::GpxImportSuccessNotification.new(notification)
+      notification_wrapper = UserNotification::GpxImportSuccess.new(notification)
 
       render "notifications/gpx_import_success", :notification => notification_wrapper
 

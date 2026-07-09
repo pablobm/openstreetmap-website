@@ -10,7 +10,7 @@ module Notifications
       follow = build_stubbed(:follow, :follower => follower, :following => following)
 
       notification = Struct.new(:record).new(follow)
-      notification_wrapper = UserNotifications::NewFollowerNotification.new(notification)
+      notification_wrapper = UserNotification::NewFollower.new(notification)
 
       render "notifications/new_follower", :notification => notification_wrapper
 
