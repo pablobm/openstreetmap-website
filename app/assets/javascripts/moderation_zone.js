@@ -7,6 +7,7 @@
 $(function () {
   const COORDINATES_FIELD_ID = "moderation_zone_zone";
   const POSTGIS_LINE_POINTS_REGEXP = /[0-9-][ 0-9.,-]+/;
+  const DATA_SOURCE_NAME = "form-data";
   const SELECT_MODE_OPTIONS = {
     flags: {
       polygon: {
@@ -32,9 +33,9 @@ $(function () {
     try {
       const draw = createTerraDrawInstance(baseMap);
       draw.on("finish", createTerraDrawFinishHandler(draw));
-      const data = readData();
-      startTerraDraw(baseMap, draw, data);
-      zoomIntoFeature(baseMap, data);
+      loadData(baseMap);
+      startTerraDraw(baseMap, draw);
+      zoomIntoFeature(baseMap);
     } catch (e) {
       // MapLibre is swallowing these exceptions silently, so I had
       // to add this to know why my code was failing as I went.
@@ -75,21 +76,26 @@ $(function () {
     };
   }
 
-  function readData() {
-    return readFormField(COORDINATES_FIELD_ID);
+  function loadData(map) {
+    const data = readFormField(COORDINATES_FIELD_ID);
+    if (data) {
+      map.addSource(DATA_SOURCE_NAME, { type: "geojson", data });
+    }
   }
 
-  function startTerraDraw(map, draw, data) {
-    if (data) {
-      startTerraDrawForEdit(draw, data);
+  async function startTerraDraw(map, draw) {
+    const dataSource = map.getSource(DATA_SOURCE_NAME);
+    if (dataSource) {
+      startTerraDrawForEdit(draw, await dataSource.getData());
     } else {
       startTerraDrawForNew(draw);
     }
   }
 
-  function zoomIntoFeature(map, data) {
-    if (data) {
-      map.fitBounds(featureToBox(data), { radius: 100 });
+  async function zoomIntoFeature(map) {
+    const dataSource = map.getSource(DATA_SOURCE_NAME);
+    if (dataSource) {
+      map.fitBounds(await dataSource.getBounds(), { radius: 100 });
     }
   }
 
@@ -152,11 +158,5 @@ $(function () {
       .join(",\n");
     const target = document.getElementById(fieldId);
     target.value = `POLYGON((\n${coordinatesString}\n))`;
-  }
-
-  function featureToBox(feature) {
-    const points = feature.geometry.coordinates[0];
-    const seed = new maplibregl.LngLatBounds(points[0], points[0]);
-    return points.reduce((bounds, point) => bounds.extend(point), seed);
   }
 });
