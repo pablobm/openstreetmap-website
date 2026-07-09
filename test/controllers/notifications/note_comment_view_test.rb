@@ -16,7 +16,7 @@ module Notifications
         :note => note
       )
       notification = Struct.new(:record).new(note_comment)
-      notification_wrapper = UserNotifications::NoteCommentNotification.new(notification)
+      notification_wrapper = UserNotification::NoteComment.new(notification)
 
       render "notifications/note_comment", :notification => notification_wrapper
 

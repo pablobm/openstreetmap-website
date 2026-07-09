@@ -16,7 +16,7 @@ module Notifications
         :diary_entry => diary_entry
       )
       notification = Struct.new(:record).new(diary_comment)
-      notification_wrapper = UserNotifications::DiaryCommentNotification.new(notification)
+      notification_wrapper = UserNotification::DiaryComment.new(notification)
 
       render "notifications/diary_comment", :notification => notification_wrapper
 
