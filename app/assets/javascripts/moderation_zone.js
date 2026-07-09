@@ -32,7 +32,9 @@ $(function () {
     try {
       const draw = createTerraDrawInstance(baseMap);
       draw.on("finish", createTerraDrawFinishHandler(draw));
-      loadData(baseMap, draw);
+      const data = readData();
+      startTerraDraw(baseMap, draw, data);
+      zoomIntoFeature(baseMap, data);
     } catch (e) {
       // MapLibre is swallowing these exceptions silently, so I had
       // to add this to know why my code was failing as I went.
@@ -73,13 +75,21 @@ $(function () {
     };
   }
 
-  function loadData(map, draw) {
-    const feature = readFormField(COORDINATES_FIELD_ID);
-    if (feature) {
-      startTerraDrawForEdit(draw, feature);
-      map.fitBounds(featureToBox(feature), { radius: 100 });
+  function readData() {
+    return readFormField(COORDINATES_FIELD_ID);
+  }
+
+  function startTerraDraw(map, draw, data) {
+    if (data) {
+      startTerraDrawForEdit(draw, data);
     } else {
       startTerraDrawForNew(draw);
+    }
+  }
+
+  function zoomIntoFeature(map, data) {
+    if (data) {
+      map.fitBounds(featureToBox(data), { radius: 100 });
     }
   }
 
