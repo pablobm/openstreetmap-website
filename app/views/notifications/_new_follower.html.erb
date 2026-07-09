@@ -22,8 +22,8 @@
                 record.follower.display_name,
                 record.follower
               ),
-              :cta_with_link => link_to(
-                t(".cta"),
+              :link => link_to(
+                t(".link_text"),
                 follow_url(record.follower)
               )
             ) %>
