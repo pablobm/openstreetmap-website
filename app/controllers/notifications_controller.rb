@@ -3,6 +3,15 @@
 class NotificationsController < ApplicationController
   include PaginationMethods
 
+  LISTABLE_NOTIFICATIONS = %w[
+    ChangesetCommentNotifier::Notification
+    DiaryCommentNotifier::Notification
+    GpxImportFailureNotifier::Notification
+    GpxImportSuccessNotifier::Notification
+    NewFollowerNotifier::Notification
+    NoteCommentNotifier::Notification
+  ].freeze
+
   layout :site_layout
 
   before_action :authorize_web
@@ -13,7 +22,7 @@ class NotificationsController < ApplicationController
   before_action :check_database_readable
 
   def index
-    records = current_user.notifications.where(:type => UserNotification::LISTABLE_NOTIFICATIONS)
+    records = current_user.notifications.where(:type => LISTABLE_NOTIFICATIONS)
     @notifications = get_page_items(records)
     @params = params.permit
   end
