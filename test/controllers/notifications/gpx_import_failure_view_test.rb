@@ -18,9 +18,11 @@ module Notifications
           Time.current
         )
 
-      notification_wrapper = UserNotification::GpxImportFailure.new(notification)
-
-      render "notifications/gpx_import_failure", :notification => notification_wrapper
+      render(
+        "notifications/gpx_import_failure",
+        :notification => notification,
+        :record => nil
+      )
 
       assert_dom ".user-notification h2", "GPS trace could not be imported"
       assert_dom ".user-notification time", "less than 1 minute ago"
