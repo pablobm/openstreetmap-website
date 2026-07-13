@@ -2,7 +2,7 @@
 
 <turbo-frame id="pagination" target="_top" data-turbo="false">
   <% notifications.items.each do |notification| %>
-    <%= render :renderable => notification %>
+    <%= render "notification", :notification => notification %>
     <hr>
   <% end %>
 

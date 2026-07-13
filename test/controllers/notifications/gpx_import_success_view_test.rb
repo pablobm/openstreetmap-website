@@ -1,30 +1,36 @@
 # frozen_string_literal: true
 
 require "test_helper"
+require_relative "view_test"
 
 module Notifications
-  class GpxImportSuccessViewTest < ActionView::TestCase
+  class GpxImportSuccessViewTest < ViewTest
     def test_render
       trace = build_stubbed(
         :trace,
         :name => "test-trace-file.gpx",
         :description => "Test trace file"
       )
-      notification =
-        Struct
-        .new(:record, :params)
-        .new(trace, { :possible_points => 5 })
-
-      render(
-        "notifications/gpx_import_success",
-        :notification => notification,
-        :record => trace
+      notification = build_stubbed(
+        :notification,
+        :record => trace,
+        :notifier_class => GpxImportSuccessNotifier,
+        :notifier_params => {
+          :possible_points => 5
+        }
       )
 
-      assert_dom ".user-notification h2", "GPS trace imported successfully"
-      assert_dom ".user-notification time", "less than 1 minute ago"
-      assert_dom ".user-notification dd", "test-trace-file.gpx"
-      assert_dom ".user-notification dd", "Test trace file"
+      render(
+        "notifications/notification",
+        :notification => notification
+      )
+
+      assert_dom ".web-notification" do
+        assert_dom "h2", "GPS trace imported successfully"
+        assert_dom "time", "less than 1 minute ago"
+        assert_dom "dd", "test-trace-file.gpx"
+        assert_dom "dd", "Test trace file"
+      end
     end
   end
 end

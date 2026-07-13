@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 require "test_helper"
+require_relative "view_test"
 
 module Notifications
-  class NoteCommentViewTest < ActionView::TestCase
+  class NoteCommentViewTest < ViewTest
     def test_render
       comment_author = build_stubbed(
         :user,
@@ -15,17 +16,18 @@ module Notifications
         :author => comment_author,
         :note => note
       )
-      notification = Struct.new(:record).new(note_comment)
+      notification = build_stubbed(:notification, :record => note_comment)
 
       render(
-        "notifications/note_comment",
-        :notification => notification,
-        :record => note_comment
+        "notifications/notification",
+        :notification => notification
       )
 
-      assert_dom ".user-notification h2", "Note comment"
-      assert_dom ".user-notification time", "less than 1 minute ago"
-      assert_dom ".user-notification blockquote", note_comment.body
+      assert_dom ".web-notification" do
+        assert_dom "h2", "Note comment"
+        assert_dom "time", "less than 1 minute ago"
+        assert_dom "blockquote", note_comment.body
+      end
     end
   end
 end

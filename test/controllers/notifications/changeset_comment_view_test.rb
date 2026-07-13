@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 require "test_helper"
+require_relative "view_test"
 
 module Notifications
-  class ChangesetCommentViewTest < ActionView::TestCase
+  class ChangesetCommentViewTest < ViewTest
     def test_render_without_summary
       comment_author = build_stubbed(
         :user,
@@ -16,15 +17,15 @@ module Notifications
         :changeset => changeset,
         :body => "Insightful comment"
       )
-      notification = Struct.new(:record).new(changeset_comment)
+
+      notification = build_stubbed(:notification, :record => changeset_comment)
 
       render(
-        "notifications/changeset_comment",
-        :notification => notification,
-        :record => changeset_comment
+        "notifications/notification",
+        :notification => notification
       )
 
-      assert_dom ".user-notification" do
+      assert_dom ".web-notification" do
         assert_dom "h2", "Changeset comment"
         assert_not_dom "p", /\("/
         assert_dom "time", "less than 1 minute ago"
@@ -49,15 +50,14 @@ module Notifications
         :changeset => changeset,
         :body => "Insightful comment"
       )
-      notification = Struct.new(:record).new(changeset_comment)
+      notification = build_stubbed(:notification, :record => changeset_comment)
 
       render(
-        "notifications/changeset_comment",
-        :notification => notification,
-        :record => changeset_comment
+        "notifications/notification",
+        :notification => notification
       )
 
-      assert_dom ".user-notification" do
+      assert_dom ".web-notification" do
         assert_dom "h2", "Changeset comment"
         assert_dom "time", "less than 1 minute ago"
         assert_dom ".event-description", /\("This is a summary"\)/
