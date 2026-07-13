@@ -2,7 +2,7 @@
 
 require "application_system_test_case"
 
-class OnsiteNotificationsTest < ApplicationSystemTestCase
+class WebNotificationsTest < ApplicationSystemTestCase
   test "no notifications available" do
     user = create(:user)
     sign_in_as(user)
