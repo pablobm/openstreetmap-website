@@ -14,18 +14,16 @@
       "notification_body",
       :author => record.author
     ) do %>
-  <p class="text-body-secondary mb-1">
-  <%= t(
-        "notifications.note_comment.description_html",
-        :commenter_name_with_link => link_to(
-          record.author.display_name,
-          record.author
-        ),
-        :note_id_with_link => link_to("##{record.note_id}", record.note),
-        :note_text => record.note.description
-      ) %>
-  </p>
-  <blockquote class="col-10 fst-italic border-start border-light-subtle border-3 ps-2">
-    <%= record.body.to_html %>
-  </blockquote>
+    <p>
+    <%= t(
+          "notifications.note_comment.description_html",
+          :commenter_name_with_link => link_to(
+            record.author.display_name,
+            record.author
+          ),
+          :note_id_with_link => link_to("##{record.note_id}", record.note),
+          :note_text => record.note.description
+        ) %>
+    </p>
+  <%= render "notification_quote", :body => record.body.to_html %>
 <% end %>
