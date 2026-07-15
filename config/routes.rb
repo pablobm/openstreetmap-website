@@ -349,7 +349,8 @@ OpenStreetMap::Application.routes.draw do
   get "/preferences", :to => redirect(:path => "/preferences/basic"), :as => nil
   get "/preferences/edit", :to => redirect(:path => "/preferences/basic"), :as => nil
 
-  resources :notifications, :only => [:index]
+  get "/notifications" => "notifications#index"
+  patch "/notifications/status" => "notifications/statuses#update"
 
   # friendships
   scope "/user/:display_name" do
