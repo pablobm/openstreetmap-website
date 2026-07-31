@@ -2,8 +2,12 @@
 
 source "https://rubygems.org"
 
-# Require rails
-gem "rails", "~> 8.1.0"
+# Web framework
+gem "amiko", :git => "ssh://git@codeberg.org/amiko/amiko-metapackage.git"
+
+# Alias the original gem for compatibility
+gem "rails", :path => "./.gemaliases"
+
 gem "turbo-rails"
 
 # Use postgres+postgis as the database
