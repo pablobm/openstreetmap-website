@@ -49,9 +49,13 @@ en:
           attributes:
             url:
               http_parse_error: Url should start with http:// or https://
+        trace:
+          attributes:
+            visibility:
+              cannot_change_to_legacy: "can't be changed back to a legacy value"
     # Translates all the model names, which is used in error handling on the website
     models:
-      acl: "Access Control List"
+      acl: "ACL"
       changeset: "Changeset"
       changeset_tag: "Changeset Tag"
       country: "Country"
@@ -89,6 +93,12 @@ en:
     # Translates all the model attributes, which is used in error handling on the website
     # Only the ones that are used on the website are translated at the moment
     attributes:
+      acl:
+        address: Address
+        domain: Domain
+        mx: MX server
+        k: Key
+        v: Value
       diary_comment:
         body: "Body"
       diary_entry:
@@ -151,6 +161,12 @@ en:
         pass_crypt: "Password"
         pass_crypt_confirmation: "Confirm Password"
     help:
+      acl:
+        address: An IP address or CIDR network, e.g. 192.0.2.0/24
+        domain: An email domain; subdomains are matched too
+        mx: The host name of an MX server for the email domain
+        k: "One of: no_account_creation, allow_account_creation, no_note_comment, no_trace_download"
+        v: Optional note, e.g. the reason for this entry
       doorkeeper/application:
         confidential: "Application will be used where the client secret can be kept confidential (native mobile apps and single page apps are not confidential)"
         redirect_uri: "Use one line per URI"
@@ -467,6 +483,9 @@ en:
       colour_preview: "Colour %{colour_value} preview"
       email_link: "Email %{email}"
     versions_navigation:
+      node_versions: "Node versions"
+      way_versions: "Way versions"
+      relation_versions: "Relation versions"
       node: "Node"
       way: "Way"
       relation: "Relation"
@@ -483,10 +502,13 @@ en:
     index:
       node:
         title_html: "Node History: %{name}"
+        actions: "Node actions"
       way:
         title_html: "Way History: %{name}"
+        actions: "Way actions"
       relation:
         title_html: "Relation History: %{name}"
+        actions: "Relation actions"
       older_versions: Older Versions
       newer_versions: Newer Versions
     actions:
@@ -632,6 +654,7 @@ en:
       latest_edit_html: "Latest edit (%{ago}):"
       no_edits: "(no edits)"
       view_changeset_details: "View changeset details"
+      actions: "User actions"
     popup:
       your location: "Your location"
       nearby mapper: "Nearby mapper"
@@ -644,8 +667,10 @@ en:
       no followings: You have not followed any user yet.
       nearby users: "Other nearby users"
       no nearby users: "There are no other users who admit to mapping nearby yet."
+      followed_actions: "Actions for users you follow"
       followed_changesets: "changesets"
       followed_diaries: "diary entries"
+      nearby_actions: "Actions for nearby users"
       nearby_changesets: "nearby user changesets"
       nearby_diaries: "nearby user diary entries"
   notifications:
@@ -654,6 +679,7 @@ en:
       no_notifications: You have no notifications at the moment
       point_to_preferences_html: "You can adjust how you receive notifications in %{link}."
       link_text: the preferences section
+      delete_selected: Delete selected
     changeset_comment:
       headline: Changeset comment
       description_with_summary_html: "User %{commenter_name_with_link} left a comment on changeset %{changeset_id_with_link} (\"%{changeset_summary}\")"
@@ -720,6 +746,7 @@ en:
       posted_by_html: "Posted by %{link_user} on %{created} in %{language_link}."
       updated_at_html: "Last updated on %{updated}."
       full_entry: See full entry
+      actions: Diary entry actions
       comment_link: Comment on this entry
       reply_link: Send a message to the author
       comment_count:
@@ -757,6 +784,7 @@ en:
       heading: Unsubscribe from the following diary entry discussion?
       button: Unsubscribe from discussion
     navigation:
+      actions: Diary actions
       in_language: "Diary Entries in %{language}"
       my_diary: My Diary
       new: New Diary Entry
@@ -1731,6 +1759,7 @@ en:
       report_created_at_html: "First reported at %{datetime}"
       last_resolved_at_html: "Last resolved at %{datetime}"
       last_updated_at_html: "Last updated at %{datetime} by %{displayname}"
+      actions: Issue actions
       resolve: Resolve
       ignore: Ignore
       reopen: Reopen
@@ -1881,6 +1910,7 @@ en:
         be-Tarask: Belarusian (Tarašk.)
         bg: Bulgarian
         mk: Macedonian
+        mt: Maltese
         mo: Moldovan
         ce: Chechen
         ru: Russian
@@ -1956,6 +1986,7 @@ en:
       select_language: Select Language
       sign_up: Sign Up
       user_diaries: User Diaries
+      navigation: Main navigation
     meta:
       openstreetmap_search: OpenStreetMap Search
     select_language_button:
@@ -3045,6 +3076,7 @@ en:
         other: "%{count} points"
       more: "more"
       trace_details: "View Trace Details"
+      trace_actions: "Trace actions"
       view_map: "View location on map"
       edit_map: "Open in editor"
       public: "PUBLIC"
@@ -3058,6 +3090,7 @@ en:
       my_gps_traces: "My GPS Traces"
       public_traces_from: "Public GPS Traces from %{user}"
       description: "Browse recent GPS trace uploads"
+      actions: "Trace list actions"
       tagged_with: " tagged with %{tags}"
       empty_title: Nothing here yet
       empty_upload_html: "%{upload_link} or learn more about GPS tracing on the %{wiki_link}."
@@ -3069,8 +3102,37 @@ en:
       my_traces: "My Traces"
       traces_from_html: "Public Traces from %{user}"
       remove_tag_filter: "Remove Tag Filter"
+      legacy_traces: "My Legacy Traces"
     destroy:
       scheduled_for_deletion: "Trace scheduled for deletion"
+    legacy_visibilities:
+      edit:
+        title: "My Legacy GPS Traces"
+        description: "These are your traces that still use the old private or public visibility. You can change them here to trackable or identifiable. Planned improvements to GPS traces will only cover trackable and identifiable."
+        filter:
+          visibility: "Current visibility"
+          any: "Private and public"
+          from: "Uploaded from"
+          to: "Uploaded to"
+          apply: "Filter"
+        empty: "No legacy traces match this filter."
+        new_visibility: "New visibility"
+        no_undo: "This change cannot be undone."
+        button:
+          one: "Change %{count} trace"
+          other: "Change %{count} traces"
+        confirmation:
+          header: "Confirm visibility change"
+          body:
+            one: "Change the visibility of %{count} trace? This cannot be undone."
+            other: "Change the visibility of %{count} traces? This cannot be undone."
+          cancel: "Cancel"
+          confirm: "Change visibility"
+      update:
+        updated:
+          one: "Changed the visibility of %{count} trace."
+          other: "Changed the visibility of %{count} traces."
+        invalid_visibility: "Please choose a visibility to change to."
     offline_warning:
       message: "The GPX file upload system is currently unavailable"
     offline:
@@ -3163,6 +3225,12 @@ en:
       preview: Preview
       help: Help
     pagination:
+      label: Page navigation
+      acls:
+        older: Older ACLs
+        newer: Newer ACLs
+        oldest: Oldest ACLs
+        newest: Newest ACLs
       changeset_comments:
         older: Older Comments
         newer: Newer Comments
@@ -3312,6 +3380,8 @@ en:
       body: "Sorry, there is no user with the name %{user}. Please check your spelling, or maybe the link you clicked is wrong."
       deleted: "deleted"
     show:
+      actions: Actions
+      admin_actions: Administrative actions
       my diary: My Diary
       my edits: My Edits
       my traces: My Traces
@@ -3661,13 +3731,16 @@ en:
       counter_warning_forum_link:
         text: "the community can help you"
         url: https://community.openstreetmap.org/
-      advice: "Your note is public and may be used to update the map, so don't enter personal information, or information from copyrighted maps or directory listings."
+      advice: "Anyone in the public can see a note, even without an OpenStreetMap account!"
+      advice_good_note: "A good note is as descriptive as possible while avoiding personal information, or content from copyrighted maps or directory listings."
+      advice_conduct: "Please be kind, patient and respectful when communicating with community members."
       add: Add Note
       error: "There was an error when creating the note"
     new_readonly:
       title: "New Note"
       warning: "New notes cannot be created because the OpenStreetMap API is currently in read-only mode."
     notes_paging_nav:
+      label: "Page navigation"
       showing_page: "Page %{page}"
       next: "Next"
       previous: "Previous"
@@ -3890,6 +3963,37 @@ en:
       not_empty: "Redaction is not empty. Please un-redact all versions belonging to this redaction before destroying it."
       flash: "Redaction destroyed."
       error: "There was an error destroying this redaction."
+  acls:
+    navigation:
+      new_title: Add a new ACL
+      new: New ACL
+      actions: ACL actions
+    index:
+      title: ACLs
+      empty: No ACLs to show.
+    page:
+      address: Address
+      domain: Domain
+      mx: MX server
+      k: Key
+      v: Value
+      actions: Actions
+    acl:
+      edit_button: Edit
+      destroy_button: Delete
+      confirm: Are you sure?
+    form:
+      cancel: Cancel
+    new:
+      title: New ACL
+    create:
+      success: ACL created.
+    edit:
+      title: Editing ACL
+    update:
+      success: ACL updated.
+    destroy:
+      success: ACL deleted.
   validations:
     leading_whitespace: "has leading whitespace"
     trailing_whitespace: "has trailing whitespace"
@@ -3899,6 +4003,7 @@ en:
     navigation:
       new_title: Define a new moderation zone
       new: New Moderation Zone
+      actions: Moderation zone actions
     index:
       title: Moderation Zones
       heading: Moderation Zones

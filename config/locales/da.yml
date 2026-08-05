@@ -85,6 +85,10 @@ da:
           attributes:
             url:
               http_parse_error: URL'en skal starte med http:// eller https://
+        trace:
+          attributes:
+            visibility:
+              cannot_change_to_legacy: kan ikke ændres tilbage til en forældet værdi
     models:
       acl: Adgangskontrolliste
       changeset: Ændringssæt
@@ -122,6 +126,12 @@ da:
       way_node: Linjepunkt
       way_tag: Linjetag
     attributes:
+      acl:
+        address: Adresse
+        domain: Domæne
+        mx: MX-server
+        k: Nøgle
+        v: Værdi
       diary_comment:
         body: Brødtekst
       diary_entry:
@@ -239,6 +249,44 @@ da:
       x_years:
         one: '%{count} år siden'
         other: '%{count} år siden'
+    distance_in_words_in:
+      about_x_hours:
+        one: om cirka %{count} time
+        other: om cirka %{count} timer
+      about_x_months:
+        one: om cirka %{count} måned
+        other: om cirka %{count} måneder
+      about_x_years:
+        one: om cirka %{count} år
+        other: om cirka %{count} år
+      almost_x_years:
+        one: om næsten %{count} år
+        other: om næsten %{count} år
+      half_a_minute: om et halvt minut
+      less_than_x_seconds:
+        one: om mindre end %{count} sekund
+        other: om mindre end %{count} sekunder
+      less_than_x_minutes:
+        one: om mindre end %{count} minut
+        other: om mindre end %{count} minutter
+      over_x_years:
+        one: om over %{count} år
+        other: om over %{count} år
+      x_seconds:
+        one: om %{count} sekund
+        other: om %{count} sekunder
+      x_minutes:
+        one: om %{count} minut
+        other: om %{count} minutter
+      x_days:
+        one: om %{count} dag
+        other: om %{count} dage
+      x_months:
+        one: om %{count} måned
+        other: om %{count} måneder
+      x_years:
+        one: om %{count} år
+        other: om %{count} år
   editor:
     default: Standard (i øjeblikket %{name})
     id:
@@ -491,6 +539,9 @@ da:
       colour_preview: Forhåndsvisning af farve %{colour_value}
       email_link: E-mail %{email}
     versions_navigation:
+      node_versions: Punktversioner
+      way_versions: Linjestrengsversioner
+      relation_versions: Relationsversioner
       node: Punkt
       way: Linjestreng
       relation: Relation
@@ -507,10 +558,13 @@ da:
     index:
       node:
         title_html: 'Punkthistorik: %{name}'
+        actions: Punkthandlinger
       way:
         title_html: 'Linjehistorik: %{name}'
+        actions: Linjestrengshandlinger
       relation:
         title_html: 'Relationshistorik: %{name}'
+        actions: Relationshandlinger
       older_versions: Ældre versioner
       newer_versions: Nyere versioner
     actions:
@@ -663,6 +717,7 @@ da:
       latest_edit_html: 'Seneste ændring (%{ago}):'
       no_edits: (ingen ændringer)
       view_changeset_details: Vis detaljer for ændringssæt
+      actions: Brugerhandlinger
     popup:
       your location: Din position
       nearby mapper: Bruger i nærheden
@@ -677,8 +732,10 @@ da:
       nearby users: 'Andre brugere i nærheden:'
       no nearby users: Der er endnu ingen andre brugere, der har tilkendegivet, at
         de kortlægger i nærheden.
+      followed_actions: Handlinger for brugere, du følger
       followed_changesets: ændringssæt
       followed_diaries: blogindlæg
+      nearby_actions: Handlinger for brugere i nærheden
       nearby_changesets: ændringssæt af brugere i nærheden
       nearby_diaries: blogindlæg af brugere i nærheden
   notifications:
@@ -762,6 +819,7 @@ da:
       posted_by_html: Skrevet af %{link_user} den %{created} på %{language_link}
       updated_at_html: Sidst opdateret den %{updated}.
       full_entry: Se hele indlægget
+      actions: Handlinger for blogindlæg
       comment_link: Kommentér dette indlæg
       reply_link: Send en besked til forfatteren
       comment_count:
@@ -798,6 +856,7 @@ da:
       heading: Vil du afmelde følgende blogindlægsdiskussion?
       button: Afmeld diskussion
     navigation:
+      actions: Bloghandlinger
       in_language: Blogindlæg på %{language}
       my_diary: Min blog
       new: Nyt blogindlæg
@@ -1781,6 +1840,7 @@ da:
       report_created_at_html: Rapporteret første gang %{datetime}
       last_resolved_at_html: Sidst løst %{datetime}
       last_updated_at_html: Sidst opdateret %{datetime} af %{displayname}
+      actions: Handlinger for problem
       resolve: Løs
       ignore: Ignorér
       reopen: Genåbn
@@ -1935,6 +1995,7 @@ da:
         be-Tarask: Hviderussisk (Tarašk.)
         bg: bulgarsk
         mk: Makedonsk
+        mt: Maltesisk
         mo: Moldovisk
         ce: Tjetjensk
         ru: russisk
@@ -2010,6 +2071,7 @@ da:
       select_language: Vælg sprog
       sign_up: Opret konto
       user_diaries: Brugerblogs
+      navigation: Hovednavigation
     meta:
       openstreetmap_search: OpenStreetMap-søgning
     select_language_button:
@@ -2759,7 +2821,7 @@ da:
         concerns_html: Hvis du har bekymringer omkring hvordan vores data anvendes
           eller om indholdet, sǻ se venligst vores %{copyright_link} for mere juridisk
           information, eller kontakt den relevante %{working_group_link}.
-        copyright: ophavsret-siden
+        copyright: ophavsret-side
         working_group: OSMF-arbejdsgruppe (working group)
     help:
       title: Få hjælp
@@ -2820,6 +2882,8 @@ da:
       get_directions_title: Find vejen mellem to punkter
       from: Fra
       to: Til
+      marker_from: Startmarkør for rute
+      marker_to: Slutmarkør for rute
       where_am_i: Hvor er dette?
       where_am_i_title: Beskriv den nuværende position ved hjælp af søgemaskinen
       submit_text: Søg
@@ -3087,6 +3151,7 @@ da:
         other: '%{count} punkter'
       more: detaljer
       trace_details: Vis spordetaljer
+      trace_actions: Sporhandlinger
       view_map: Se placering på kort
       edit_map: Åbn i editor
       public: OFFENTLIG
@@ -3100,6 +3165,7 @@ da:
       my_gps_traces: Mine GPS-spor
       public_traces_from: Offentlige GPS-spor fra %{user}
       description: Gennemse de seneste overførsler af GPS-spor
+      actions: Handlinger for sporliste
       tagged_with: ' med egenskaberne %{tags}'
       empty_title: Ingenting her endnu
       empty_upload_html: '%{upload_link} eller lær mere om kortlægning vha. GPS på
@@ -3210,6 +3276,7 @@ da:
       preview: Forhåndsvisning
       help: Hjælp
     pagination:
+      label: Sidenavigation
       changeset_comments:
         older: Ældre kommentarer
         newer: Nyere kommentarer
@@ -3368,6 +3435,8 @@ da:
         ellers kan linket du trykkede på være forkert.
       deleted: slettet
     show:
+      actions: Handlinger
+      admin_actions: Administrative handlinger
       my diary: Min blog
       my edits: Mine redigeringer
       my traces: Mine GPS-spor
@@ -3611,7 +3680,7 @@ da:
         active: aktiv
         active_until_read: aktiv indtil læst
         read_html: læst %{time}
-        time_in_future_title: '%{time_absolute}; om %{time_relative}'
+        time_in_future_title: '%{time_absolute}; %{time_relative}'
         time_in_past_title: '%{time_absolute}; %{time_relative}'
     show:
       title: '%{block_on} blokeret af %{block_by}'
@@ -3751,6 +3820,7 @@ da:
       warning: Nye bemærkninger kan ikke oprettes, fordi OpenStreetMap API'en i øjeblikket
         er i skrivebeskyttet tilstand.
     notes_paging_nav:
+      label: Sidenavigation
       showing_page: Side %{page}
       next: Næste
       previous: Forrige
@@ -3977,6 +4047,20 @@ da:
         der tilhører denne omarbejdelse, før du sletter den.
       flash: Omarbejdelse slettet.
       error: Der opstod en fejl under sletning af denne omarbejdelse.
+  acls:
+    page:
+      address: Adresse
+      domain: Domæne
+      mx: MX-server
+      k: Nøgle
+      v: Værdi
+      actions: Handlinger
+    acl:
+      edit_button: Rediger
+      destroy_button: Slet
+      confirm: Er du sikker?
+    form:
+      cancel: Annuller
   validations:
     leading_whitespace: har indledende blanktegn
     trailing_whitespace: har afsluttende blanktegn
@@ -3986,6 +4070,7 @@ da:
     navigation:
       new_title: Definer en ny moderationszone
       new: Ny moderationszone
+      actions: Handlinger i moderationszonen
     index:
       title: Moderationszoner
       heading: Moderationszoner

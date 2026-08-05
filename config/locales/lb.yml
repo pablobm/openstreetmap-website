@@ -90,6 +90,11 @@ lb:
       way_node: Wee-Knuet
       way_tag: Wee-Tag
     attributes:
+      acl:
+        address: Adress
+        mx: MX-Server
+        k: Schlëssel
+        v: Wäert
       diary_comment:
         body: Text
       diary_entry:
@@ -204,6 +209,44 @@ lb:
       x_years:
         one: virun %{count} Joer
         other: viru(n) %{count} Joer
+    distance_in_words_in:
+      about_x_hours:
+        one: an ongeféier %{count} Stonn
+        other: an ongeféier %{count} Stonnen
+      about_x_months:
+        one: an ongeféier %{count} Mount
+        other: an ongeféier %{count} Méint
+      about_x_years:
+        one: an ongeféier %{count} Joer
+        other: an ongeféier %{count} Joer
+      almost_x_years:
+        one: a bal %{count} Joer
+        other: a bal %{count} Joer
+      half_a_minute: an enger hallwer Minutt
+      less_than_x_seconds:
+        one: a manner wéi %{count} Sekonn
+        other: a manner wéi %{count} Sekonnen
+      less_than_x_minutes:
+        one: a manner wéi %{count} Minutt
+        other: a manner wéi %{count} Minutten
+      over_x_years:
+        one: a méi wéi %{count} Joer
+        other: a méi wéi %{count} Joer
+      x_seconds:
+        one: an %{count} Sekonn
+        other: a(n) %{count} Sekonnen
+      x_minutes:
+        one: an %{count} Minutt
+        other: a(n) %{count} Minutten
+      x_days:
+        one: an %{count} Dag
+        other: a(n) %{count} Deeg
+      x_months:
+        one: an %{count} Mount
+        other: a(n) %{count} Méint
+      x_years:
+        one: an %{count} Joer
+        other: a(n) %{count} Joer
   editor:
     default: Standard (elo %{name})
     id:
@@ -397,6 +440,7 @@ lb:
       feature_warning: D'Luede vun %{num_features} Funktioune kann dëse Browser méi
         lues maachen oder afréieren. Sidd Dir sécher dat Dir dës Donnéeë wëllt ugewise
         kréien?
+      feature_error: 'Objete konnten net geluede ginn: %{message}'
       load_data: Donnéeë lueden
       loading: Lueden...
     tag_details:
@@ -411,6 +455,7 @@ lb:
       colour_preview: Faarw %{colour_value} Ausbléck
       email_link: E-Mail %{email}
     versions_navigation:
+      relation_versions: Relatiounsversiounen
       node: Knuet
       way: Wee
       relation: Relatioun
@@ -429,8 +474,10 @@ lb:
         title_html: 'Versioune vum Knuet: %{name}'
       way:
         title_html: 'Versioune vum Wee: %{name}'
+        actions: Weeaktiounen
       relation:
         title_html: 'Versioune vun der Relatioun: %{name}'
+        actions: Relatiounsaktiounen
       older_versions: Méi al Versiounen
       newer_versions: Méi nei Versiounen
   nodes:
@@ -576,6 +623,7 @@ lb:
       latest_edit_html: 'Lescht Ännerung (%{ago}):'
       no_edits: (keng Ännerungen)
       view_changeset_details: Detailer vum Ännerungssaz uweisen
+      actions: Benotzeraktiounen
     popup:
       your location: Äre Standuert
       nearby mapper: Mapper an der Emgéigend
@@ -1680,6 +1728,7 @@ lb:
         de: Däitsch
         et: Estnesch
         en: Englesch
+        en-GB: Englesch (UK)
         es: Spuenesch
         eo: Esperanto
         eu: Baskesch
@@ -1722,6 +1771,7 @@ lb:
         be: Wäissrussesch
         bg: Bulgaresch
         mk: Mazedonesch
+        mt: Malteesesch
         mo: Moldawesch
         ce: Tschetscheenesch
         ru: Russesch
@@ -2599,7 +2649,7 @@ lb:
       details_with_tags_html: viru(n) %{time_ago} vum %{user} a(n) %{tags}
       details_without_tags_html: viru(n) %{time_ago} vum %{user}
     index:
-      public_traces: Ëffentlech GPS Spueren
+      public_traces: Ëffentlech GPS-Spueren
       my_gps_traces: Meng GPS-Spueren
       public_traces_from: Ëffentlech GPS-Spuere vu(n) %{user}
       description: Lescht GPS-Spuer-Uploads duerchsichen
@@ -2613,6 +2663,19 @@ lb:
       remove_tag_filter: Tag-Filter ewechhuelen
     destroy:
       scheduled_for_deletion: Fir d'Läsche bestëmmt Spuer
+    legacy_visibilities:
+      edit:
+        filter:
+          visibility: Aktuell Siichtbarkeet
+          any: Privat an ëffentlech
+        new_visibility: Nei Siichtbarkeet
+        no_undo: Dës Ännerung kann net réckgängeg gemaach ginn.
+        confirmation:
+          header: Ännerung vun der Siichtbarkeet confirméieren
+          cancel: Ofbriechen
+          confirm: Siichtbarkeet änneren
+      update:
+        invalid_visibility: Wielt wgl. d'Siichtbarkeet, op déi geännert soll ginn.
     feeds:
       show:
         title: OpenStreetMap-GPS-Spueren
@@ -2811,6 +2874,8 @@ lb:
       heading: De Benotzer %{user} gëtt et net
       deleted: geläscht
     show:
+      actions: Aktiounen
+      admin_actions: Administrativ Aktiounen
       my diary: Mäi Blog
       my edits: Meng Ännerungen
       my traces: Meng Spueren
@@ -2945,8 +3010,8 @@ lb:
       no_authorization_code: Keen Autorisatiouns-Code
     auth_association:
       heading: Är ID ass nach net mat engem OpenStreetMap-Kont verbonnen.
-      option_1: Wann Dir nei sidd bei OpenSrreetMap da leet wgl. e Benotzerkont un
-        andeem Dir de Formulaire hei drënner benotzt.
+      option_1: Wann Dir nei sidd bei OpenStreetMap, da leet wgl. en neie Benotzerkont
+        un, andeem Dir de Formulaire hei drënner benotzt.
   user_role:
     filter:
       not_a_role: D'Zeecheketten '%{role}' ass keng gülteg Roll.
@@ -3005,7 +3070,7 @@ lb:
         active: aktiv
         active_until_read: aktiv bis gelies
         read_html: gelies de(n) %{time}
-        time_in_future_title: '%{time_absolute}; a(n) %{time_relative}'
+        time_in_future_title: '%{time_absolute}; %{time_relative}'
         time_in_past_title: '%{time_absolute}; %{time_relative}'
     show:
       title: '%{block_on} gespaart vum %{block_by}'
@@ -3060,7 +3125,7 @@ lb:
   notes:
     index:
       title: Notizen, ofgeschéckt oder kommentéiert vum %{user}
-      heading: Noti%{user}ze vum
+      heading: Notize vum %{user}
       subheading_html: Notizen, %{submitted} oder %{commented} vum %{user}
       subheading_submitted: ofgeschéckt
       subheading_commented: kommentéiert
@@ -3128,6 +3193,7 @@ lb:
       warning: Et kënne keng nei Notizen ugeluecht ginn, well d'OpenStreetMap-API
         aktuell am Read-Only-Modus ass.
     notes_paging_nav:
+      label: Säitennavigatioun
       showing_page: Säit %{page}
       next: Nächst
       previous: Vireg
@@ -3138,6 +3204,7 @@ lb:
     share:
       title: Deelen
       view_larger_map: Méi grouss Kaart weisen
+      export_failed_title: Kaartenexport feelgeschloen
       filename: Kaart
     embed:
       report_problem: E Problem mellen
@@ -3172,7 +3239,7 @@ lb:
         header: Kaartenniveauen
         notes: Kaartennotizen
         data: Kaartendonnéeën
-        gps: Ëffentlech GPS Spueren
+        gps: Ëffentlech GPS-Spueren
         overlays: Overlayë fir d’Feelersich aktivéieren
         title: Niveauen
       openstreetmap_contributors: OpenStreetMap-Contributeuren
@@ -3289,6 +3356,7 @@ lb:
       node: Knuet
       way: Wee
       relation: Relatioun
+      nothing_found: Keng Objete fonnt
       error: 'Feeler beim Kontaktéiere vu(n) %{server}: %{error}'
     element:
       wikipedia: Wikipedia
@@ -3321,6 +3389,19 @@ lb:
       confirm: Sidd Dir sécher?
     update:
       flash: Ännerunge gespäichert.
+  acls:
+    page:
+      address: Adress
+      mx: MX-Server
+      k: Schlëssel
+      v: Wäert
+      actions: Aktiounen
+    acl:
+      edit_button: Änneren
+      destroy_button: Läschen
+      confirm: Sidd Dir sécher?
+    form:
+      cancel: Ofbriechen
   validations:
     leading_whitespace: huet en Espace vir
     trailing_whitespace: huet en Espace hannen

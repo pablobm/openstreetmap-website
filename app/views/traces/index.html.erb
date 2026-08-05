@@ -1,7 +1,7 @@
 <% content_for :heading_class, "pb-0" %>
 <% content_for :heading do %>
   <h1><%= @title %></h1>
-  <nav class="secondary-actions mb-3">
+  <nav class="secondary-actions mb-3" aria-label="<%= t ".actions" %>">
     <ul>
       <li>
         <%= t(".description") %>
@@ -55,6 +55,11 @@
           <li class="nav-item">
             <%= link_to t(".traces_from_html", :user => tag.span(@target_user.display_name, :class => "username text-truncate d-inline-block align-bottom", :dir => "auto")),
                         { :controller => "traces", :action => "index", :display_name => @target_user.display_name }, { :class => "nav-link active" } %>
+          </li>
+        <% end %>
+        <% if @legacy_traces_exist %>
+          <li class="nav-item">
+            <%= link_to t(".legacy_traces"), edit_traces_legacy_visibility_path, :class => "nav-link" %>
           </li>
         <% end %>
       </ul>

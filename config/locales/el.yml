@@ -92,8 +92,13 @@ el:
           attributes:
             url:
               http_parse_error: Το URL πρέπει να αρχίζει με http:// ή https://
+        trace:
+          attributes:
+            visibility:
+              cannot_change_to_legacy: δεν μπορεί να αλλάξει ξανά σε μια παρωχημένη
+                τιμή
     models:
-      acl: Λίστα ελέγχου πρόσβασης
+      acl: Λίστα ελέγχου πρόσβασης (ACL)
       changeset: Σύνολο αλλαγών
       changeset_tag: Ετικέτα συνόλου αλλαγών
       country: Χώρα
@@ -129,6 +134,12 @@ el:
       way_node: Κόμβος γραμμής
       way_tag: Ετικέτα γραμμής
     attributes:
+      acl:
+        address: Διεύθυνση
+        domain: Τομέας
+        mx: Διακομιστής MX
+        k: Κλειδί
+        v: Τιμή
       diary_comment:
         body: Κύριο μέρος
       diary_entry:
@@ -192,13 +203,20 @@ el:
         pass_crypt: Κωδικός
         pass_crypt_confirmation: Επιβεβαίωση κωδικού
     help:
+      acl:
+        address: Μια διεύθυνση IP ή ένα δίκτυο CIDR, π.χ. 192.0.2.0/24
+        domain: Ένας τομέας email. Οι υποτομείς αντιστοιχίζονται επίσης
+        mx: Το όνομα κεντρικού υπολογιστή ενός διακομιστή MX για τον τομέα email
+        k: 'Ένα από τα: no_account_creation, allow_account_creation, no_note_comment,
+          no_trace_download'
+        v: Προαιρετική σημείωση, π.χ. ο λόγος για αυτήν την καταχώριση
       doorkeeper/application:
         confidential: Η εφαρμογή θα χρησιμοποιηθεί όπου το μυστικό πελάτη μπορεί να
           κρατηθεί εμπιστευτικά (οι εγγενείς εφαρμογές κινητών και οι εφαρμογές μονής
           σελίδας δεν είναι εμπιστευτικές)
         redirect_uri: Χρήση μίας σειράς ανά URI
       trace:
-        tagstring: διαχωρισμένο με κόμμα
+        tagstring: διαχωρισμένες με κόμμα
       user_block:
         reason: Η αιτία φραγής του χρήστη. Παρακαλούμε να είστε όσο το δυνατόν πιο
           ήρεμος/-η και λογικός/-ή, δίνοντας όσες περισσότερες λεπτομέρειες μπορείτε
@@ -247,6 +265,44 @@ el:
       x_years:
         one: '%{count} χρόνο πριν'
         other: '%{count} χρόνια πριν'
+    distance_in_words_in:
+      about_x_hours:
+        one: σε περίπου %{count} ώρα
+        other: σε περίπου %{count} ώρες
+      about_x_months:
+        one: σε περίπου %{count} μήνα
+        other: σε περίπου %{count} μήνες
+      about_x_years:
+        one: σε περίπου %{count} χρόνο
+        other: σε περίπου %{count} χρόνια
+      almost_x_years:
+        one: σε σχεδόν %{count} χρόνο
+        other: σε σχεδόν %{count} χρόνια
+      half_a_minute: σε μισό λεπτό
+      less_than_x_seconds:
+        one: σε λιγότερο από %{count} δευτερόλεπτο
+        other: σε λιγότερο από %{count} δευτερόλεπτα
+      less_than_x_minutes:
+        one: σε λιγότερο από %{count} λεπτό
+        other: σε λιγότερο από %{count} λεπτά
+      over_x_years:
+        one: σε πάνω από %{count} χρόνο
+        other: σε πάνω από %{count} χρόνια
+      x_seconds:
+        one: σε %{count} δευτερόλεπτο
+        other: σε %{count} δευτερόλεπτα
+      x_minutes:
+        one: σε %{count} λεπτό
+        other: σε %{count} λεπτά
+      x_days:
+        one: σε %{count} ημέρα
+        other: σε %{count} ημέρες
+      x_months:
+        one: σε %{count} μήνα
+        other: σε %{count} μήνες
+      x_years:
+        one: σε %{count} χρόνο
+        other: σε %{count} χρόνια
   editor:
     default: Προεπιλογή (τώρα είναι %{name})
     id:
@@ -500,6 +556,9 @@ el:
       colour_preview: Προεπισκόπηση χρώματος %{colour_value}
       email_link: Αποστολή μέιλ στο %{email}
     versions_navigation:
+      node_versions: Εκδόσεις κόμβου
+      way_versions: Εκδόσεις γραμμής
+      relation_versions: Εκδόσεις σχέσης
       node: Κόμβος
       way: Γραμμή
       relation: Σχέση
@@ -516,10 +575,13 @@ el:
     index:
       node:
         title_html: 'Ιστορικό κόμβου: %{name}'
+        actions: Ενέργειες κόμβου
       way:
         title_html: 'Ιστορικό γραμμής: %{name}'
+        actions: Ενέργειες γραμμής
       relation:
         title_html: 'Ιστορικό σχέσης: %{name}'
+        actions: Ενέργειες σχέσης
       older_versions: Παλαιότερες εκδόσεις
       newer_versions: Νεότερες εκδόσεις
     actions:
@@ -678,6 +740,7 @@ el:
       latest_edit_html: 'Τελευταία επεξεργασία (%{ago}):'
       no_edits: (χωρίς επεξεργασίες)
       view_changeset_details: Προβολή λεπτομερειών συνόλου αλλαγών
+      actions: Ενέργειες χρήστη
     popup:
       your location: Η τοποθεσία σας
       nearby mapper: Κοντινός χαρτογράφος
@@ -692,8 +755,10 @@ el:
       nearby users: Άλλοι κοντινοί χρήστες
       no nearby users: Δεν υπάρχουν άλλοι χρήστες που δήλωσαν ότι χαρτογραφούν κοντά
         σας προς το παρόν.
+      followed_actions: Ενέργειες για χρήστες που ακολουθείτε
       followed_changesets: σύνολα αλλαγών
       followed_diaries: καταχωρίσεις ημερολογίου
+      nearby_actions: Ενέργειες για κοντινούς χρήστες
       nearby_changesets: σύνολα αλλαγών από κοντινούς χρήστες
       nearby_diaries: καταχωρίσεις ημερολογίου από κοντινούς χρήστες
   notifications:
@@ -778,6 +843,7 @@ el:
       posted_by_html: Δημοσιεύτηκε από τον/την %{link_user} στις %{created} στα %{language_link}.
       updated_at_html: Τελευταία ενημέρωση στις %{updated}.
       full_entry: Δείτε την πλήρη καταχώριση
+      actions: Ενέργειες καταχώρισης ημερολογίου
       comment_link: Σχολιάστε την καταχώριση
       reply_link: Αποστολή μηνύματος στον συντάκτη
       comment_count:
@@ -815,6 +881,7 @@ el:
       heading: Απεγγραφή από την ακόλουθη συζήτηση καταχώρισης ημερολογίου;
       button: Απεγγραφή από τη συζήτηση
     navigation:
+      actions: Ενέργειες ημερολογίου
       in_language: Καταχωρίσεις ημερολογίων στα %{language}
       my_diary: Το ημερολόγιό μου
       new: Νέα καταχώριση ημερολογίου
@@ -1807,6 +1874,7 @@ el:
       last_resolved_at_html: Επιλύθηκε για τελευταία φορά στις %{datetime}
       last_updated_at_html: Ενημερώθηκε για τελευταία φορά στις %{datetime} από τον
         %{displayname}
+      actions: Ενέργειες ζητημάτων
       resolve: Επίλυση
       ignore: Αγνόηση
       reopen: Ξανάνοιγμα
@@ -1963,6 +2031,7 @@ el:
         be-Tarask: Λευκορωσικά (Ταρασκ.)
         bg: Βουλγάρικα
         mk: Σλαβομακεδονικά
+        mt: Μαλτέζικα
         mo: Μολδαβικά
         ce: Τσετσενικά
         ru: Ρώσικα
@@ -2038,6 +2107,7 @@ el:
       select_language: Επιλογή γλώσσας
       sign_up: Εγγραφή
       user_diaries: Ημερολόγια χρηστών
+      navigation: Κύρια πλοήγηση
     meta:
       openstreetmap_search: Αναζήτηση OpenStreetMap
     select_language_button:
@@ -2784,14 +2854,17 @@ el:
           Παρακαλούμε κάντε μεγέθυνση, επιλέξτε μικρότερη περιοχή, ή χρησιμοποιήστε
           μία από της ακόλουθες πηγές για μαζικές λήψεις δεδομένων:'
         planet:
+          url: https://planet.openstreetmap.org/
           title: Πλανήτης OSM
           description: Τακτικά-ενημερωμένα αντίγραφα της πλήρους βάσης δεδομένων του
             OpenStreetMap
         overpass:
+          url: https://overpass-api.de/api/map
           title: Overpass API
           description: Λήψη αυτού του πλαισίου οριοθέτησης από ένα καθρέφτη της βάσης
             δεδομένων του OpenStreetMap
         geofabrik:
+          url: https://download.geofabrik.de/
           title: Λήψεις Geofabrik
           description: Τακτικά-ενημερωμένες εξαγωγές ηπείρων, χωρών και επιλεγμένων
             πόλεων
@@ -3164,6 +3237,7 @@ el:
         other: '%{count} σημεία'
       more: περισσότερα
       trace_details: Προβολή λεπτομερειών ίχνους
+      trace_actions: Ενέργειες ίχνους
       view_map: Προβολή τοποθεσίας στον χάρτη
       edit_map: Άνοιγμα στον επεξεργαστή
       public: ΔΗΜΟΣΙΟ
@@ -3177,6 +3251,7 @@ el:
       my_gps_traces: Τα ίχνη GPS μου
       public_traces_from: Δημόσια ίχνη GPS από %{user}
       description: Προβολή πρόσφατων μεταφορτωμένων ιχνών GPS
+      actions: Ενέργειες λίστας ιχνών
       tagged_with: ' με ετικέτα %{tags}'
       empty_title: Τίποτα εδώ ακόμη
       empty_upload_html: '%{upload_link} ή μάθετε περισσότερα για την ανίχνευση GPS
@@ -3188,8 +3263,40 @@ el:
       my_traces: Τα ίχνη μου
       traces_from_html: Δημόσια ίχνη από %{user}
       remove_tag_filter: Κατάργηση φίλτρου ετικετών
+      legacy_traces: Τα παρωχημένα ίχνη μου
     destroy:
       scheduled_for_deletion: Το ίχνος προγραμματίστηκε για διαγραφή
+    legacy_visibilities:
+      edit:
+        title: Τα παρωχημένα ίχνη GPS μου
+        description: Αυτά είναι τα ίχνη σας που εξακολουθούν να χρησιμοποιούν την
+          παλιά ιδιωτική ή δημόσια ορατότητα. Μπορείτε να τα αλλάξετε εδώ σε ανιχνεύσιμα
+          ή αναγνωρίσιμα. Οι προγραμματισμένες βελτιώσεις στα ίχνη GPS θα καλύπτουν
+          μόνο τα ανιχνεύσιμα και αναγνωρίσιμα.
+        filter:
+          visibility: Τρέχουσα ορατότητα
+          any: Ιδιωτικά και δημόσια
+          from: Μεταφορτώθηκε από
+          to: Μεταφορτώθηκε μέχρι
+          apply: Φιλτράρισμα
+        empty: Δεν υπάρχουν παρωχημένα ίχνη που να αντιστοιχούν σε αυτό το φίλτρο.
+        new_visibility: Νέα ορατότητα
+        no_undo: Αυτή η αλλαγή δεν μπορεί να αναιρεθεί.
+        button:
+          one: Αλλαγή %{count} ίχνους
+          other: Αλλαγή %{count} ιχνών
+        confirmation:
+          header: Επιβεβαίωση αλλαγής ορατότητας
+          body:
+            one: Αλλαγή της ορατότητας %{count} ίχνους; Δεν θα μπορεί αναιρεθεί.
+            other: Αλλαγή της ορατότητας %{count} ιχνών; Δεν θα μπορεί αναιρεθεί.
+          cancel: Ακύρωση
+          confirm: Αλλαγή ορατότητας
+      update:
+        updated:
+          one: Άλλαξε η ορατότητα %{count} ίχνους.
+          other: Άλλαξε η ορατότητα %{count} ιχνών.
+        invalid_visibility: Παρακαλούμε επιλέξτε μια ορατότητα για να αλλάξετε.
     offline_warning:
       message: Το σύστημα μεταφόρτωσης αρχείων GPX δεν είναι διαθέσιμο προς το παρών
     offline:
@@ -3289,6 +3396,12 @@ el:
       preview: Προεπισκόπηση
       help: Βοήθεια
     pagination:
+      label: Πλοήγηση σελίδας
+      acls:
+        older: Παλαιότερα ACL
+        newer: Νεότερα ACL
+        oldest: Παλαιότατα ACL
+        newest: Νεότατα ACL
       changeset_comments:
         older: Παλαιότερα σχόλια
         newer: Νεότερα σχόλια
@@ -3454,6 +3567,8 @@ el:
         τη σελίδα.
       deleted: διεγράφη
     show:
+      actions: Ενέργειες
+      admin_actions: Διαχειριστικές ενέργειες
       my diary: Το ημερολόγιό μου
       my edits: Οι επεξεργασίες μου
       my traces: Τα ίχνη μου
@@ -3696,7 +3811,7 @@ el:
         active: ενεργή
         active_until_read: ενεργή μέχρι να διαβαστεί
         read_html: διαβάστηκε στις %{time}
-        time_in_future_title: '%{time_absolute}; σε %{time_relative}'
+        time_in_future_title: '%{time_absolute}; %{time_relative}'
         time_in_past_title: '%{time_absolute}; %{time_relative}'
     show:
       title: Ο/Η %{block_on} έχει φραγεί από τον/την %{block_by}
@@ -3826,9 +3941,13 @@ el:
         url: https://wiki.openstreetmap.org/wiki/El:Οδηγός_για_αρχάριους
       counter_warning_forum_link:
         text: η κοινότητα μπορεί να σας βοηθήσει
-      advice: Η σημείωση σας είναι δημόσια και μπορεί να χρησιμοποιηθεί για την ενημέρωση
-        του χάρτη, γι'αυτό μην προστέθετε προσωπικές πληροφορίες, ή πληροφορίες από
-        χάρτες που καλύπτονται από πνευματικά δικαιώματα ή καταχωρίσεις καταλόγου.
+      advice: Οποιοσδήποτε δημόσια μπορεί να δει μια σημείωση, ακόμη και χωρίς λογαριασμό
+        OpenStreetMap!
+      advice_good_note: Μια καλή σημείωση είναι όσο το δυνατόν πιο περιγραφική, αποφεύγοντας
+        παράλληλα προσωπικές πληροφορίες ή περιεχόμενο από χάρτες ή καταχωρίσεις καταλόγων
+        που προστατεύονται από πνευματικά δικαιώματα.
+      advice_conduct: Παρακαλούμε να είστε ευγενικοί, υπομονετικοί και να δείχνετε
+        σεβασμό όταν επικοινωνείτε με τα μέλη της κοινότητας.
       add: Προσθήκη σημείωσης
       error: Παρουσιάστηκε σφάλμα κατά τη δημιουργία της σημείωσης
     new_readonly:
@@ -3836,6 +3955,7 @@ el:
       warning: Δεν είναι δυνατή η δημιουργία νέων σημειώσεων, επειδή το API του OpenStreetMap
         βρίσκεται αυτήν τη στιγμή σε λειτουργία μόνο για ανάγνωση.
     notes_paging_nav:
+      label: Πλοήγηση σελίδας
       showing_page: Σελίδα %{page}
       next: Επόμενη
       previous: Προηγούμενη
@@ -4068,6 +4188,37 @@ el:
         όλες τις εκδόσεις σε αυτήν την απόκρυψη πριν την καταστρέψετε.
       flash: Η απόκρυψη καταστράφηκε.
       error: Εμφανίστηκε ένα σφάλμα στη καταστροφή αυτής της απόκρυψης.
+  acls:
+    navigation:
+      new_title: Προσθήκη νέας ACL
+      new: Νέα ACL
+      actions: Ενέργειες ACL
+    index:
+      title: Λίστες ελέγχου πρόσβασης (ACL)
+      empty: Καμία ACL προς εμφάνιση.
+    page:
+      address: Διεύθυνση
+      domain: Τομέας
+      mx: Διακομιστής MX
+      k: Κλειδί
+      v: Τιμή
+      actions: Ενέργειες
+    acl:
+      edit_button: Επεξεργασία
+      destroy_button: Διαγραφή
+      confirm: Σίγουρα;
+    form:
+      cancel: Ακύρωση
+    new:
+      title: Νέα ACL
+    create:
+      success: Η ACL δημιουργήθηκε.
+    edit:
+      title: Επεξεργασία ACL
+    update:
+      success: Η ACL ενημερώθηκε.
+    destroy:
+      success: Η ACL διαγράφηκε.
   validations:
     leading_whitespace: περιέχει κενό διάστημα στην αρχή
     trailing_whitespace: περιέχει κενό διάστημα στο τέλος
@@ -4077,6 +4228,7 @@ el:
     navigation:
       new_title: Ορισμός νέας ζώνης συντονισμού
       new: Νέα ζώνη συντονισμού
+      actions: Ενέργειες ζώνης συντονισμού
     index:
       title: Ζώνες συντονισμού
       heading: Ζώνες συντονισμού

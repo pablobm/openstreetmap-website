@@ -66,6 +66,7 @@
 # Author: Sjoerddebruin
 # Author: Southparkfan
 # Author: Sven L
+# Author: Thomasje
 # Author: Tiptracks
 # Author: Tjcool007
 # Author: Trijnstel
@@ -116,8 +117,12 @@ nl:
           attributes:
             url:
               http_parse_error: De URL moet beginnen met http:// of https://
+        trace:
+          attributes:
+            visibility:
+              cannot_change_to_legacy: kan niet worden teruggezet naar een oude waarde
     models:
-      acl: Toegangscontrolelijst
+      acl: ACL
       changeset: Wijzigingenset
       changeset_tag: Label van wijzigingenset
       country: Land
@@ -153,6 +158,12 @@ nl:
       way_node: Wegknooppunt
       way_tag: Weglabel
     attributes:
+      acl:
+        address: Adres
+        domain: Domein
+        mx: MX-server
+        k: Sleutel
+        v: Waarde
       diary_comment:
         body: Tekst
       diary_entry:
@@ -215,6 +226,13 @@ nl:
         pass_crypt: Wachtwoord
         pass_crypt_confirmation: Wachtwoord bevestigen
     help:
+      acl:
+        address: Een IP-adres of CIDR-netwerk, bijvoorbeeld 192.0.2.0/24
+        domain: Een e-maildomein; subdomeinen worden ook herkend
+        mx: De hostnaam van een MX-server voor het e-maildomein
+        k: 'Een van de volgende opties: no_account_creation, allow_account_creation,
+          no_note_comment, no_trace_download'
+        v: Optionele notitie, bijvoorbeeld de reden voor deze vermelding
       doorkeeper/application:
         confidential: De toepassing wordt gebruikt waar het clientgeheim vertrouwelijk
           kan worden gehouden (voor mobiele apparaten ontworpen apps en éénpagina-apps
@@ -269,6 +287,44 @@ nl:
       x_years:
         one: '%{count} jaar geleden'
         other: '%{count} jaar geleden'
+    distance_in_words_in:
+      about_x_hours:
+        one: over ongeveer %{count} uur
+        other: over ongeveer %{count} uur
+      about_x_months:
+        one: over ongeveer %{count} maand
+        other: over ongeveer %{count} maanden
+      about_x_years:
+        one: over ongeveer %{count} jaar
+        other: over ongeveer %{count} jaar
+      almost_x_years:
+        one: over  bijna %{count} jaar
+        other: over bijna %{count} jaar
+      half_a_minute: over een halve minuut
+      less_than_x_seconds:
+        one: over minder dan %{count} seconde
+        other: over minder dan %{count} seconden
+      less_than_x_minutes:
+        one: over minder dan %{count} minuut
+        other: over minder dan %{count} minuten
+      over_x_years:
+        one: over ongeveer meer dan %{count} jaar
+        other: over ongeveer meer dan %{count} jaar
+      x_seconds:
+        one: over %{count} seconde
+        other: over %{count} seconden
+      x_minutes:
+        one: over %{count} minuut
+        other: over %{count} minuten
+      x_days:
+        one: over %{count} dag
+        other: over %{count} dagen
+      x_months:
+        one: over %{count} maand
+        other: over %{count} maanden
+      x_years:
+        one: over %{count} jaar
+        other: over %{count} jaar
   editor:
     default: Standaard (op dit moment %{name})
     id:
@@ -523,6 +579,9 @@ nl:
       colour_preview: Kleur %{colour_value} voorbeeld
       email_link: E-mail %{email}
     versions_navigation:
+      node_versions: Knooppuntversies
+      way_versions: Wegversies
+      relation_versions: Relatieversies
       node: Knooppunt
       way: Weg
       relation: Relatie
@@ -539,10 +598,13 @@ nl:
     index:
       node:
         title_html: 'Knooppuntgeschiedenis: %{name}'
+        actions: Knooppunthandelingen
       way:
         title_html: 'Weggeschiedenis: %{name}'
+        actions: Weghandeingen
       relation:
         title_html: 'Relatiegeschiedenis: %{name}'
+        actions: Relatiehandelingen
       older_versions: Oudere versies
       newer_versions: Nieuwere versies
     actions:
@@ -696,6 +758,7 @@ nl:
       latest_edit_html: 'Laatste bewerking (%{ago}):'
       no_edits: (geen bewerkingen)
       view_changeset_details: Details wijzigingenset weergeven
+      actions: Gebruikershandelingen
     popup:
       your location: Uw locatie
       nearby mapper: Kaartmaker in de buurt
@@ -710,8 +773,10 @@ nl:
       nearby users: Andere gebruikers in de buurt
       no nearby users: Er zijn nog geen andere gebruikers die hebben opgegeven in
         de buurt te mappen.
+      followed_actions: Handelingen voor gebruikers die u volgt
       followed_changesets: wijzigingensets
       followed_diaries: dagboekberichten
+      nearby_actions: Handelingen voor nabije gebruikers
       nearby_changesets: wijzigingensets van gebruikers in de buurt
       nearby_diaries: dagboekberichten van gebruikers in de buurt
   notifications:
@@ -794,6 +859,7 @@ nl:
       posted_by_html: Geplaatst door %{link_user} op %{created} in het %{language_link}.
       updated_at_html: Laatst aangepast op %{updated}.
       full_entry: Bekijk het volledige bericht
+      actions: Dagboekberichthandelingen
       comment_link: Op dit bericht reageren
       reply_link: Een bericht sturen naar de auteur
       comment_count:
@@ -831,6 +897,7 @@ nl:
       heading: Afmelden voor de volgende dagboekaantekeningendiscussie?
       button: Van discussie afmelden
     navigation:
+      actions: Dagboekhandelingen
       in_language: Dagboekberichten in het %{language}
       my_diary: Mijn dagboek
       new: Nieuw dagboekbericht
@@ -1480,12 +1547,12 @@ nl:
         place:
           allotments: Volkstuinen
           archipelago: Archipel
-          city: Plaats
+          city: Stad
           city_block: Woonblok
           country: Land
           county: District
           farm: Boerderij
-          hamlet: Gehucht
+          hamlet: Buurtschap/Gehucht
           house: Huis
           houses: Huizen
           island: Eiland
@@ -1503,7 +1570,7 @@ nl:
           state: Staat
           subdivision: Deelgebied
           suburb: Stadsdeel
-          town: Stad
+          town: Plaats
           village: Dorp
           "yes": Plaats
         railway:
@@ -1816,6 +1883,7 @@ nl:
       report_created_at_html: Voor het eerst gemeld op %{datetime}
       last_resolved_at_html: Laatst opgelost op %{datetime}
       last_updated_at_html: Laatst bijgewerkt op %{datetime} door %{displayname}
+      actions: Probleemhandelingen
       resolve: Oplossen
       ignore: Negeren
       reopen: Heropenen
@@ -1931,7 +1999,7 @@ nl:
         ia: Interlingua
         is: IJslands
         it: Italiaans
-        kw: Cornish
+        kw: Cornisch
         gcf: Guadeloupe-Creools
         ku-Latn: Koerdisch (Latijns)
         lv: Lets
@@ -1972,6 +2040,7 @@ nl:
         be-Tarask: Wit-Russisch (Tarašk.)
         bg: Bulgaars
         mk: Macedonisch
+        mt: Maltees
         mo: Moldavisch
         ce: Tsjetsjeens
         ru: Russisch
@@ -2048,6 +2117,7 @@ nl:
       select_language: Taal selecteren
       sign_up: Registreren
       user_diaries: Gebruikersdagboeken
+      navigation: Hoofdnavigatie
     meta:
       openstreetmap_search: OpenStreetMap Zoeken
     select_language_button:
@@ -2490,7 +2560,7 @@ nl:
       password: 'Wachtwoord:'
       remember: Aanmeldgegevens onthouden
       lost password link: Wachtwoord vergeten?
-      login_button: Inloggen
+      login_button: Aanmelden
       with external: of meld u aan via een derde
       or: of
       reset_to_login: Uw wachtwoord is verlopen. Stel uw wachtwoord opnieuw in om
@@ -3160,6 +3230,7 @@ nl:
         other: '%{count} punten'
       more: meer
       trace_details: Trajectdetails weergeven
+      trace_actions: Trajecthandelingen
       view_map: Locatie op de kaart bekijken
       edit_map: In editor openen
       public: OPENBAAR
@@ -3173,6 +3244,7 @@ nl:
       my_gps_traces: Mijn gps-trajecten
       public_traces_from: Openbare gps-trajecten van %{user}
       description: Door recente gps-traject-uploads bladeren
+      actions: Trajectenlijsthandelingen
       tagged_with: ' gelabeld met %{tags}'
       empty_title: Hier nog niets
       empty_upload_html: '%{upload_link} of lees meer over gps-trajecten op de %{wiki_link}.'
@@ -3185,6 +3257,11 @@ nl:
       remove_tag_filter: Labelfilter verwijderen
     destroy:
       scheduled_for_deletion: Traject staat op de lijst voor verwijdering
+    legacy_visibilities:
+      edit:
+        confirmation:
+          cancel: Annuleren
+          confirm: Zichtbaarheid wijzigen
     offline_warning:
       message: Het systeem voor het uploaden van GPX-bestanden is momenteel niet beschikbaar
     offline:
@@ -3283,6 +3360,12 @@ nl:
       preview: Voorvertoning
       help: Hulp
     pagination:
+      label: Paginanavigatie
+      acls:
+        older: Oudere ACL's
+        newer: Nieuwere ACL's
+        oldest: Oudste ACL's
+        newest: Nieuwste ACL's
       changeset_comments:
         older: Oudere reacties
         newer: Nieuwere reacties
@@ -3414,7 +3497,7 @@ nl:
         paragraph_2: Schrijf u in om te beginnen met bijdragen.
         welcome: Welkom bij OpenStreetMap
       duplicate_social_email: Als u al een OpenStreetMap-account heeft en een identiteitsprovider
-        van derden wilt gebruiken, log dan in met uw wachtwoord en wijzig de instellingen
+        van derden wilt gebruiken, meld u dan aan met uw wachtwoord en wijzig de instellingen
         van uw account.
       display name description: Uw openbare gebruikersnaam. U kunt deze later in uw
         voorkeuren wijzigen.
@@ -3444,6 +3527,8 @@ nl:
         is de koppeling waarop u hebt geklikt onjuist.
       deleted: verwijderd
     show:
+      actions: Handelingen
+      admin_actions: Administratieve handelingen
       my diary: Mijn dagboek
       my edits: Mijn bewerkingen
       my traces: Mijn trajecten
@@ -3685,7 +3770,7 @@ nl:
         active: actief
         active_until_read: actief tot gelezen
         read_html: gelezen op %{time}
-        time_in_future_title: '%{time_absolute}; in %{time_relative}'
+        time_in_future_title: '%{time_absolute}; %{time_relative}'
         time_in_past_title: '%{time_absolute}; %{time_relative}'
     show:
       title: '%{block_on} geblokkeerd door %{block_by}'
@@ -3826,6 +3911,7 @@ nl:
       warning: Er kunnen geen nieuwe opmerkingen worden aangemaakt omdat de OpenStreetMap-API
         momenteel in de alleen-lezenmodus staat.
     notes_paging_nav:
+      label: Paginanavigatie
       showing_page: Pagina %{page}
       next: Volgende
       previous: Vorige
@@ -4052,6 +4138,37 @@ nl:
         betrokken zijn voordat u die vernietigt.
       flash: De redigering is vernietigd.
       error: Er is een fout opgetreden tijdens het verwijderen van deze redigering.
+  acls:
+    navigation:
+      new_title: Nieuwe ACL toevoegen
+      new: Nieuwe ACL
+      actions: ACL-handelingen
+    index:
+      title: ACL's
+      empty: Geen ACL's om weer te geven.
+    page:
+      address: Adres
+      domain: Domein
+      mx: MX-server
+      k: Sleutel
+      v: Waarde
+      actions: Handelingen
+    acl:
+      edit_button: Bewerken
+      destroy_button: Verwijderen
+      confirm: Weet u het zeker?
+    form:
+      cancel: Annuleren
+    new:
+      title: Nieuwe ACL
+    create:
+      success: ACL aangemaakt.
+    edit:
+      title: ACL bewerken
+    update:
+      success: ACL bijgewerkt.
+    destroy:
+      success: ACL verwijderd.
   validations:
     leading_whitespace: begint met spaties
     trailing_whitespace: eindigt met spaties
@@ -4061,6 +4178,7 @@ nl:
     navigation:
       new_title: Nieuwe moderatiezone definiëren
       new: Nieuwe moderatiezone
+      actions: Moderatiezonehandelingen
     index:
       title: Moderatiezones
       heading: Moderatiezones

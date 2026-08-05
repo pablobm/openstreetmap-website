@@ -103,6 +103,9 @@ fur:
         gpx_file: Sielç file di trace GPX
         visibility: Visibilitât
         tagstring: Etichetis
+      moderation_zone:
+        name: Non
+        reason: Reson
       message:
         sender: Mitent
         title: Sogjet
@@ -172,6 +175,8 @@ fur:
       x_years:
         one: '%{count} an indaûr'
         other: '%{count} agns indaûr'
+    distance_in_words_in:
+      half_a_minute: in mieç minût
   editor:
     default: Predeterminât (par cumò %{name})
     id:
@@ -480,6 +485,14 @@ fur:
       followed_diaries: vôs tal diari
       nearby_changesets: grups di cambiaments dai utents dongje
       nearby_diaries: vôs di diari dai utents dongje
+  notifications:
+    gpx_details:
+      description: Descrizion
+      tags: Etichetis
+      total_points: Numar totâl di ponts
+      imported_points: Numar di ponts impuartâts
+    gpx_import_failure:
+      error_message: Messaç di erôr
   diary_entries:
     new:
       title: Gnove vôs dal diari
@@ -1675,7 +1688,9 @@ fur:
       image: Figure
       url: URL
     richtext_field:
+      edit: Cambie
       preview: Anteprime
+      help: Jutori
     pagination:
       changeset_comments:
         newest: I coments plui gnûfs
@@ -1787,7 +1802,11 @@ fur:
       report: Segnale chest utent
       edit_profile_details: Modifiche i detais dal profîl
       edit_description: Cambie descrizion
+      edit_links: Modifiche i leams
       change_image: Cambie la figure
+      edit_company: Modifiche l'aziende
+      edit_location: Modifiche il lûc
+      edit_contribution_calendar: Configurâ il calendari dai contribûts
       contributions:
         one: '%{count} contribût tal ultin an'
         other: '%{count} contribûts tal ultin an'
@@ -1816,6 +1835,7 @@ fur:
         active_blocks:
           one: '%{count} bloc atîf'
           other: '%{count} blocs atîfs'
+        revoke: Revoche!
       destroy:
         flash: Ducj i blocs atîfs a son stâts revocâts.
     lists:
@@ -1829,6 +1849,7 @@ fur:
           deleted: Eliminât
         name_or_email: Non o Email
         ip_address: Direzion IP
+        no_edits: Nissun cambiament
         search: Cîr
       page:
         confirm: Conferme i utents selezionâts
@@ -2164,4 +2185,11 @@ fur:
       confirm: Sêstu sigûr?
     update:
       flash: Cambiaments salvâts.
+  moderation_zones:
+    row:
+      edit: Cambie
+    helper:
+      short:
+        ended: finît
+        active: atîf
 ...

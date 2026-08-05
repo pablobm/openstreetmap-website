@@ -123,6 +123,10 @@ pt:
           attributes:
             url:
               http_parse_error: A URL deve começar com http:// ou https://
+        trace:
+          attributes:
+            visibility:
+              cannot_change_to_legacy: não pode ser revertido para um valor antigo
     models:
       acl: Lista de controle de acesso
       changeset: Conjunto de alterações
@@ -2041,6 +2045,7 @@ pt:
       select_language: Selecionar idioma
       sign_up: Criar conta
       user_diaries: Diários de usuário
+      navigation: Navegação principal
     meta:
       openstreetmap_search: Pesquisa no OpenStreetMap
     select_language_button:
@@ -3440,6 +3445,7 @@ pt:
         link em que você clicou esteja errado.
       deleted: excluído
     show:
+      actions: Ações
       my diary: Meu diário
       my edits: Minhas edições
       my traces: Minhas trilhas

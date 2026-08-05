@@ -4,6 +4,7 @@
 # Author: Alesaru
 # Author: Alextranslate
 # Author: Andreyyshore
+# Author: Blaséd
 # Author: Buraddo
 # Author: C1pr1an
 # Author: Cevamihnea
@@ -69,6 +70,11 @@ ro:
           attributes:
             url:
               http_parse_error: Adresa URL ar trebui să înceapă cu http:// sau https://
+        trace:
+          attributes:
+            visibility:
+              cannot_change_to_legacy: nu poate fi modificată înapoi la o valoare
+                veche
     models:
       acl: Lista de control al accesului
       changeset: Set de modificări
@@ -236,6 +242,8 @@ ro:
         one: acum un an
         few: cu %{count} ani în urmă
         other: cu %{count} de ani în urmă
+    distance_in_words_in:
+      half_a_minute: în jumătate de minut
   editor:
     default: Implicit (în prezent %{name})
     id:
@@ -899,7 +907,7 @@ ro:
           animal_shelter: Adăpost de animale
           arts_centre: Centru de arte
           atm: Bancomat
-          bank: Instituție bancară
+          bank: Bancă
           bar: Bar
           bbq: Grătar
           bench: Bancă
@@ -1663,6 +1671,7 @@ ro:
         city: Limită Oraș
         county: Limită Județ
         departement: Limită Departamentală
+        national: Frontieră internațională
   searches:
     show:
       title:
@@ -2962,6 +2971,10 @@ ro:
       remove_tag_filter: Eliminați filtrul de etichete
     destroy:
       scheduled_for_deletion: Traseul este programat pentru ștergere
+    legacy_visibilities:
+      edit:
+        confirmation:
+          cancel: Anulează
     offline_warning:
       message: Sistemul de încărcare a fișierelor GPX nu este disponibil momentan
     offline:

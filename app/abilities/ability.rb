@@ -42,7 +42,7 @@ class Ability
         can :update, :account_terms
         can :create, :account_pd_declaration
         can :read, :dashboard
-        can :index, :notification
+        can [:index, :destroy], :notification
         can [:read, :update], [:preferences, :profile]
         can [:create, :subscribe, :unsubscribe], DiaryEntry
         can [:update, :hide, :unhide], DiaryEntry, :user => user
@@ -78,6 +78,7 @@ class Ability
           can [:update], :user_status
           can [:read, :update], :users_list
           can [:create, :destroy], UserRole
+          can [:read, :create, :update, :destroy], Acl
         end
       end
     end

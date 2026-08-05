@@ -69,6 +69,7 @@
 # Author: Killarnee
 # Author: KimKelting
 # Author: Kjon
+# Author: Kmpoppe
 # Author: LeoGe25
 # Author: Lonvia
 # Author: MGChecker
@@ -172,6 +173,11 @@ de:
           attributes:
             url:
               http_parse_error: Die URL sollte mit http:// oder https:// beginnen
+        trace:
+          attributes:
+            visibility:
+              cannot_change_to_legacy: kann nicht auf einen alten Wert zurückgesetzt
+                werden
     models:
       acl: Zugriffssteuerungsliste
       changeset: Änderungssatz
@@ -209,6 +215,12 @@ de:
       way_node: Wegmarke
       way_tag: Weg-Attribut
     attributes:
+      acl:
+        address: Adresse
+        domain: Domäne
+        mx: MX-Server
+        k: Schlüssel
+        v: Wert
       diary_comment:
         body: Text
       diary_entry:
@@ -239,6 +251,7 @@ de:
         visibility: Sichtbarkeit
         tagstring: Tags
       moderation_zone:
+        name: Name
         reason: Grund
         zone: Zone
         period: Zeitraum
@@ -270,6 +283,13 @@ de:
         pass_crypt: Passwort
         pass_crypt_confirmation: Passwort bestätigen
     help:
+      acl:
+        address: Eine IP-Adresse oder ein CIDR-Netzwerk, z. B. 192.0.2.0/24
+        domain: Eine E-Mail-Domain; Subdomains werden auch berücksichtigt
+        mx: Der Hostname eines MX-Servers für die E-Mail-Domäne
+        k: 'Eine der folgenden: no_account_creation, allow_account_creation, no_note_comment,
+          no_trace_download'
+        v: Optionale Anmerkung, z. B. der Grund für diesen Eintrag
       doorkeeper/application:
         confidential: Es wird eine Anwendung verwendet, bei der das Kundengeheimnis
           vertraulich behandelt werden kann (native mobile Apps und einseitige Apps
@@ -325,6 +345,44 @@ de:
       x_years:
         one: vor %{count} Jahr
         other: vor %{count} Jahren
+    distance_in_words_in:
+      about_x_hours:
+        one: in etwa einer Stunde
+        other: in etwa %{count} Stunden
+      about_x_months:
+        one: in etwa einem Monat
+        other: in etwa %{count} Monaten
+      about_x_years:
+        one: in etwa einem Jahr
+        other: in etwa %{count} Jahren
+      almost_x_years:
+        one: in fast %{count} Jahr
+        other: in fast %{count} Jahren
+      half_a_minute: in einer halben Minute
+      less_than_x_seconds:
+        one: in weniger als einer Sekunde
+        other: in weniger als %{count} Sekunden
+      less_than_x_minutes:
+        one: in weniger als %{count} Minute
+        other: in weniger als %{count} Minuten
+      over_x_years:
+        one: in über %{count} Jahr
+        other: in über %{count} Jahren
+      x_seconds:
+        one: in einer Sekunde
+        other: in %{count} Sekunden
+      x_minutes:
+        one: in einer Minute
+        other: in %{count} Minuten
+      x_days:
+        one: in einem Tag
+        other: in %{count} Tagen
+      x_months:
+        one: in einem Monat
+        other: in %{count} Monaten
+      x_years:
+        one: in einem Jahr
+        other: in %{count} Jahren
   editor:
     default: Voreinstellung (derzeit %{name})
     id:
@@ -585,6 +643,9 @@ de:
       colour_preview: Farbe %{colour_value} Vorschau
       email_link: E-Mail %{email}
     versions_navigation:
+      node_versions: Knotenversionen
+      way_versions: Wegversionen
+      relation_versions: Relationsversionen
       node: Knoten
       way: Linie
       relation: Relation
@@ -601,10 +662,13 @@ de:
     index:
       node:
         title_html: 'Knotenverlauf: %{name}'
+        actions: Knotenaktionen
       way:
         title_html: 'Wegverlauf: %{name}'
+        actions: Wegaktionen
       relation:
         title_html: 'Relationsverlauf: %{name}'
+        actions: Relationsaktionen
       older_versions: Ältere Versionen
       newer_versions: Neuere Versionen
     actions:
@@ -764,6 +828,7 @@ de:
       latest_edit_html: 'Letzte Änderung (%{ago}):'
       no_edits: (keine Bearbeitungen)
       view_changeset_details: Details des Änderungssatzes anzeigen
+      actions: Benutzeraktionen
     popup:
       your location: Standort
       nearby mapper: Mapper in der Nähe
@@ -778,8 +843,10 @@ de:
       nearby users: Mapper in der Nähe
       no nearby users: Es existieren bisher keine Benutzer, die einen Standort in
         deiner Nähe angegeben haben.
+      followed_actions: Aktionen für Nutzer, denen Sie folgen
       followed_changesets: Änderungssätze
       followed_diaries: Blogeinträge
+      nearby_actions: Aktionen für Nutzer in der Nähe
       nearby_changesets: Änderungssätze von Benutzern in der Nähe
       nearby_diaries: Blogs von Benutzern in der Nähe
   notifications:
@@ -865,6 +932,7 @@ de:
       posted_by_html: Verfasst von %{link_user} am %{created} in %{language_link}
       updated_at_html: Zuletzt aktualisiert am %{updated}.
       full_entry: Vollständigen Blogeintrag anzeigen
+      actions: Blogeintrag-Aktionen
       comment_link: Kommentar zu diesem Eintrag
       reply_link: Eine Nachricht an den Autor senden
       comment_count:
@@ -901,6 +969,7 @@ de:
       heading: Von der folgenden Tagebucheintragsdiskussion abmelden?
       button: Von der Diskussion abmelden
     navigation:
+      actions: Blogaktionen
       in_language: Blog-Einträge in %{language}
       my_diary: Mein Blog
       new: Neuer Blog-Eintrag
@@ -1887,6 +1956,7 @@ de:
       report_created_at_html: Zuerst gemeldet am %{datetime}
       last_resolved_at_html: Zuletzt erledigt am %{datetime}
       last_updated_at_html: Zuletzt aktualisiert am %{datetime} von %{displayname}
+      actions: Problem-Aktionen
       resolve: Erledigen
       ignore: Ignorieren
       reopen: Erneut öffnen
@@ -2043,6 +2113,7 @@ de:
         be-Tarask: Belarussisch (Taraschkewiza)
         bg: Bulgarisch
         mk: Mazedonisch
+        mt: Maltesisch
         mo: Moldawisch
         ce: Tschetschenisch
         ru: Russisch
@@ -2118,6 +2189,7 @@ de:
       select_language: Sprache auswählen
       sign_up: Registrieren
       user_diaries: Benutzer-Blogs
+      navigation: Hauptnavigation
     meta:
       openstreetmap_search: OpenStreetMap-Suche
     select_language_button:
@@ -2983,6 +3055,8 @@ de:
       get_directions_title: Routenberechnung zwischen zwei Orten
       from: Von
       to: Nach
+      marker_from: Routenstartmarkierung
+      marker_to: Routenendmarkierung
       where_am_i: Wo ist dies?
       where_am_i_title: Die momentane Position mit der Suchmaschine anzeigen
       submit_text: Los
@@ -3260,6 +3334,7 @@ de:
         other: '%{count} Punkte'
       more: Details
       trace_details: Details des Tracks anzeigen
+      trace_actions: Track-Aktionen
       view_map: Ort auf der Karte anzeigen
       edit_map: Im Editor öffnen
       public: ÖFFENTLICH
@@ -3273,6 +3348,7 @@ de:
       my_gps_traces: Meine GPS-Tracks
       public_traces_from: Öffentliche GPS-Tracks von %{user}
       description: Letzte GPS-Track-Uploads durchsuchen
+      actions: Track-Listen-Aktionen
       tagged_with: ' gekennzeichnet mit %{tags}'
       empty_title: Noch nichts vorhanden
       empty_upload_html: '%{upload_link} oder erfahre mehr über GPS-Tracks auf der
@@ -3287,6 +3363,36 @@ de:
       remove_tag_filter: Tag-Filter entfernen
     destroy:
       scheduled_for_deletion: Für die Löschung vorgesehener Track
+    legacy_visibilities:
+      edit:
+        description: Dies sind Ihre Spuren, die noch die alte Einstellung „privat“
+          oder „öffentlich“ verwenden. Sie können diese hier auf „verfolgbar“ oder
+          „identifizierbar“ ändern. Geplante Verbesserungen der GPS-Spuren betreffen
+          ausschließlich verfolgbare und identifizierbare Spuren.
+        filter:
+          visibility: Aktuelle Sichtbarkeit
+          any: Privat und öffentlich
+          from: Hochgeladen von
+          to: Hochgeladen auf
+          apply: Filter
+        new_visibility: Neue Sichtbarkeit
+        no_undo: Diese Änderung kann nicht rückgängig gemacht werden.
+        button:
+          one: Ändere %{count} Spur
+          other: Ändere %{count} Spuren
+        confirmation:
+          header: Sichtbarkeitsänderung bestätigen
+          body:
+            one: Die Sichtbarkeit von %{count} Track ändern? Dies kann nicht rückgängig
+              gemacht werden.
+            other: Die Sichtbarkeit von %{count} Tracks ändern? Dies kann nicht rückgängig
+              gemacht werden.
+          cancel: Abbrechen
+          confirm: Sichtbarkeit ändern
+      update:
+        updated:
+          one: Die Sichtbarkeit von %{count} Spur wurde geändert.
+          other: Die Sichtbarkeit von %{count} Spuren wurde geändert.
     offline_warning:
       message: Das Upload-System für GPX-Dateien ist derzeit nicht verfügbar
     offline:
@@ -3383,6 +3489,7 @@ de:
       preview: Vorschau
       help: Hilfe
     pagination:
+      label: Seitennavigation
       changeset_comments:
         older: Ältere Kommentare
         newer: Neuere Kommentare
@@ -3546,6 +3653,8 @@ de:
         möglicherweise vertippt oder bist einem ungültigem Link gefolgt.
       deleted: gelöscht
     show:
+      actions: Aktionen
+      admin_actions: Verwaltungsaktionen
       my diary: Mein Blog
       my edits: Meine Änderungen
       my traces: Meine Tracks
@@ -3791,7 +3900,7 @@ de:
         active: Aktiv
         active_until_read: aktiv bis gelesen
         read_html: gelesen am %{time}
-        time_in_future_title: '%{time_absolute}; in %{time_relative}'
+        time_in_future_title: '%{time_absolute}; %{time_relative}'
         time_in_past_title: '%{time_absolute}; %{time_relative}'
     show:
       title: '%{block_on} gesperrt durch  %{block_by}'
@@ -3921,9 +4030,12 @@ de:
         url: https://wiki.openstreetmap.org/wiki/DE:Beginners%27_guide
       counter_warning_forum_link:
         text: die Gemeinschaft kann dir helfen
-      advice: Deine Meldung ist öffentlich und kann zur Aktualisierung der Karte verwendet
-        werden. Gib deshalb keine persönlichen oder urheberrechtlich geschützten Informationen
-        von anderen Karten oder Verzeichnislisten an.
+      advice: Jeder kann einen Hinweis sehen, auch ohne OpenStreetMap-Konto!
+      advice_good_note: Ein guter Hinweis ist so umfangreich wie möglich, vermeidet
+        aber persönliche Informationen oder Inhalte aus urheberrechtlich geschützten
+        Karten oder Verzeichniseinträgen.
+      advice_conduct: Bitte sei freundlich, geduldig und respektvoll, wenn du mit
+        den Mitgliedern der Community kommunizierst.
       add: Hinweis/Fehler melden
       error: Beim Erstellen der Notiz ist ein Fehler aufgetreten
     new_readonly:
@@ -3931,6 +4043,7 @@ de:
       warning: Es können keine neuen Notizen erstellt werden, da sich die OpenStreetMap-API
         derzeit im schreibgeschützten Modus befindet.
     notes_paging_nav:
+      label: Seitennavigation
       showing_page: Seite %{page}
       next: Weiter
       previous: Zurück
@@ -4163,6 +4276,20 @@ de:
         zugehörigen Versionen zurück, bevor du die Redaction löschst.
       flash: Redaction wurde gelöscht.
       error: Beim Löschen dieser Redaction ist ein Fehler aufgetreten.
+  acls:
+    page:
+      address: Adresse
+      domain: Domäne
+      mx: MX-Server
+      k: Schlüssel
+      v: Wert
+      actions: Aktionen
+    acl:
+      edit_button: Bearbeiten
+      destroy_button: Löschen
+      confirm: Bist du sicher?
+    form:
+      cancel: Abbrechen
   validations:
     leading_whitespace: hat anführendes Leerzeichen
     trailing_whitespace: hat anhängendes Leerzeichen
@@ -4172,8 +4299,9 @@ de:
     navigation:
       new_title: Definiere eine neue Moderationszone
       new: Neue Moderationszone
+      actions: Moderationszonen-Aktionen
     index:
-      title: Moderationswerkzeuge
+      title: Moderationszonen
       heading: Moderationszonen
       name: Name
       reason: Grund
