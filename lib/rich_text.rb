@@ -3,7 +3,7 @@
 module RichText
   DESCRIPTION_MAX_LENGTH = 500
   DESCRIPTION_WORD_BREAK_THRESHOLD_LENGTH = 450
-  URL_UNSAFE_CHARS = "[^\\w!#$%&'*+,./:;=?@_~^\\-]"
+  URL_UNSAFE_CHARS = "[^\\w!#$%&*+,./:;=?@_~^\\-]"
 
   def self.new(format, text)
     case format

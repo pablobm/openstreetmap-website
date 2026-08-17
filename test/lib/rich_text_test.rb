@@ -716,6 +716,53 @@ class RichTextTest < ActiveSupport::TestCase
     assert_equal "#{'x' * (t - o)}...", r.description
   end
 
+  # This test is a bit involved, but I want to avoid a "fail-fast".
+  # When there's a change, I want to know how many cases were affected.
+  def test_edge_cases
+    cases = [
+      {
+        :text => "Fix misspelled tag (highway=residence instead of highway=residential)",
+        :asserts => [
+          ["https://wiki.openstreetmap.org/wiki/Tag:highway=residence", "highway=residence"],
+          ["https://wiki.openstreetmap.org/wiki/Tag:highway=residential", "highway=residential"]
+        ]
+      },
+      {
+        :text => "Australia, NSW, Syd., Darlin Harbor. Place 'building=ship' on ships - same tagging as HMS Belfast in London.",
+        :asserts => [
+          ["https://wiki.openstreetmap.org/wiki/Tag:building=ship", "building=ship"]
+        ]
+      }
+    ]
+
+    failures = []
+    cases.each do |instance|
+      text = instance[:text]
+      r = RichText.new("text", text)
+      html = r.to_html
+      dom = Nokogiri::HTML.fragment(html)
+      asserts = instance[:asserts]
+      asserts.each do |(href, link_text)|
+        match = dom.css("a").find { |el| el["href"] == href && el.text == link_text }
+        next if match
+
+        failures << <<~ERROR
+          TEXT:
+          #{text}
+
+          HTML:
+          #{html}
+
+          ASSERT: #{href} - #{link_text}
+        ERROR
+      end
+    end
+
+    # rubocop:disable Minitest/AssertEmpty, Minitest/AssertPredicate
+    assert failures.empty?, %(### Failures:\n\n#{failures.join("\n----\n")})
+    # rubocop:enable Minitest/AssertEmpty, Minitest/AssertPredicate
+  end
+
   private
 
   def assert_html(richtext, &block)
