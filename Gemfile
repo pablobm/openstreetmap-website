@@ -67,6 +67,7 @@ gem "rack-cors"
 gem "rails_autolink", :require => "rails_autolink"
 gem "rails-i18n"
 gem "rails_param"
+gem "rinku", :require => "rails_rinku"
 gem "strong_migrations"
 gem "validates_email_format_of"
 

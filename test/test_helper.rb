@@ -38,6 +38,11 @@ require "minitest/focus"
 
 WebMock.disable_net_connect!(:allow_localhost => true, :allow => %w[selenium-default selenium-de selenium-nolang rails-app])
 
+$t_total ||= 0
+at_exit do
+  puts "Total time spent in autolinker: #{$t_total}s"
+end
+
 module ActiveSupport
   class TestCase
     include FactoryBot::Syntax::Methods
