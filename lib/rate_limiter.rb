@@ -1,6 +1,44 @@
 # frozen_string_literal: true
 
 class RateLimiter
+  class Empty
+    def allow?(key)
+      true
+    end
+
+    def update(key)
+    end
+  end
+
+  def self.signup_email_limiter
+    @signup_email_limiter ||=
+      if Settings.memcache_servers && Settings.signup_email_per_day && Settings.signup_email_max_burst
+        RateLimiter.new(
+          Dalli::Client.new(
+            Settings.memcache_servers,
+            :protocol => :meta,
+            :namespace => "rails:signup:email"
+          ),
+          86400,
+          Settings.signup_email_per_day,
+          Settings.signup_email_max_burst
+        )
+      else
+        Empty.new
+      end
+  end
+
+  def self.signup_ip_limiter
+    if Settings.memcache_servers && Settings.signup_ip_per_day && Settings.signup_ip_max_burst
+      RateLimiter.new(
+        Dalli::Client.new(Settings.memcache_servers, :protocol => :meta, :namespace => "rails:signup:ip"),
+        86400, Settings.signup_ip_per_day, Settings.signup_ip_max_burst
+      )
+    else
+      Empty.new
+    end
+  end
+
   def initialize(cache, interval, limit, max_burst)
     @cache = cache
     @requests_per_second = limit.to_f / interval
