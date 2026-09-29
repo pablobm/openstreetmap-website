@@ -1066,4 +1066,23 @@ class UserCreationTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_template "site/welcome"
   end
+
+  def test_missing_email
+    new_email = ""
+    display_name = "new_tester"
+
+    assert_difference("User.count", 1) do
+      assert_difference("ActionMailer::Base.deliveries.size", 1) do
+        perform_enqueued_jobs do
+          post "/user",
+               :params => { :user => { :email => new_email,
+                                       :display_name => display_name,
+                                       :pass_crypt => "testtest",
+                                       :pass_crypt_confirmation => "testtest" } }
+          assert_response :success
+          assert_template "users/new"
+        end
+      end
+    end
+  end
 end
