@@ -9,7 +9,7 @@ module UserHelper
 
     if user.image_use_gravatar
       user_gravatar_tag(user, options)
-    elsif user.avatar.attached?
+    elsif user.avatar.attached? && !user.avatar.new_record?
       user_avatar_variant_tag(user, { :resize_to_limit => [100, 100] }, options)
     else
       image_tag "avatar.svg", options.merge(:width => 100, :height => 100)
@@ -22,7 +22,7 @@ module UserHelper
 
     if user.image_use_gravatar
       user_gravatar_tag(user, options.merge(:size => 50))
-    elsif user.avatar.attached?
+    elsif user.avatar.attached? && !user.avatar.new_record?
       user_avatar_variant_tag(user, { :resize_to_limit => [50, 50] }, options)
     else
       image_tag "avatar.svg", options.merge(:width => 50, :height => 50)
@@ -35,7 +35,7 @@ module UserHelper
 
     if user.image_use_gravatar
       user_gravatar_tag(user, options.merge(:size => 50))
-    elsif user.avatar.attached?
+    elsif user.avatar.attached? && !user.avatar.new_record?
       user_avatar_variant_tag(user, { :resize_to_limit => [50, 50] }, options)
     else
       image_tag "avatar.svg", options.merge(:width => 50, :height => 50)
@@ -45,7 +45,7 @@ module UserHelper
   def user_image_url(user)
     if user.image_use_gravatar
       user_gravatar_url(user)
-    elsif user.avatar.attached?
+    elsif user.avatar.attached? && !user.avatar.new_record?
       polymorphic_url(user_avatar_variant(user, :resize_to_limit => [100, 100]), :host => Settings.server_url)
     else
       image_url("avatar.svg")
