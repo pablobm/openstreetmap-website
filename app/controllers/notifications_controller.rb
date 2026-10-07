@@ -17,4 +17,12 @@ class NotificationsController < ApplicationController
     @notifications = get_page_items(notifications)
     @params = params.permit
   end
+
+  def debug_unread
+    current_user
+      .web_notifications
+      .update(:read_at => nil)
+
+    redirect_back_or_to notifications_path
+  end
 end

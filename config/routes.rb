@@ -361,6 +361,7 @@ OpenStreetMap::Application.routes.draw do
   namespace :notifications do
     resource :reads, :only => [:create]
   end
+  post "notifications/debug_unread" => "notifications#debug_unread", :as => :notifications_debug_unread
 
   # friendships
   scope "/user/:display_name" do
