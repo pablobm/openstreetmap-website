@@ -21,6 +21,14 @@ class UserHelperTest < ActionView::TestCase
     assert_match %r{^<img class="foo" .* src="http://www.gravatar.com/avatar/.*" />$}, image
   end
 
+  def test_user_image_uncommitted
+    user = create(:user)
+    user.avatar = bad_image_upload
+
+    image = user_image(user, :class => "foo")
+    assert_match %r{^<img class="foo" .* src="/images/avatar.svg" />$}, image
+  end
+
   def test_user_thumbnail
     user = create(:user)
     gravatar_user = create(:user, :image_use_gravatar => true)
@@ -36,6 +44,14 @@ class UserHelperTest < ActionView::TestCase
 
     image = user_thumbnail(gravatar_user, :class => "foo")
     assert_match %r{^<img class="foo" .* src="http://www.gravatar.com/avatar/.*" />$}, image
+  end
+
+  def test_user_thumbnail_uncommitted
+    user = create(:user)
+    user.avatar = bad_image_upload
+
+    image = user_thumbnail(user, :class => "foo")
+    assert_match %r{^<img class="foo" .* src="/images/avatar.svg" />$}, image
   end
 
   def test_user_thumbnail_tiny
@@ -55,6 +71,14 @@ class UserHelperTest < ActionView::TestCase
     assert_match %r{^<img class="foo" .* src="http://www.gravatar.com/avatar/.*" />$}, image
   end
 
+  def test_user_thumbnail_tiny_uncommitted
+    user = create(:user)
+    user.avatar = bad_image_upload
+
+    image = user_thumbnail_tiny(user, :class => "foo")
+    assert_match %r{^<img class="foo" .* src="/images/avatar.svg" />$}, image
+  end
+
   def test_user_image_url
     user = create(:user)
     user.avatar.attach(:io => File.open("test/gpx/fixtures/a.gif"), :filename => "a.gif")
@@ -65,6 +89,14 @@ class UserHelperTest < ActionView::TestCase
 
     url = user_image_url(gravatar_user)
     assert_match %r{^http://www.gravatar.com/avatar/}, url
+  end
+
+  def test_user_image_url_uncommitted
+    user = create(:user)
+    user.avatar = bad_image_upload
+
+    url = user_image_url(user)
+    assert_equal "/images/avatar.svg", url
   end
 
   def test_user_image_sizes_default_image
@@ -115,5 +147,9 @@ class UserHelperTest < ActionView::TestCase
 
   def request
     controller.request
+  end
+
+  def bad_image_upload
+    Rack::Test::UploadedFile.new("test/fixtures/lorem_ipsum.txt", "image/gif")
   end
 end
