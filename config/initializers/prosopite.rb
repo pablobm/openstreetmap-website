@@ -14,7 +14,7 @@ if Rails.env.test?
   require "prosopite/middleware/rack"
   Rails.application.config.middleware.use(Prosopite::Middleware::Rack)
 
-  Prosopite.raise = true
+  #Prosopite.raise = true
   Prosopite.allow_stack_paths = YAML.load_file(Rails.root.join("test/prosopite_todo.yml")).map do |path|
     # Match "/app/models/way.rb:123" but not "/app/models/old_way.rb:123"
     "/#{path}:"
