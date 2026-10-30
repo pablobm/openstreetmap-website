@@ -7,19 +7,6 @@ class ConfirmationsControllerTest < ActionDispatch::IntegrationTest
   # test all routes which lead to this controller
   def test_routes
     assert_routing(
-      { :path => "/user/username/confirm", :method => :get },
-      { :controller => "confirmations", :action => "confirm", :display_name => "username" }
-    )
-    assert_routing(
-      { :path => "/user/username/confirm", :method => :post },
-      { :controller => "confirmations", :action => "confirm", :display_name => "username" }
-    )
-    assert_routing(
-      { :path => "/user/username/confirm/resend", :method => :post },
-      { :controller => "confirmations", :action => "confirm_resend", :display_name => "username" }
-    )
-
-    assert_routing(
       { :path => "/user/confirm", :method => :get },
       { :controller => "confirmations", :action => "confirm" }
     )

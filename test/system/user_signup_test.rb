@@ -30,11 +30,8 @@ class UserSignupTest < ApplicationSystemTestCase
     email = ActionMailer::Base.deliveries.first
     assert_equal 1, email.to.count
     assert_equal "new_user_account@example.com", email.to.first
-    email_text = email.parts[0].parts[0].decoded
-    match = %r{/user/new_user_account/confirm\?confirm_string=\S+}.match(email_text)
-    assert_not_nil match
 
-    visit match[0]
+    click_confirmation_email_link
 
     assert_content "new_user_account"
     assert_content "Welcome!"
@@ -65,14 +62,11 @@ class UserSignupTest < ApplicationSystemTestCase
     assert_content "sent a new confirmation"
     assert_no_content "<p>"
 
-    email = ActionMailer::Base.deliveries.last
+    email = ActionMailer::Base.deliveries.first
     assert_equal 1, email.to.count
     assert_equal "new_user_account@example.com", email.to.first
-    email_text = email.parts[0].parts[0].decoded
-    match = %r{/user/new_user_account/confirm\?confirm_string=\S+}.match(email_text)
-    assert_not_nil match
 
-    visit match[0]
+    click_confirmation_email_link
 
     assert_content "new_user_account"
     assert_content "Welcome!"

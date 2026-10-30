@@ -230,12 +230,7 @@ class CreateNoteTest < ApplicationSystemTestCase
       end
     end
 
-    email = ActionMailer::Base.deliveries.first
-    email_text = email.parts[0].parts[0].decoded
-    match = %r{/user/new_user_account/confirm\?confirm_string=\S+}.match(email_text)
-    assert_not_nil match
-
-    visit match[0]
+    click_confirmation_email_link
 
     assert_content "Welcome!"
   end

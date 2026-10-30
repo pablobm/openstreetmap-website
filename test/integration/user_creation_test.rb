@@ -212,11 +212,11 @@ class UserCreationTest < ActionDispatch::IntegrationTest
     assert_template "confirmations/confirm"
 
     # Go to the confirmation page
-    get "/user/#{display_name}/confirm", :params => { :referer => "/welcome", :confirm_string => confirm_string }
+    get "/user/confirm", :params => { :display_name => display_name, :referer => "/welcome", :confirm_string => confirm_string }
     assert_response :success
     assert_template "confirmations/confirm"
 
-    post "/user/#{display_name}/confirm", :params => { :referer => "/welcome", :confirm_string => confirm_string }
+    post "/user/confirm", :params => { :display_name => display_name, :referer => "/welcome", :confirm_string => confirm_string }
     assert_response :redirect
     follow_redirect!
     assert_response :success
@@ -352,11 +352,11 @@ class UserCreationTest < ActionDispatch::IntegrationTest
     assert_template "confirmations/confirm"
 
     # Go to the confirmation page
-    get "/user/#{display_name}/confirm", :params => { :referer => "/welcome", :confirm_string => confirm_string }
+    get "/user/confirm", :params => { :display_name => display_name, :referer => "/welcome", :confirm_string => confirm_string }
     assert_response :success
     assert_template "confirmations/confirm"
 
-    post "/user/#{display_name}/confirm", :params => { :referer => "/welcome", :confirm_string => confirm_string }
+    post "/user/confirm", :params => { :display_name => display_name, :referer => "/welcome", :confirm_string => confirm_string }
     assert_response :redirect
     follow_redirect!
     assert_response :success
@@ -495,11 +495,11 @@ class UserCreationTest < ActionDispatch::IntegrationTest
     ActionMailer::Base.deliveries.clear
 
     # Go to the confirmation page
-    get "/user/#{display_name}/confirm", :params => { :referer => "/welcome", :confirm_string => confirm_string }
+    get "/user/confirm", :params => { :display_name => display_name, :referer => "/welcome", :confirm_string => confirm_string }
     assert_response :success
     assert_template "confirmations/confirm"
 
-    post "/user/#{display_name}/confirm", :params => { :referer => "/welcome", :confirm_string => confirm_string }
+    post "/user/confirm", :params => { :display_name => display_name, :referer => "/welcome", :confirm_string => confirm_string }
     assert_response :redirect
     follow_redirect!
     assert_response :success
@@ -634,11 +634,11 @@ class UserCreationTest < ActionDispatch::IntegrationTest
     assert_template "confirmations/confirm"
 
     # Go to the confirmation page
-    get "/user/#{display_name}/confirm", :params => { :referer => "/welcome", :confirm_string => confirm_string }
+    get "/user/confirm", :params => { :display_name => display_name, :referer => "/welcome", :confirm_string => confirm_string }
     assert_response :success
     assert_template "confirmations/confirm"
 
-    post "/user/#{display_name}/confirm", :params => { :referer => "/welcome", :confirm_string => confirm_string }
+    post "/user/confirm", :params => { :display_name => display_name, :referer => "/welcome", :confirm_string => confirm_string }
     assert_response :redirect
     follow_redirect!
     assert_response :success
@@ -771,11 +771,11 @@ class UserCreationTest < ActionDispatch::IntegrationTest
     assert_template "confirmations/confirm"
 
     # Go to the confirmation page
-    get "/user/#{display_name}/confirm", :params => { :referer => "/welcome", :confirm_string => confirm_string }
+    get "/user/confirm", :params => { :display_name => display_name, :referer => "/welcome", :confirm_string => confirm_string }
     assert_response :success
     assert_template "confirmations/confirm"
 
-    post "/user/#{display_name}/confirm", :params => { :referer => "/welcome", :confirm_string => confirm_string }
+    post "/user/confirm", :params => { :display_name => display_name, :referer => "/welcome", :confirm_string => confirm_string }
     assert_response :redirect
     follow_redirect!
     assert_response :success
@@ -913,11 +913,11 @@ class UserCreationTest < ActionDispatch::IntegrationTest
     assert_template "confirmations/confirm"
 
     # Go to the confirmation page
-    get "/user/#{display_name}/confirm", :params => { :referer => "/welcome", :confirm_string => confirm_string }
+    get "/user/confirm", :params => { :display_name => display_name, :referer => "/welcome", :confirm_string => confirm_string }
     assert_response :success
     assert_template "confirmations/confirm"
 
-    post "/user/#{display_name}/confirm", :params => { :referer => "/welcome", :confirm_string => confirm_string }
+    post "/user/confirm", :params => { :display_name => display_name, :referer => "/welcome", :confirm_string => confirm_string }
     assert_response :redirect
     follow_redirect!
     assert_response :success
@@ -1056,11 +1056,11 @@ class UserCreationTest < ActionDispatch::IntegrationTest
     assert_template "confirmations/confirm"
 
     # Go to the confirmation page
-    get "/user/#{display_name}/confirm", :params => { :referer => "/welcome", :confirm_string => confirm_string }
+    get "/user/confirm", :params => { :display_name => display_name, :referer => "/welcome", :confirm_string => confirm_string }
     assert_response :success
     assert_template "confirmations/confirm"
 
-    post "/user/#{display_name}/confirm", :params => { :referer => "/welcome", :confirm_string => confirm_string }
+    post "/user/confirm", :params => { :display_name => display_name, :referer => "/welcome", :confirm_string => confirm_string }
     assert_response :redirect
     follow_redirect!
     assert_response :success

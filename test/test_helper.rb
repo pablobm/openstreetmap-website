@@ -441,5 +441,20 @@ module ActiveSupport
     def read_fixture_file(relpath)
       Rails.root.join("test", "fixtures", relpath).read
     end
+
+    def click_confirmation_email_link
+      email = ActionMailer::Base.deliveries.first
+
+      assert_not_nil email, "Could not find an email"
+
+      html_email_text = email.parts[0].parts[1].decoded
+      html = Nokogiri::HTML(html_email_text)
+      href = html.css("a").map { |a| a[:href] }.find { |href| href.include?("/user/confirm") }
+
+      assert_not_nil href, "Could not find confirmation link in email"
+
+      path = href.gsub(%r{\Ahttp://[^/]+/}, "")
+      visit path
+    end
   end
 end
