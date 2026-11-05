@@ -76,6 +76,8 @@ gem "quad_tile"
 gem "addressable"
 gem "rack-uri_sanitizer"
 
+# Authentication
+gem "devise"
 gem "omniauth"
 gem "omniauth-apple"
 gem "omniauth-facebook"
@@ -170,6 +172,8 @@ group :development do
   gem "danger"
   gem "danger-auto_label"
   gem "debug_inspector"
+  # https://github.com/danger/danger/issues/1560
+  gem "git", "< 6.0.0"
   gem "herb"
   gem "i18n-tasks"
   gem "listen"
