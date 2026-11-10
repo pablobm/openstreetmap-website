@@ -12,10 +12,13 @@ module Notifications
     def create
       notification_ids = Array.wrap(params[:notification_ids]).map { |id| Integer(id) }
 
-      current_user
-        .web_notifications
-        .where(:id => notification_ids)
-        .update(:read_at => Time.zone.now)
+      notifications = current_user.web_notifications.where(:id => notification_ids)
+
+      if params[:add]
+        notifications.update(:read_at => Time.zone.now)
+      elsif params[:remove]
+        notifications.update(:read_at => nil)
+      end
 
       redirect_back_or_to notifications_path
     end
