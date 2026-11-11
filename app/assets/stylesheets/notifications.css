@@ -1,0 +1,14 @@
+.notification-read-one-btn {
+  display: none;
+}
+
+.notification-index-entry:hover {
+  .notification-read-one-btn {
+    display: block;
+    position: absolute;
+    right: 1em;
+  }
+  .notification-timestamp {
+    display: none;
+  }
+}
