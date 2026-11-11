@@ -2,8 +2,8 @@
 
 <turbo-frame id="pagination" target="_top" data-turbo="false">
   <% notifications.items.each do |notification| %>
-    <div class="<%= class_names("row", "border-bottom", "bg-success-subtle" => notification.unread?) %>">
-      <div class="col-1 text-center">
+    <div class="<%= class_names("row", "border-bottom", "notification-index-entry", "bg-success-subtle" => notification.unread?) %>">
+      <div class="col-1 text-center pt-1">
         <%= check_box_tag "notification_ids[]", notification.id, :id => dom_id(notification), :class => "notification-mark-as-read align-bottom form-check-input" %>
       </div>
       <div class="col-11">

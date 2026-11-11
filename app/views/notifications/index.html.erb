@@ -1,4 +1,5 @@
 <% content_for :head do %>
+  <%= stylesheet_link_tag "notifications", :media => "screen" %>
   <%= javascript_include_tag "notifications" %>
 <% end %>
 
@@ -22,7 +23,7 @@
       </div>
       <div class="col-11">
         <%= form.submit t(".mark_selected_read"), :class => "btn btn-primary", name: "add" %>
-        <%= form.submit t(".mark_selected_unread"), :class => "btn btn-primary", name: "remove" %>
+        <%= form.submit t(".mark_selected_unread"), :class => "btn btn-secondary", name: "remove" %>
       </div>
     </div>
     <%= render "page", :notifications => @notifications, :params => @params %>
