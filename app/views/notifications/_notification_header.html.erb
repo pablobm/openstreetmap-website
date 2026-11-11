@@ -3,6 +3,7 @@
 <header class="<%= class_names("row", "align-items-center", "text-secondary" => missing_record) %>">
   <h2 class="col-8 h6 my-2"><%= link_to_if(uri, title, uri) %></h2>
   <p class="col-4 text-end my-1">
-    <%= friendly_date_ago(timestamp) %>
+    <span class="notification-timestamp"><%= friendly_date_ago(timestamp) %></span>
+    <%= submit_tag "Mark read", :class => "btn btn-secondary btn-sm notification-read-one-btn", name: "add" %>
   </p>
 </header>

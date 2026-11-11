@@ -6,6 +6,7 @@
   .notification-read-one-btn {
     display: block;
     position: absolute;
+    margin-top: -1em;
     right: 1em;
   }
   .notification-timestamp {
