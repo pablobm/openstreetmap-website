@@ -4,7 +4,8 @@
       "notifications/notification_header",
       :title => t("headline", :scope => ["notifications", notification_event_type_name(notification)]),
       :timestamp => notification.created_at,
-      :missing_record => true
+      :missing_record => true,
+      :notification => notification
     ) %>
 
 <%= render("notifications/notification_body") do %>

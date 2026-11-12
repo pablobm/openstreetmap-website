@@ -356,9 +356,15 @@ OpenStreetMap::Application.routes.draw do
   get "/preferences", :to => redirect(:path => "/preferences/basic"), :as => nil
   get "/preferences/edit", :to => redirect(:path => "/preferences/basic"), :as => nil
 
-  resources :notifications, :only => [:index]
+  resources :notifications, :only => [:index] do
+    # Actions on individual notifications
+      resources :reads, :only => [:create], :controller => "notifications/reads"
+      resources :unreads, :only => [:create], :controller => "notifications/unreads"
+  end
   namespace :notifications do
-    resource :reads, :only => [:create]
+    # Actions on a list of notifications
+    resources :reads, :only => [:create]
+    resources :unreads, :only => [:create]
   end
 
   # friendships

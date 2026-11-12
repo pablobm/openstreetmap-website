@@ -3,7 +3,8 @@
 <%= render(
       "notifications/notification_header",
       :title => t(".headline"),
-      :timestamp => notification.created_at
+      :timestamp => notification.created_at,
+      :notification => notification
     ) %>
 
 <%= render("notifications/notification_body") do %>

@@ -16,14 +16,14 @@
 <% if @notifications.items.empty? %>
   <p><%= t(".no_notifications") %></p>
 <% else %>
-  <%= form_with :url => notifications_reads_path, :method => :create do |form| %>
+  <%= form_with :method => :create do |form| %>
     <div class="row border-bottom pb-2">
       <div class="col-1 text-center">
         <%= check_box_tag "select_page", :class => "align-bottom form-check-input" %>
       </div>
       <div class="col-11">
-        <%= form.submit t(".mark_selected_read"), :class => "btn btn-primary", name: "add" %>
-        <%= form.submit t(".mark_selected_unread"), :class => "btn btn-secondary", name: "remove" %>
+        <%= form.submit t(".mark_selected_read"), :class => "btn btn-primary", :formaction => notifications_reads_path %>
+        <%= form.submit t(".mark_selected_unread"), :class => "btn btn-secondary", :formaction => notifications_unreads_path %>
       </div>
     </div>
     <%= render "page", :notifications => @notifications, :params => @params %>
