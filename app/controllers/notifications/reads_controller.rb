@@ -10,17 +10,19 @@ module Notifications
     before_action :check_database_writable
 
     def create
-      notification_ids = Array.wrap(params[:notification_ids]).map { |id| Integer(id) }
+      notification_ids = Array.wrap(params[:notification_ids] || params[:notification_id])
 
       notifications = current_user.web_notifications.where(:id => notification_ids)
 
-      if params[:add]
-        notifications.update(:read_at => Time.zone.now)
-      elsif params[:remove]
-        notifications.update(:read_at => nil)
-      end
+      mark_notifications(notifications)
 
       redirect_back_or_to notifications_path
+    end
+
+    private
+
+    def mark_notifications(notifications)
+      notifications.update(:read_at => Time.zone.now)
     end
   end
 end
