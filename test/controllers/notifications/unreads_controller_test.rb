@@ -28,7 +28,7 @@ module Notifications
       assert_response :forbidden
     end
 
-    def test_create_single_mine_unread
+    def test_create_single_unread
       user1 = create(:user)
       user2 = create(:user)
       n1a = create(:changeset_comment_notification, :recipient => user1)
@@ -44,7 +44,7 @@ module Notifications
       assert_redirected_to notifications_path
     end
 
-    def test_create_single_mine_read
+    def test_create_single_read
       user1 = create(:user)
       user2 = create(:user)
       n1a = create(:changeset_comment_notification, :recipient => user1)
