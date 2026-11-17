@@ -10,7 +10,7 @@
           tag.i(:class => "bi bi-plus-lg"),
           :type => "submit",
           :class => ["btn btn-outline-secondary btn-sm"],
-          :title => "Mark this unread",
+          "aria-label" => t("notifications.index.mark_one_unread"),
           :formaction => notification_unreads_path(notification)
         ) %>
       <% else %>
@@ -18,7 +18,7 @@
           tag.i(:class => "bi bi-check-lg"),
           :type => "submit",
           :class => ["btn btn-outline-secondary btn-sm"],
-          :title => "Mark this read",
+          "aria-label" => t("notifications.index.mark_one_read"),
           :formaction => notification_reads_path(notification),
         ) %>
       <% end %>
